@@ -1,0 +1,424 @@
+<?xml version="1.0"?>
+<rdf:RDF
+    xmlns="http://www.biopax.org/examples/myExample#"
+    xmlns:bp="http://www.biopax.org/release/biopax-level3.owl#"
+    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+    xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+    xmlns:owl="http://www.w3.org/2002/07/owl#"
+  xml:base="http://www.biopax.org/examples/myExample">
+  <owl:Ontology rdf:about="">
+    <owl:imports rdf:resource="http://www.biopax.org/release/biopax-level3.owl"/>
+  </owl:Ontology>
+  <bp:Protein rdf:ID="Protein_1">
+    <bp:xref>
+      <bp:PublicationXref rdf:ID="PublicationXref_1">
+        <bp:db rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >Pubmed</bp:db>
+        <bp:author rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >Chan SJ, Keim P, Steiner DF.</bp:author>
+        <bp:year rdf:datatype="http://www.w3.org/2001/XMLSchema#int"
+        >1976</bp:year>
+        <bp:id rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >778852</bp:id>
+        <bp:title rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >Cell-free synthesis of rat preproinsulins: characterization and partial amino acid sequence determination</bp:title>
+      </bp:PublicationXref>
+    </bp:xref>
+    <bp:xref>
+      <bp:UnificationXref rdf:ID="UnificationXref_12">
+        <bp:db rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >NCBI GENBANK</bp:db>
+        <bp:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >preproinsulin</bp:comment>
+        <bp:id rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >CAA23828</bp:id>
+      </bp:UnificationXref>
+    </bp:xref>
+    <bp:entityReference>
+      <bp:ProteinReference rdf:ID="insulin_ref">
+        <bp:sequence rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >malwmrllpl lallalwgpd paaafvnqhl cgshlvealy lvcgergffy tpktrreaed      lqvgqvelgg gpgagslqpl alegslqkrg iveqcctsic slyqlenycn</bp:sequence>
+        <bp:displayName rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >insulin</bp:displayName>
+        <bp:organism>
+          <bp:BioSource rdf:ID="BioSource_3">
+            <bp:standardName rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+            >Human</bp:standardName>
+            <bp:taxonXref>
+              <bp:UnificationXref rdf:ID="UnificationXref_4">
+                <bp:id rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+                >9606</bp:id>
+                <bp:db rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+                >Taxonomy</bp:db>
+              </bp:UnificationXref>
+            </bp:taxonXref>
+            <bp:displayName rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+            >Homo sapiens</bp:displayName>
+          </bp:BioSource>
+        </bp:organism>
+        <bp:xref>
+          <bp:UnificationXref rdf:ID="UnificationXref_38">
+            <bp:id rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+            >AAA59172</bp:id>
+            <bp:db rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+            >NCBI GENBANK</bp:db>
+            <bp:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+            >insulin</bp:comment>
+          </bp:UnificationXref>
+        </bp:xref>
+      </bp:ProteinReference>
+    </bp:entityReference>
+    <bp:feature>
+      <bp:FragmentFeature rdf:ID="FragmentFeature_5">
+        <bp:featureLocationType>
+          <bp:SequenceRegionVocabulary rdf:ID="SequenceRegionVocabulary_11">
+            <bp:xref>
+              <bp:UnificationXref rdf:ID="UnificationXref_6">
+                <bp:id rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+                >SO:0000418</bp:id>
+                <bp:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+                >signal peptide</bp:comment>
+                <bp:db rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+                >Sequence Ontology</bp:db>
+              </bp:UnificationXref>
+            </bp:xref>
+            <bp:term rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+            >signal_peptide</bp:term>
+          </bp:SequenceRegionVocabulary>
+        </bp:featureLocationType>
+        <bp:featureLocation>
+          <bp:SequenceInterval rdf:ID="SequenceInterval_8">
+            <bp:sequenceIntervalBegin>
+              <bp:SequenceSite rdf:ID="SequenceSite_9">
+                <bp:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+                ></bp:comment>
+                <bp:sequencePosition rdf:datatype="http://www.w3.org/2001/XMLSchema#int"
+                >1</bp:sequencePosition>
+                <bp:positionStatus rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+                >EQUAL</bp:positionStatus>
+              </bp:SequenceSite>
+            </bp:sequenceIntervalBegin>
+            <bp:sequenceIntervalEnd>
+              <bp:SequenceSite rdf:ID="SequenceSite_10">
+                <bp:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+                ></bp:comment>
+                <bp:positionStatus rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+                >EQUAL</bp:positionStatus>
+                <bp:sequencePosition rdf:datatype="http://www.w3.org/2001/XMLSchema#int"
+                >24</bp:sequencePosition>
+              </bp:SequenceSite>
+            </bp:sequenceIntervalEnd>
+          </bp:SequenceInterval>
+        </bp:featureLocation>
+        <bp:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >signal peptide</bp:comment>
+      </bp:FragmentFeature>
+    </bp:feature>
+    <bp:displayName rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >preproinsulin</bp:displayName>
+  </bp:Protein>
+  <bp:Stoichiometry rdf:ID="Stoichiometry_15">
+    <bp:physicalEntity rdf:resource="#Protein_1"/>
+    <bp:stoichiometricCoefficient rdf:datatype="http://www.w3.org/2001/XMLSchema#float"
+    >1.0</bp:stoichiometricCoefficient>
+  </bp:Stoichiometry>
+  <bp:UnificationXref rdf:ID="UnificationXref_1">
+    <bp:id rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >MI:0408</bp:id>
+    <bp:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Disulfide bond</bp:comment>
+    <bp:db rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >PSI-MI</bp:db>
+  </bp:UnificationXref>
+  <bp:SequenceSite rdf:ID="SequenceSite_23">
+    <bp:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >B chain</bp:comment>
+    <bp:sequencePosition rdf:datatype="http://www.w3.org/2001/XMLSchema#int"
+    >19</bp:sequencePosition>
+    <bp:positionStatus rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >EQUAL</bp:positionStatus>
+  </bp:SequenceSite>
+  <bp:SequenceSite rdf:ID="SequenceSite_27">
+    <bp:sequencePosition rdf:datatype="http://www.w3.org/2001/XMLSchema#int"
+    >6</bp:sequencePosition>
+    <bp:positionStatus rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >EQUAL</bp:positionStatus>
+    <bp:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    ></bp:comment>
+  </bp:SequenceSite>
+  <bp:UnificationXref rdf:ID="UnificationXref_37">
+    <bp:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >proinsulin</bp:comment>
+    <bp:id rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >AAW83741</bp:id>
+    <bp:db rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >NCBI GENBANK</bp:db>
+  </bp:UnificationXref>
+  <bp:InteractionVocabulary rdf:ID="InteractionVocabulary_11">
+    <bp:xref rdf:resource="#UnificationXref_1"/>
+    <bp:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    ></bp:comment>
+    <bp:term rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >disulfide bond</bp:term>
+  </bp:InteractionVocabulary>
+  <bp:BiochemicalReaction rdf:ID="BiochemicalReaction_10">
+    <bp:conversionDirection rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >LEFT-TO-RIGHT</bp:conversionDirection>
+    <bp:left rdf:resource="#Protein_1"/>
+    <bp:interactionType rdf:resource="#InteractionVocabulary_11"/>
+    <bp:participantStoichiometry>
+      <bp:Stoichiometry rdf:ID="Stoichiometry_7">
+        <bp:stoichiometricCoefficient rdf:datatype="http://www.w3.org/2001/XMLSchema#float"
+        >1.0</bp:stoichiometricCoefficient>
+        <bp:physicalEntity>
+          <bp:Protein rdf:ID="Protein_14">
+            <bp:feature>
+              <bp:CovalentBindingFeature rdf:ID="CovalentBindingFeature_16">
+                <bp:bindsTo>
+                  <bp:CovalentBindingFeature rdf:ID="CovalentBindingFeature_18">
+                    <bp:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+                    >B chain</bp:comment>
+                    <bp:featureLocation>
+                      <bp:SequenceSite rdf:ID="SequenceSite_19">
+                        <bp:sequencePosition rdf:datatype="http://www.w3.org/2001/XMLSchema#int"
+                        >7</bp:sequencePosition>
+                        <bp:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+                        >B chain</bp:comment>
+                        <bp:positionStatus rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+                        >EQUAL</bp:positionStatus>
+                      </bp:SequenceSite>
+                    </bp:featureLocation>
+                    <bp:modificationType>
+                      <bp:SequenceModificationVocabulary rdf:ID="SequenceModificationVocabulary_1">
+                        <bp:xref>
+                          <bp:UnificationXref rdf:ID="UnificationXref_2">
+                            <bp:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+                            >half cystine</bp:comment>
+                            <bp:id rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+                            >MI:0832</bp:id>
+                            <bp:db rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+                            >PSI-MI</bp:db>
+                          </bp:UnificationXref>
+                        </bp:xref>
+                        <bp:term rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+                        >half cystine</bp:term>
+                      </bp:SequenceModificationVocabulary>
+                    </bp:modificationType>
+                    <bp:intraMolecular rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean"
+                    >false</bp:intraMolecular>
+                    <bp:bindsTo rdf:resource="#CovalentBindingFeature_16"/>
+                  </bp:CovalentBindingFeature>
+                </bp:bindsTo>
+                <bp:featureLocation>
+                  <bp:SequenceSite rdf:ID="SequenceSite_17">
+                    <bp:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+                    >A chain</bp:comment>
+                    <bp:sequencePosition rdf:datatype="http://www.w3.org/2001/XMLSchema#int"
+                    >7</bp:sequencePosition>
+                    <bp:positionStatus rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+                    >EQUAL</bp:positionStatus>
+                  </bp:SequenceSite>
+                </bp:featureLocation>
+                <bp:intraMolecular rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean"
+                >false</bp:intraMolecular>
+                <bp:modificationType rdf:resource="#SequenceModificationVocabulary_1"/>
+                <bp:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+                >A chain</bp:comment>
+              </bp:CovalentBindingFeature>
+            </bp:feature>
+            <bp:feature>
+              <bp:CovalentBindingFeature rdf:ID="CovalentBindingFeature_20">
+                <bp:bindsTo>
+                  <bp:CovalentBindingFeature rdf:ID="CovalentBindingFeature_22">
+                    <bp:bindsTo rdf:resource="#CovalentBindingFeature_20"/>
+                    <bp:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+                    >B chain</bp:comment>
+                    <bp:modificationType rdf:resource="#SequenceModificationVocabulary_1"/>
+                    <bp:featureLocation rdf:resource="#SequenceSite_23"/>
+                    <bp:intraMolecular rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean"
+                    >false</bp:intraMolecular>
+                  </bp:CovalentBindingFeature>
+                </bp:bindsTo>
+                <bp:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+                >A chain</bp:comment>
+                <bp:modificationType rdf:resource="#SequenceModificationVocabulary_1"/>
+                <bp:intraMolecular rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean"
+                >false</bp:intraMolecular>
+                <bp:featureLocation>
+                  <bp:SequenceSite rdf:ID="SequenceSite_21">
+                    <bp:positionStatus rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+                    >EQUAL</bp:positionStatus>
+                    <bp:sequencePosition rdf:datatype="http://www.w3.org/2001/XMLSchema#int"
+                    >20</bp:sequencePosition>
+                    <bp:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+                    >A chain</bp:comment>
+                  </bp:SequenceSite>
+                </bp:featureLocation>
+              </bp:CovalentBindingFeature>
+            </bp:feature>
+            <bp:xref rdf:resource="#UnificationXref_37"/>
+            <bp:displayName rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+            >proinsulin</bp:displayName>
+            <bp:xref>
+              <bp:PublicationXref rdf:ID="PublicationXref_2">
+                <bp:year rdf:datatype="http://www.w3.org/2001/XMLSchema#int"
+                >1967</bp:year>
+                <bp:id rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+                >16591494</bp:id>
+                <bp:title rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+                >THE BIOSYNTHESIS OF INSULIN AND A PROBABLE PRECURSOR OF INSULIN BY A HUMAN ISLET CELL ADENOMA.</bp:title>
+                <bp:db rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+                >Pubmed</bp:db>
+              </bp:PublicationXref>
+            </bp:xref>
+            <bp:feature>
+              <bp:CovalentBindingFeature rdf:ID="CovalentBindingFeature_26">
+                <bp:modificationType rdf:resource="#SequenceModificationVocabulary_1"/>
+                <bp:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+                >A chain</bp:comment>
+                <bp:featureLocation rdf:resource="#SequenceSite_27"/>
+                <bp:bindsTo>
+                  <bp:CovalentBindingFeature rdf:ID="CovalentBindingFeature_28">
+                    <bp:intraMolecular rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean"
+                    >true</bp:intraMolecular>
+                    <bp:bindsTo rdf:resource="#CovalentBindingFeature_26"/>
+                    <bp:modificationType rdf:resource="#SequenceModificationVocabulary_1"/>
+                    <bp:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+                    >A chain</bp:comment>
+                    <bp:featureLocation>
+                      <bp:SequenceSite rdf:ID="SequenceSite_29">
+                        <bp:sequencePosition rdf:datatype="http://www.w3.org/2001/XMLSchema#int"
+                        >11</bp:sequencePosition>
+                        <bp:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+                        >A chain</bp:comment>
+                        <bp:positionStatus rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+                        >EQUAL</bp:positionStatus>
+                      </bp:SequenceSite>
+                    </bp:featureLocation>
+                  </bp:CovalentBindingFeature>
+                </bp:bindsTo>
+                <bp:intraMolecular rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean"
+                >true</bp:intraMolecular>
+              </bp:CovalentBindingFeature>
+            </bp:feature>
+            <bp:feature rdf:resource="#CovalentBindingFeature_18"/>
+            <bp:feature rdf:resource="#CovalentBindingFeature_28"/>
+            <bp:feature rdf:resource="#CovalentBindingFeature_22"/>
+            <bp:entityReference rdf:resource="#insulin_ref"/>
+          </bp:Protein>
+        </bp:physicalEntity>
+      </bp:Stoichiometry>
+    </bp:participantStoichiometry>
+    <bp:standardName rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Disulfide bond formation between amino acids A7 and B7</bp:standardName>
+    <bp:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >A7 forms disulfide bond with B7</bp:comment>
+    <bp:right rdf:resource="#Protein_14"/>
+    <bp:participantStoichiometry rdf:resource="#Stoichiometry_15"/>
+    <bp:displayName rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >A7-B7 disulfide bond formation</bp:displayName>
+  </bp:BiochemicalReaction>
+  <bp:InteractionVocabulary rdf:ID="InteractionVocabulary_3">
+    <bp:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    ></bp:comment>
+    <bp:xref>
+      <bp:UnificationXref rdf:ID="UnificationXref_5">
+        <bp:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >Protein cleavage</bp:comment>
+        <bp:db rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >PSI-MI</bp:db>
+        <bp:id rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >MI:0570</bp:id>
+      </bp:UnificationXref>
+    </bp:xref>
+    <bp:term rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >protein cleavage</bp:term>
+  </bp:InteractionVocabulary>
+  <bp:SequenceInterval rdf:ID="SequenceInterval_31">
+    <bp:sequenceIntervalEnd>
+      <bp:SequenceSite rdf:ID="SequenceSite_34">
+        <bp:positionStatus rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >EQUAL</bp:positionStatus>
+        <bp:sequencePosition rdf:datatype="http://www.w3.org/2001/XMLSchema#int"
+        >82</bp:sequencePosition>
+      </bp:SequenceSite>
+    </bp:sequenceIntervalEnd>
+    <bp:sequenceIntervalBegin>
+      <bp:SequenceSite rdf:ID="SequenceSite_32">
+        <bp:positionStatus rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >EQUAL</bp:positionStatus>
+        <bp:sequencePosition rdf:datatype="http://www.w3.org/2001/XMLSchema#int"
+        >52</bp:sequencePosition>
+      </bp:SequenceSite>
+    </bp:sequenceIntervalBegin>
+  </bp:SequenceInterval>
+  <bp:BiochemicalReaction rdf:ID="BiochemicalReaction_1">
+    <bp:conversionDirection rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >LEFT-TO-RIGHT</bp:conversionDirection>
+    <bp:participantStoichiometry rdf:resource="#Stoichiometry_15"/>
+    <bp:participantStoichiometry rdf:resource="#Stoichiometry_7"/>
+    <bp:right rdf:resource="#Protein_14"/>
+    <bp:displayName rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >A20-B19 disulfide bond formation</bp:displayName>
+    <bp:left rdf:resource="#Protein_1"/>
+    <bp:interactionType rdf:resource="#InteractionVocabulary_11"/>
+    <bp:standardName rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Formation of disulfide bond between amino acids A20 and B19</bp:standardName>
+  </bp:BiochemicalReaction>
+  <bp:FragmentFeature rdf:ID="FragmentFeature_30">
+    <bp:featureLocation rdf:resource="#SequenceInterval_31"/>
+    <bp:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >C chain removal</bp:comment>
+  </bp:FragmentFeature>
+  <bp:Stoichiometry rdf:ID="Stoichiometry_6">
+    <bp:physicalEntity>
+      <bp:Protein rdf:ID="insulin">
+        <bp:displayName rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >insulin</bp:displayName>
+        <bp:xref>
+          <bp:UnificationXref rdf:ID="UnificationXref_3">
+            <bp:id rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+            >C00723</bp:id>
+            <bp:db rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+            >KEGG Compound</bp:db>
+          </bp:UnificationXref>
+        </bp:xref>
+        <bp:xref rdf:resource="#UnificationXref_38"/>
+        <bp:feature rdf:resource="#FragmentFeature_30"/>
+        <bp:entityReference rdf:resource="#insulin_ref"/>
+      </bp:Protein>
+    </bp:physicalEntity>
+    <bp:stoichiometricCoefficient rdf:datatype="http://www.w3.org/2001/XMLSchema#float"
+    >1.0</bp:stoichiometricCoefficient>
+  </bp:Stoichiometry>
+  <bp:BiochemicalReaction rdf:ID="BiochemicalReaction_2">
+    <bp:left rdf:resource="#Protein_14"/>
+    <bp:standardName rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >C chain removal</bp:standardName>
+    <bp:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >See fragment feature: C chain removal</bp:comment>
+    <bp:participantStoichiometry rdf:resource="#Stoichiometry_7"/>
+    <bp:interactionType rdf:resource="#InteractionVocabulary_3"/>
+    <bp:conversionDirection rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >LEFT-TO-RIGHT</bp:conversionDirection>
+    <bp:xref rdf:resource="#PublicationXref_2"/>
+    <bp:participantStoichiometry rdf:resource="#Stoichiometry_6"/>
+    <bp:displayName rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Cleavage of C Chain</bp:displayName>
+    <bp:right rdf:resource="#insulin"/>
+  </bp:BiochemicalReaction>
+  <bp:BiochemicalReaction rdf:ID="BiochemicalReaction_16">
+    <bp:participantStoichiometry rdf:resource="#Stoichiometry_7"/>
+    <bp:participantStoichiometry rdf:resource="#Stoichiometry_15"/>
+    <bp:right rdf:resource="#Protein_14"/>
+    <bp:left rdf:resource="#Protein_1"/>
+    <bp:standardName rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Formation of disulfide bond between amino acids A6 and A11</bp:standardName>
+    <bp:displayName rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >A6-A11 disulfide bond formation</bp:displayName>
+    <bp:conversionDirection rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >LEFT-TO-RIGHT</bp:conversionDirection>
+    <bp:interactionType rdf:resource="#InteractionVocabulary_11"/>
+  </bp:BiochemicalReaction>
+</rdf:RDF>

@@ -45,14 +45,14 @@
           <bp:BioSource rdf:ID="BioSource_3">
             <bp:standardName rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
             >Human</bp:standardName>
-            <bp:taxonXref>
+            <bp:xref>
               <bp:UnificationXref rdf:ID="UnificationXref_4">
                 <bp:id rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
                 >9606</bp:id>
                 <bp:db rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
                 >Taxonomy</bp:db>
               </bp:UnificationXref>
-            </bp:taxonXref>
+            </bp:xref>
             <bp:displayName rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
             >Homo sapiens</bp:displayName>
           </bp:BioSource>

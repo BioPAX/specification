@@ -23,14 +23,14 @@
       <bp:BioSource rdf:ID="BioSource_10">
         <bp:displayName rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
         >budding yeast</bp:displayName>
-        <bp:taxonXref>
+        <bp:xref>
           <bp:UnificationXref rdf:ID="UnificationXref_11">
             <bp:id rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
             >4932</bp:id>
             <bp:db rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
             >taxonomy</bp:db>
           </bp:UnificationXref>
-        </bp:taxonXref>
+        </bp:xref>
         <bp:standardName rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
         >S. cerevisiae</bp:standardName>
       </bp:BioSource>

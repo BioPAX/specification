@@ -97,14 +97,14 @@
               <bp:BioSource rdf:ID="BioSource_7">
                 <bp:displayName rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
                 >Strongylocentrotus purpuratus</bp:displayName>
-                <bp:taxonXref>
+                <bp:xref>
                   <bp:UnificationXref rdf:ID="UnificationXref_8">
                     <bp:db rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
                     >taxonomy</bp:db>
                     <bp:id rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
                     >7668</bp:id>
                   </bp:UnificationXref>
-                </bp:taxonXref>
+                </bp:xref>
                 <bp:standardName rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
                 >sea urchin</bp:standardName>
               </bp:BioSource>

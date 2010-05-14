@@ -16,21 +16,20 @@
     >GLK</bp:standardName>
     <bp:displayName rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
     >glucokinase</bp:displayName>
-    <bp:xref>
-      <bp:UnificationXref rdf:ID="SwissProtTrEMBL_P46880">
-        <bp:id rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
-        >P46880</bp:id>
-        <bp:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
-        >PMID: 15608167</bp:comment>
-        <bp:db rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
-        >uniprot</bp:db>
-      </bp:UnificationXref>
-    </bp:xref>
     <bp:entityReference>
       <bp:ProteinReference rdf:ID="ProteinReference_15">
         <bp:sequence rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
         >MTKYALVGDVGGTNARLALCDIASGEISQAKTYSGLDYPSLEAVIRVYLEEHKVEVKDGCIAIACPITGDWVAMTNHTWAFSIAEMKKNLGFSHLEIINDFTAVSMAIPMLKKEHLIQFGGAEPVEGKPIAVYGAGTGLGVAHLVHVDKRWVSLPGEGGHVDFAPNSEEEAIILEILRAEIGHVSAERVLSGPGLVNLYRAIVKADNRLPENLKPKDITERALADSCTDCRRALSLFCVIMGRFGGNLALNLGTFGGVFIAGGIVPRFLEFFKASGFRAAFEDKGRFKEYVHDIPVYLIVHDNPGLLGSGAHLRQTLGHIL</bp:sequence>
-        <bp:xref rdf:resource="#SwissProtTrEMBL_P46880"/>
+        <bp:xref>
+          <bp:UnificationXref rdf:ID="SwissProtTrEMBL_P46880">
+            <bp:id rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+            >P46880</bp:id>
+            <bp:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+            >PMID: 15608167</bp:comment>
+            <bp:db rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+            >uniprot</bp:db>
+          </bp:UnificationXref>
+        </bp:xref>
         <bp:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
         >glucose kinase</bp:name>
         <bp:displayName rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
@@ -104,16 +103,6 @@
     <bp:physicalEntity>
       <bp:SmallMolecule rdf:ID="alpha-D-glucose_6-phosphate">
         <bp:dataSource rdf:resource="#aMAZE"/>
-        <bp:xref>
-          <bp:UnificationXref rdf:ID="KEGG_C00668">
-            <bp:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
-            >PMID: 9847135</bp:comment>
-            <bp:id rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
-            >C00668</bp:id>
-            <bp:db rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
-            >KEGG compound</bp:db>
-          </bp:UnificationXref>
-        </bp:xref>
         <bp:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
         >b-D-glucose-6-phoshate</bp:name>
         <bp:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
@@ -140,7 +129,16 @@
             >beta-D-glucose 6-phosphate</bp:displayName>
             <bp:standardName rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
             >b-D-glu-6-p</bp:standardName>
-            <bp:xref rdf:resource="#KEGG_C00668"/>
+            <bp:xref>
+              <bp:UnificationXref rdf:ID="KEGG_C00668">
+                <bp:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+                >PMID: 9847135</bp:comment>
+                <bp:id rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+                >C00668</bp:id>
+                <bp:db rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+                >KEGG compound</bp:db>
+              </bp:UnificationXref>
+            </bp:xref>
           </bp:SmallMoleculeReference>
         </bp:entityReference>
         <bp:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
@@ -163,14 +161,6 @@
       </bp:SmallMolecule>
     </bp:physicalEntity>
   </bp:Stoichiometry>
-  <bp:UnificationXref rdf:ID="KEGG_R01786">
-    <bp:db rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
-    >kegg reaction</bp:db>
-    <bp:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
-    >PMID: 9847135 </bp:comment>
-    <bp:id rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
-    >R01786</bp:id>
-  </bp:UnificationXref>
   <bp:BiochemicalReaction rdf:ID="phosphoglucoisomerase">
     <bp:eCNumber rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
     >5.3.1.9	</bp:eCNumber>
@@ -356,7 +346,6 @@
       <bp:Catalysis rdf:ID="phosphoglucose_isomerase_converts_alpha-D-gluc-6-p_to_beta-D-fruc-6-p">
         <bp:controller>
           <bp:Protein rdf:ID="phosphoglucose_isomerase">
-            <bp:xref rdf:resource="#Swiss-ProtTrEMBL_Q9KH85"/>
             <bp:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
             >glucose-6-phosphate isomerase</bp:name>
             <bp:entityReference>
@@ -419,16 +408,6 @@
     >1.0</bp:stoichiometricCoefficient>
     <bp:physicalEntity>
       <bp:SmallMolecule rdf:ID="alpha-D-glucose">
-        <bp:xref>
-          <bp:UnificationXref rdf:ID="KEGG_C00267">
-            <bp:db rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
-            >kegg compound</bp:db>
-            <bp:id rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
-            >C00267</bp:id>
-            <bp:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
-            >PMID: 9847135 </bp:comment>
-          </bp:UnificationXref>
-        </bp:xref>
         <bp:displayName rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
         >beta-D-glucose</bp:displayName>
         <bp:dataSource rdf:resource="#aMAZE"/>
@@ -452,7 +431,16 @@
                 >SMILES</bp:structureFormat>
               </bp:ChemicalStructure>
             </bp:structure>
-            <bp:xref rdf:resource="#KEGG_C00267"/>
+            <bp:xref>
+              <bp:UnificationXref rdf:ID="KEGG_C00267">
+                <bp:db rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+                >kegg compound</bp:db>
+                <bp:id rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+                >C00267</bp:id>
+                <bp:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+                >PMID: 9847135 </bp:comment>
+              </bp:UnificationXref>
+            </bp:xref>
             <bp:displayName rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
             >beta-D-glucose</bp:displayName>
             <bp:chemicalFormula rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
@@ -467,7 +455,6 @@
   <bp:Stoichiometry rdf:ID="Stoichiometry_43">
     <bp:physicalEntity>
       <bp:SmallMolecule rdf:ID="ATP">
-        <bp:xref rdf:resource="#KEGG_C00002"/>
         <bp:dataSource rdf:resource="#KEGG"/>
         <bp:dataSource rdf:resource="#aMAZE"/>
         <bp:standardName rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
@@ -484,7 +471,16 @@
     >1.0</bp:stoichiometricCoefficient>
   </bp:Stoichiometry>
   <bp:BiochemicalReaction rdf:ID="glucokinase">
-    <bp:xref rdf:resource="#KEGG_R01786"/>
+    <bp:xref>
+     <bp:UnificationXref rdf:ID="KEGG_R01786">
+      <bp:db rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+      >kegg reaction</bp:db>
+      <bp:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+      >PMID: 9847135 </bp:comment>
+      <bp:id rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+      >R01786</bp:id>
+     </bp:UnificationXref>
+    </bp:xref>
     <bp:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
     >glucose ATP phosphotransferase	</bp:name>
     <bp:displayName rdf:datatype="http://www.w3.org/2001/XMLSchema#string"

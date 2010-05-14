@@ -214,14 +214,6 @@
       </bp:PublicationXref>
     </bp:xref>
   </bp:Evidence>
-  <bp:UnificationXref rdf:ID="UNIPROT_Q9NTK8">
-    <bp:id rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
-    >Q9NTK8</bp:id>
-    <bp:idVersion rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
-    >45</bp:idVersion>
-    <bp:db rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
-    >UNIPROT</bp:db>
-  </bp:UnificationXref>
   <bp:Protein rdf:ID="p73">
     <bp:feature>
       <bp:BindingFeature rdf:ID="N-TERM">
@@ -275,17 +267,6 @@
         >GENE ONTOLOGY</bp:db>
       </bp:RelationshipXref>
     </bp:xref>
-    <bp:xref rdf:resource="#UNIPROT_Q9NTK8"/>
-    <bp:xref>
-      <bp:UnificationXref rdf:ID="UNIPROT_O15351">
-        <bp:id rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
-        >O15351</bp:id>
-        <bp:idVersion rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
-        >45</bp:idVersion>
-        <bp:db rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
-        >UNIPROT</bp:db>
-      </bp:UnificationXref>
-    </bp:xref>
     <bp:xref>
       <bp:RelationshipXref rdf:ID="GO_0006298">
         <bp:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
@@ -297,26 +278,43 @@
         <bp:relationshipType rdf:resource="#GO_biological_process"/>
       </bp:RelationshipXref>
     </bp:xref>
-    <bp:xref>
-      <bp:UnificationXref rdf:ID="UNIPROT_O15350">
-        <bp:db rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
-        >UNIPROT</bp:db>
-        <bp:id rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
-        >O15350</bp:id>
-      </bp:UnificationXref>
-    </bp:xref>
     <bp:standardName rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
     >Tumor protein p73</bp:standardName>
     <bp:entityReference>
       <bp:ProteinReference rdf:ID="ProteinReference_2">
         <bp:displayName rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
         >p73</bp:displayName>
-        <bp:xref rdf:resource="#UNIPROT_Q9NTK8"/>
+        <bp:xref>
+         <bp:UnificationXref rdf:ID="UNIPROT_Q9NTK8">
+          <bp:id rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+          >Q9NTK8</bp:id>
+          <bp:idVersion rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+          >45</bp:idVersion>
+          <bp:db rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+          >UNIPROT</bp:db>
+         </bp:UnificationXref>
+        </bp:xref>
         <bp:xref rdf:resource="#GO_0003700"/>
-        <bp:xref rdf:resource="#UNIPROT_O15351"/>
+        <bp:xref>
+          <bp:UnificationXref rdf:ID="UNIPROT_O15351">
+            <bp:id rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+            >O15351</bp:id>
+            <bp:idVersion rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+            >45</bp:idVersion>
+            <bp:db rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+            >UNIPROT</bp:db>
+          </bp:UnificationXref>
+        </bp:xref>
         <bp:standardName rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
         >Tumor protein p73</bp:standardName>
-        <bp:xref rdf:resource="#UNIPROT_O15350"/>
+        <bp:xref>
+          <bp:UnificationXref rdf:ID="UNIPROT_O15350">
+             <bp:db rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+             >UNIPROT</bp:db>
+             <bp:id rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+             >O15350</bp:id>
+          </bp:UnificationXref>
+        </bp:xref>
         <bp:xref>
           <bp:RelationshipXref rdf:ID="GO_0008630">
             <bp:id rdf:datatype="http://www.w3.org/2001/XMLSchema#string"

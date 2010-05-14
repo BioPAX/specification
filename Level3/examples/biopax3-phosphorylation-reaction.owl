@@ -98,7 +98,6 @@
     >Serine/threonine-protein kinase Chk2 (Cds1)</bp:standardName>
     <bp:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
     >CHEK2</bp:name>
-    <bp:xref rdf:resource="#UnificationXref_12"/>
     <bp:displayName rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
     >CHK2</bp:displayName>
   </bp:Protein>
@@ -141,17 +140,14 @@
     >Adenosine 5'-diphosphate</bp:standardName>
     <bp:cellularLocation rdf:resource="#CellularLocationVocabulary_6"/>
     <bp:dataSource rdf:resource="#Provenance_3"/>
-    <bp:xref>
-      <bp:UnificationXref rdf:ID="UnificationXref_22">
-        <bp:id rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
-        >CHEBI:2342</bp:id>
-        <bp:db rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
-        >ChEBI</bp:db>
-      </bp:UnificationXref>
-    </bp:xref>
     <bp:entityReference>
       <bp:SmallMoleculeReference rdf:ID="SmallMoleculeReference_23">
-        <bp:xref rdf:resource="#UnificationXref_22"/>
+        <bp:xref>
+          <bp:UnificationXref rdf:ID="UnificationXref_22">
+            <bp:id rdf:datatype="http://www.w3.org/2001/XMLSchema#string">CHEBI:2342</bp:id>
+            <bp:db rdf:datatype="http://www.w3.org/2001/XMLSchema#string">ChEBI</bp:db>
+          </bp:UnificationXref>
+        </bp:xref>       
         <bp:displayName rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
         >ADP</bp:displayName>
         <bp:standardName rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
@@ -208,7 +204,6 @@
             <bp:entityReference rdf:resource="#CHK2"/>
             <bp:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
             >CHEK2</bp:name>
-            <bp:xref rdf:resource="#UnificationXref_12"/>
             <bp:feature>
               <bp:ModificationFeature rdf:ID="ModificationFeature_17">
                 <bp:featureLocation rdf:resource="#SequenceSite_20"/>
@@ -279,7 +274,6 @@
                 >Adenosine 5'-triphosphate</bp:standardName>
               </bp:SmallMoleculeReference>
             </bp:entityReference>
-            <bp:xref rdf:resource="#UnificationXref_14"/>
             <bp:cellularLocation rdf:resource="#CellularLocationVocabulary_6"/>
             <bp:standardName rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
             >Adenosine 5'-triphosphate</bp:standardName>

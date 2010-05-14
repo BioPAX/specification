@@ -77,18 +77,6 @@
         >TCF1_protein</bp:displayName>
         <bp:xref rdf:resource="#PublicationXref_11"/>
         <bp:xref rdf:resource="#PublicationXref_10"/>
-        <bp:xref>
-          <bp:UnificationXref rdf:ID="NP_001027543">
-            <bp:id rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
-            >NP_001027543</bp:id>
-            <bp:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
-            >beta-catenin</bp:comment>
-            <bp:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
-            >Entrez Protein ID</bp:comment>
-            <bp:db rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
-            >RefSeq</bp:db>
-          </bp:UnificationXref>
-        </bp:xref>
         <bp:entityReference>
           <bp:ProteinReference rdf:ID="ProteinReference_39">
             <bp:standardName rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
@@ -124,7 +112,18 @@
           <bp:ProteinReference rdf:ID="beta">
             <bp:standardName rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
             >beta-catenin</bp:standardName>
-            <bp:xref rdf:resource="#NP_001027543"/>
+            <bp:xref>
+              <bp:UnificationXref rdf:ID="NP_001027543">
+                <bp:id rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+                >NP_001027543</bp:id>
+                <bp:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+                >beta-catenin</bp:comment>
+                <bp:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+                >Entrez Protein ID</bp:comment>
+                <bp:db rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+                >RefSeq</bp:db>
+              </bp:UnificationXref>
+            </bp:xref>
             <bp:xref rdf:resource="#PublicationXref_11"/>
             <bp:xref rdf:resource="#PublicationXref_10"/>
             <bp:displayName rdf:datatype="http://www.w3.org/2001/XMLSchema#string"

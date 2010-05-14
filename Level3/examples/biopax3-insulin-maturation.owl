@@ -26,14 +26,14 @@
       </bp:PublicationXref>
     </bp:xref>
     <bp:xref>
-      <bp:UnificationXref rdf:ID="UnificationXref_12">
+      <bp:RelationshipXref rdf:ID="RelationshipXref_12">
         <bp:db rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
         >NCBI GENBANK</bp:db>
         <bp:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
         >preproinsulin</bp:comment>
         <bp:id rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
         >CAA23828</bp:id>
-      </bp:UnificationXref>
+      </bp:RelationshipXref>
     </bp:xref>
     <bp:entityReference>
       <bp:ProteinReference rdf:ID="insulin_ref">
@@ -147,14 +147,6 @@
     <bp:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
     ></bp:comment>
   </bp:SequenceSite>
-  <bp:UnificationXref rdf:ID="UnificationXref_37">
-    <bp:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
-    >proinsulin</bp:comment>
-    <bp:id rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
-    >AAW83741</bp:id>
-    <bp:db rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
-    >NCBI GENBANK</bp:db>
-  </bp:UnificationXref>
   <bp:InteractionVocabulary rdf:ID="InteractionVocabulary_11">
     <bp:xref rdf:resource="#UnificationXref_1"/>
     <bp:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
@@ -257,7 +249,13 @@
                 </bp:featureLocation>
               </bp:CovalentBindingFeature>
             </bp:feature>
-            <bp:xref rdf:resource="#UnificationXref_37"/>
+            <bp:xref>
+              <bp:RelationshipXref rdf:ID="RelationshipXref_37">
+                <bp:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">proinsulin</bp:comment>
+                <bp:id rdf:datatype="http://www.w3.org/2001/XMLSchema#string">AAW83741</bp:id>
+                <bp:db rdf:datatype="http://www.w3.org/2001/XMLSchema#string">NCBI GENBANK</bp:db>
+              </bp:RelationshipXref>
+            </bp:xref>
             <bp:displayName rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
             >proinsulin</bp:displayName>
             <bp:xref>
@@ -377,12 +375,12 @@
         <bp:displayName rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
         >insulin</bp:displayName>
         <bp:xref>
-          <bp:UnificationXref rdf:ID="UnificationXref_3">
+          <bp:RelationshipXref rdf:ID="UnificationXref_3">
             <bp:id rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
             >C00723</bp:id>
             <bp:db rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
             >KEGG Compound</bp:db>
-          </bp:UnificationXref>
+          </bp:RelationshipXref>
         </bp:xref>
         <bp:xref rdf:resource="#UnificationXref_38"/>
         <bp:feature rdf:resource="#FragmentFeature_30"/>

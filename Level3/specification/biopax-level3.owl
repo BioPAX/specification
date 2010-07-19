@@ -264,7 +264,7 @@ be left empty.</rdfs:comment>
         <rdfs:comment rdf:datatype="&xsd;string"
             >Definition: The chemical structure of a small molecule. 
 
-Usage: Structure information is stored in the property STRUCTURE-DATA, in one of three formats: the CML format (see URL www.xml-cml.org), the SMILES format (see URL www.daylight.com/dayhtml/smiles/) or the InChI format (http://www.iupac.org/inchi/). The STRUCTURE-FORMAT property specifies which format is used.
+Usage: Structure information is stored in the property structureData, in one of three formats: the CML format (see URL www.xml-cml.org), the SMILES format (see URL www.daylight.com/dayhtml/smiles/) or the InChI format (http://www.iupac.org/inchi/). The structureFormat property specifies which format is used.
 
 Examples: The following SMILES string describes the structure of glucose-6-phosphate:
 &apos;C(OP(=O)(O)O)[CH]1([CH](O)[CH](O)[CH](O)[CH](O)O1)&apos;.</rdfs:comment>
@@ -316,7 +316,7 @@ Examples: Ribosome, RNA polymerase II. Other examples of this class include comp
         <owl:disjointWith rdf:resource="#Degradation"/>
         <owl:disjointWith rdf:resource="#Transport"/>
         <rdfs:comment rdf:datatype="&xsd;string"
-            >Definition: A conversion interaction in which a set of physical entities, at least one being a macromolecule (e.g. protein, RNA, DNA), aggregate to from a complex physicalEntity. One of the participants of a complexAssembly must be an instance of the class Complex. The modification of the physicalentities involoved in the ComplexAssembly is captured via BindingFeature class.
+            >Definition: A conversion interaction in which a set of physical entities, at least one being a macromolecule (e.g. protein, RNA, DNA), aggregate to from a complex physicalEntity. One of the participants of a complexAssembly must be an instance of the class Complex. The modification of the physicalentities involved in the ComplexAssembly is captured via BindingFeature class.
 
 Usage: This class is also used to represent complex disassembly. The assembly or disassembly of a complex is often a spontaneous process, in which case the direction of the complexAssembly (toward either assembly or disassembly) should be specified via the SPONTANEOUS property. Conversions in which participants obtain or lose CovalentBindingFeatures ( e.g. glycolysation of proteins) should be modeled with BiochemicalReaction.
 
@@ -354,8 +354,6 @@ Usage: Conceptually, physical entities are involved in interactions (or events) 
 Subclasses of control define types specific to the biological process that is being controlled and should be used instead of the generic &quot;control&quot; class when applicable. 
 
 A control can potentially have multiple controllers. This acts as a logical AND, i.e. both controllers are needed to regulate the  controlled event. Alternatively multiple controllers can control the same event and this acts as a logical OR, i.e. any one of them is sufficient to regulate the controlled event. Using this structure it is possible to describe arbitrary control logic using BioPAX.
-
- 
 
 Rationale: Control can be temporally non-atomic, for example a pathway can control another pathway in BioPAX.  
 Synonyms: regulation, mediation
@@ -399,6 +397,8 @@ Examples: A small molecule that inhibits a pathway by an unknown mechanism.</rdf
         <owl:disjointWith rdf:resource="#SequenceLocation"/>
         <owl:disjointWith rdf:resource="#Stoichiometry"/>
         <owl:disjointWith rdf:resource="#Xref"/>
+        <rdfs:comment rdf:datatype="&xsd;string"
+            >Used to reference terms from external controlled vocabularies (CVs) from the ontology. To support consistency and compatibility, open, freely available CVs should be used whenever possible, such as the Gene Ontology (GO)15 or other open biological CVs listed on the OBO website (http://obo.sourceforge.net/). See the section on controlled vocabularies in Section 4 for more information.</rdfs:comment>
     </owl:Class>
     <owl:ObjectProperty rdf:ID="controller">
         <rdfs:domain rdf:resource="#Control"/>
@@ -782,7 +782,7 @@ Examples: Protein encoding region, promoter</rdfs:comment>
         <owl:disjointWith rdf:resource="#RnaRegionReference"/>
         <owl:disjointWith rdf:resource="#SmallMoleculeReference"/>
         <rdfs:comment rdf:datatype="&xsd;string"
-            >Definition: A DNA reference is a grouping of several DNA entities that are common in sequence and genomic position.  Members can differ in celular location, sequence features, SNPs, mutations and bound partners.</rdfs:comment>
+            >Definition: A DNARegionReference is a grouping of several DNARegion entities that are common in sequence and genomic position.  Members can differ in cellular location, sequence features, SNPs, mutations and bound partners.</rdfs:comment>
     </owl:Class>
     <owl:DatatypeProperty rdf:ID="eCNumber">
         <rdfs:domain rdf:resource="#BiochemicalReaction"/>
@@ -825,9 +825,9 @@ Synonyms: element, thing, object, bioentity, statement.</rdfs:comment>
 Rationale: Two phosphorylated forms of a protein are strictly speaking different chemical  molecules. It is, however, standard in biology to treat them as different states of the same entity, where the entity is loosely defined based on sequence. Entity Feature class and its subclassses captures these variable characteristics. A Physical Entity in BioPAX represents a pool of  molecules rather than an individual molecule. This is a notion imported from chemistry( See PhysicalEntity). Pools are defined by a set of Entity Features in the sense that a single molecule must have all of the features in the set in order to be considered a member of the pool. Since it is impossible to list and experimentally test all potential features for an  entity, features that are not listed in the selection criteria is neglected Pools can also be defined by the converse by specifying features  that are known to NOT exist in a specific context. As DNA, RNA and Proteins can be hierarchicaly organized into families based on sequence homology so can entity features. The memberFeature property allows capturing such hierarchical classifications among entity features.
 
 
-Usage: Subclasses of entity feature describe most common biological instances and sholud be preferred whenever possible. One common usecase for instatiating entity feature is, for describing active/inactive states of proteins where more specific feature information is not available.  
+Usage: Subclasses of entity feature describe most common biological instances and should be preferred whenever possible. One common usecase for instantiating  entity feature is, for describing active/inactive states of proteins where more specific feature information is not available.  
 
-Instances: Open/close conformational state of channel proteins, &quot;active&quot;/&quot;inactive&quot; states, excited states of photoreactive groups.</rdfs:comment>
+Examples: Open/close conformational state of channel proteins, &quot;active&quot;/&quot;inactive&quot; states, excited states of photoreactive groups.</rdfs:comment>
     </owl:Class>
     <owl:InverseFunctionalProperty rdf:ID="entityFeature">
         <rdf:type rdf:resource="&owl;ObjectProperty"/>
@@ -907,7 +907,7 @@ Comments: This grouping has three semantic implications:
         <owl:disjointWith rdf:resource="#SequenceRegionVocabulary"/>
         <owl:disjointWith rdf:resource="#TissueVocabulary"/>
         <rdfs:comment rdf:datatype="&xsd;string"
-            >Definiiton: A reference to a term from a reference entity group ontology. There is no &quot;best-practice&quot; vocabulary for this one.</rdfs:comment>
+            >Definiiton: A reference to a term from an entity reference group ontology. As of the writing of this documentation, there is no standard ontology of these terms, though a common type is &#8216;homology&#8217;.</rdfs:comment>
     </owl:Class>
     <owl:Class rdf:ID="Evidence">
         <rdfs:subClassOf>
@@ -945,7 +945,7 @@ Comments: This grouping has three semantic implications:
         <owl:disjointWith rdf:resource="#Xref"/>
         <rdfs:comment rdf:datatype="&xsd;string"
             >Definition: The support for a particular assertion, such as the existence of an interaction or pathway. 
-Usage: At least one of CONFIDENCE, EVIDENCE-CODE, or EXPERIMENTAL-FORM must be instantiated when creating an evidence instance. XREF may reference a publication describing the experimental evidence using a publicationXref or may store a description of the experiment in an experimental description database using a unificationXref (if the referenced experiment is the same) or relationshipXref (if it is not identical, but similar in some way e.g. similar in protocol). Evidence is meant to provide more information than just an xref to the source paper.
+Usage: At least one of confidence, evidenceCode, or experimentalForm must be instantiated when creating an evidence instance. XREF may reference a publication describing the experimental evidence using a publicationXref or may store a description of the experiment in an experimental description database using a unificationXref (if the referenced experiment is the same) or relationshipXref (if it is not identical, but similar in some way e.g. similar in protocol). Evidence is meant to provide more information than just an xref to the source paper.
 Examples: A description of a molecular binding assay that was used to detect a protein-protein interaction.</rdfs:comment>
     </owl:Class>
     <owl:ObjectProperty rdf:ID="evidence">
@@ -1170,7 +1170,7 @@ Example: A synthetic lethal interaction occurs when cell growth is possible with
         <rdfs:comment rdf:datatype="&xsd;string"
             >Definition: A biological relationship between two or more entities. 
 
-Rationale: In BioPAX, interactions are atomic from a database modeling perspective, i.e. interactions can not be decomposed into sub-interactions. When representing non-atomic continuants with explicit subevents the pathway class should be used instead. Interactions are not neccesarily temporally atomic, for example genetic interactions cover a large span of time. Interactions as a fromal concpet is a continuant, it retains its identitiy regardless of time, or any differences in specific states or properties.
+Rationale: In BioPAX, interactions are atomic from a database modeling perspective, i.e. interactions can not be decomposed into sub-interactions. When representing non-atomic continuants with explicit subevents the pathway class should be used instead. Interactions are not necessarily  temporally atomic, for example genetic interactions cover a large span of time. Interactions as a formal concept is a continuant, it retains its identitiy regardless of time, or any differences in specific states or properties.
 
 Usage: Interaction is a highly abstract class and in almost all cases it is more appropriate to use one of the subclasses of interaction. 
 It is partially possible to define generic reactions by using generic participants. A more comprehensive method is planned for BioPAX L4 for covering all generic cases like oxidization of a generic alcohol.   
@@ -1501,7 +1501,7 @@ Examples: glycolysis, valine biosynthesis, EGFR signaling</rdfs:comment>
         <rdfs:comment rdf:datatype="&xsd;string"
             >Definition: A step in an ordered pathway.
 Rationale: Some pathways can have a temporal order. For example,  if the pathway boundaries are based on a perturbation phenotype link, the pathway might start with the perturbing agent and end at gene expression leading to the observed changes. Pathway steps can represent directed compound graphs.
-Usage: Multiple interactions may occur in a pathway step, each should be listed in the STEP-INTERACTION property. Order relationships between pathway steps may be established with the NEXT-STEP slot. If the reaction contained in the step is a reversible biochemical reaction but physiologically has a direction in the context of this pathway, use Biochemical Pathway Step instead.
+Usage: Multiple interactions may occur in a pathway step, each should be listed in the stepProcess property. Order relationships between pathway steps may be established with the nextStep slot. If the reaction contained in the step is a reversible biochemical reaction but physiologically has a direction in the context of this pathway, use the subclass BiochemicalPathwayStep.
 
 Example: A metabolic pathway may contain a pathway step composed of one biochemical reaction (BR1) and one catalysis (CAT1) instance, where CAT1 describes the catalysis of BR1. The M phase of the cell cycle, defined as a pathway, precedes the G1 phase, also defined as a pathway.</rdfs:comment>
     </owl:Class>
@@ -1846,7 +1846,7 @@ Examples: CDS, 3&apos; UTR, Hairpin</rdfs:comment>
         <owl:disjointWith rdf:resource="#RnaReference"/>
         <owl:disjointWith rdf:resource="#SmallMoleculeReference"/>
         <rdfs:comment rdf:datatype="&xsd;string"
-            >Definition: A RNA reference is a grouping of several RNA entities that are common in sequence and genomic position.  Members can differ in celular location, sequence features, mutations and bound partners.</rdfs:comment>
+            >Definition: A RNARegion reference is a grouping of several RNARegion entities that are common in sequence and genomic position.  Members can differ in celular location, sequence features, mutations and bound partners.</rdfs:comment>
     </owl:Class>
     <owl:Class rdf:ID="Score">
         <rdfs:subClassOf>
@@ -1902,7 +1902,7 @@ Examples: The statistical significance of a result, e.g. &quot;p&lt;0.05&quot;.<
         <owl:disjointWith rdf:resource="#SequenceSite"/>
         <rdfs:comment rdf:datatype="&xsd;string"
             >Definition: An interval on a sequence. 
-Usage: Inverval is defined as an ordered pair of SequenceSites. All of the sequence from the begin site to the end site (inclusive) is described, not any subset.</rdfs:comment>
+Usage: Interval is defined as an ordered pair of SequenceSites. All of the sequence from the begin site to the end site (inclusive) is described, not any subset.</rdfs:comment>
     </owl:Class>
     <owl:FunctionalProperty rdf:ID="sequenceIntervalBegin">
         <rdf:type rdf:resource="&owl;ObjectProperty"/>

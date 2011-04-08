@@ -19,9 +19,9 @@
      xmlns:swrl="http://www.w3.org/2003/11/swrl#"
      xmlns:protege="http://protege.stanford.edu/plugins/owl/protege#"
      xmlns:xsp="http://www.owl-ontologies.com/2005/08/07/xsp.owl#"
-     xmlns:swrlb="http://www.w3.org/2003/11/swrlb#"
-     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
      xmlns:owl="http://www.w3.org/2002/07/owl#"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+     xmlns:swrlb="http://www.w3.org/2003/11/swrlb#"
      xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
     <owl:Ontology rdf:about="">
         <rdfs:comment rdf:datatype="&xsd;string"
@@ -37,21 +37,21 @@
                 </owl:unionOf>
             </owl:Class>
         </rdfs:domain>
-        <rdfs:range rdf:resource="#SequenceLocation"/>
         <rdfs:comment rdf:datatype="&xsd;string"
             >Absolute location as defined by the referenced sequence database record. E.g. an operon has a absolute region on the DNA molecule referenced by the UnificationXref.</rdfs:comment>
+        <rdfs:range rdf:resource="#SequenceLocation"/>
     </owl:FunctionalProperty>
     <owl:DatatypeProperty rdf:ID="author">
         <rdfs:domain rdf:resource="#PublicationXref"/>
-        <rdfs:range rdf:resource="&xsd;string"/>
         <rdfs:comment xml:lang="en"
             >The authors of this publication, one per property value.</rdfs:comment>
+        <rdfs:range rdf:resource="&xsd;string"/>
     </owl:DatatypeProperty>
     <owl:DatatypeProperty rdf:ID="availability">
         <rdfs:domain rdf:resource="#Entity"/>
-        <rdfs:range rdf:resource="&xsd;string"/>
         <rdfs:comment xml:lang="en"
             >Describes the availability of this data (e.g. a copyright statement).</rdfs:comment>
+        <rdfs:range rdf:resource="&xsd;string"/>
     </owl:DatatypeProperty>
     <owl:Class rdf:ID="BindingFeature">
         <rdfs:subClassOf rdf:resource="#EntityFeature"/>
@@ -73,9 +73,9 @@ If the binding is due to the covalent interactions, for example in the case of l
         <rdf:type rdf:resource="&owl;ObjectProperty"/>
         <rdfs:domain rdf:resource="#BindingFeature"/>
         <owl:inverseOf rdf:resource="#bindsTo"/>
-        <rdfs:range rdf:resource="#BindingFeature"/>
         <rdfs:comment rdf:datatype="&xsd;string"
             >A binding feature represents a &quot;half&quot; of the bond between two entities. This property points to another binding feature which represents the other half. The bond can be covalent or non-covalent.</rdfs:comment>
+        <rdfs:range rdf:resource="#BindingFeature"/>
     </owl:InverseFunctionalProperty>
     <owl:Class rdf:ID="BiochemicalPathwayStep">
         <rdfs:subClassOf>
@@ -103,20 +103,20 @@ Comment: In the example reaction above, ATP is considered to be an equilibrium m
     </owl:Class>
     <owl:Class rdf:ID="BioSource">
         <rdfs:subClassOf rdf:resource="#UtilityClass"/>
+        <owl:disjointWith rdf:resource="#ChemicalStructure"/>
+        <owl:disjointWith rdf:resource="#ControlledVocabulary"/>
+        <owl:disjointWith rdf:resource="#DeltaG"/>
+        <owl:disjointWith rdf:resource="#EntityFeature"/>
         <owl:disjointWith rdf:resource="#EntityReference"/>
         <owl:disjointWith rdf:resource="#Evidence"/>
-        <owl:disjointWith rdf:resource="#PathwayStep"/>
-        <owl:disjointWith rdf:resource="#Stoichiometry"/>
-        <owl:disjointWith rdf:resource="#DeltaG"/>
-        <owl:disjointWith rdf:resource="#ControlledVocabulary"/>
-        <owl:disjointWith rdf:resource="#KPrime"/>
         <owl:disjointWith rdf:resource="#ExperimentalForm"/>
-        <owl:disjointWith rdf:resource="#Xref"/>
-        <owl:disjointWith rdf:resource="#EntityFeature"/>
-        <owl:disjointWith rdf:resource="#SequenceLocation"/>
-        <owl:disjointWith rdf:resource="#ChemicalStructure"/>
-        <owl:disjointWith rdf:resource="#Score"/>
+        <owl:disjointWith rdf:resource="#KPrime"/>
+        <owl:disjointWith rdf:resource="#PathwayStep"/>
         <owl:disjointWith rdf:resource="#Provenance"/>
+        <owl:disjointWith rdf:resource="#Score"/>
+        <owl:disjointWith rdf:resource="#SequenceLocation"/>
+        <owl:disjointWith rdf:resource="#Stoichiometry"/>
+        <owl:disjointWith rdf:resource="#Xref"/>
         <rdfs:comment rdf:datatype="&xsd;string"
             >Definition: The biological source (organism, tissue or cell type) of an Entity. 
 
@@ -137,13 +137,13 @@ Instances: HeLa cells, Homo sapiens, and mouse liver tissue.</rdfs:comment>
                 <owl:allValuesFrom rdf:resource="#Conversion"/>
             </owl:Restriction>
         </rdfs:subClassOf>
-        <rdfs:subClassOf rdf:resource="#Control"/>
         <rdfs:subClassOf>
             <owl:Restriction>
                 <owl:onProperty rdf:resource="#controller"/>
                 <owl:allValuesFrom rdf:resource="#PhysicalEntity"/>
             </owl:Restriction>
         </rdfs:subClassOf>
+        <rdfs:subClassOf rdf:resource="#Control"/>
         <owl:disjointWith rdf:resource="#Modulation"/>
         <owl:disjointWith rdf:resource="#TemplateReactionRegulation"/>
         <rdfs:comment rdf:datatype="&xsd;string"
@@ -157,6 +157,17 @@ Examples: The catalysis of a biochemical reaction by an enzyme, the enabling of 
     <owl:FunctionalProperty rdf:ID="catalysisDirection">
         <rdf:type rdf:resource="&owl;DatatypeProperty"/>
         <rdfs:domain rdf:resource="#Catalysis"/>
+        <rdfs:comment rdf:datatype="&xsd;string"
+            >This property represents the direction of this catalysis under all
+physiological conditions if there is one.
+
+Note that chemically a catalyst will increase the rate of the reaction
+in both directions. In biology, however, there are cases where the
+enzyme is expressed only when the controlled bidirectional conversion is
+on one side of the chemical equilibrium. For example E.Coli&apos;s lac operon ensures that lacZ gene is only synthesized when there is enough lactose in the medium.  If that is the case and the controller, under biological conditions, is always catalyzing the conversion in one direction then this fact can be
+captured using this property. If the enzyme is active for both
+directions, or the conversion is not bidirectional, this property should
+be left empty.</rdfs:comment>
         <rdfs:range>
             <owl:DataRange>
                 <owl:oneOf>
@@ -172,115 +183,102 @@ Examples: The catalysis of a biochemical reaction by an enzyme, the enabling of 
                 </owl:oneOf>
             </owl:DataRange>
         </rdfs:range>
-        <rdfs:comment rdf:datatype="&xsd;string"
-            >This property represents the direction of this catalysis under all
-physiological conditions if there is one.
-
-Note that chemically a catalyst will increase the rate of the reaction
-in both directions. In biology, however, there are cases where the
-enzyme is expressed only when the controlled bidirectional conversion is
-on one side of the chemical equilibrium [todo : example]. If that is the
-case and the controller, under biological conditions, is always
-catalyzing the conversion in one direction then this fact can be
-captured using this property. If the enzyme is active for both
-directions, or the conversion is not bidirectional, this property should
-be left empty.</rdfs:comment>
     </owl:FunctionalProperty>
     <owl:FunctionalProperty rdf:ID="cellType">
         <rdf:type rdf:resource="&owl;ObjectProperty"/>
         <rdfs:domain rdf:resource="#BioSource"/>
-        <rdfs:range rdf:resource="#CellVocabulary"/>
         <rdfs:comment xml:lang="en"
             >A cell type, e.g. &apos;HeLa&apos;. This should reference a term in a controlled vocabulary of cell types. Best practice is to refer to OBO Cell Ontology. http://www.obofoundry.org/cgi-bin/detail.cgi?id=cell</rdfs:comment>
+        <rdfs:range rdf:resource="#CellVocabulary"/>
     </owl:FunctionalProperty>
     <owl:FunctionalProperty rdf:ID="cellularLocation">
         <rdf:type rdf:resource="&owl;ObjectProperty"/>
         <rdfs:domain rdf:resource="#PhysicalEntity"/>
-        <rdfs:range rdf:resource="#CellularLocationVocabulary"/>
         <rdfs:comment rdf:datatype="&xsd;string"
             >A cellular location, e.g. &apos;cytoplasm&apos;. This should reference a term in the Gene Ontology Cellular Component ontology. The location referred to by this property should be as specific as is known. If an interaction is known to occur in multiple locations, separate interactions (and physicalEntities) must be created for each different location.  If the location of a participant in a complex is unspecified, it may be assumed to be the same location as that of the complex. 
 
  A molecule in two different cellular locations are considered two different physical entities.</rdfs:comment>
+        <rdfs:range rdf:resource="#CellularLocationVocabulary"/>
     </owl:FunctionalProperty>
     <owl:Class rdf:ID="CellularLocationVocabulary">
         <rdfs:subClassOf rdf:resource="#ControlledVocabulary"/>
-        <owl:disjointWith rdf:resource="#RelationshipTypeVocabulary"/>
         <owl:disjointWith rdf:resource="#CellVocabulary"/>
-        <owl:disjointWith rdf:resource="#EvidenceCodeVocabulary"/>
-        <owl:disjointWith rdf:resource="#TissueVocabulary"/>
-        <owl:disjointWith rdf:resource="#PhenotypeVocabulary"/>
-        <owl:disjointWith rdf:resource="#SequenceRegionVocabulary"/>
         <owl:disjointWith rdf:resource="#EntityReferenceTypeVocabulary"/>
-        <owl:disjointWith rdf:resource="#InteractionVocabulary"/>
+        <owl:disjointWith rdf:resource="#EvidenceCodeVocabulary"/>
         <owl:disjointWith rdf:resource="#ExperimentalFormVocabulary"/>
+        <owl:disjointWith rdf:resource="#InteractionVocabulary"/>
+        <owl:disjointWith rdf:resource="#PhenotypeVocabulary"/>
+        <owl:disjointWith rdf:resource="#RelationshipTypeVocabulary"/>
         <owl:disjointWith rdf:resource="#SequenceModificationVocabulary"/>
+        <owl:disjointWith rdf:resource="#SequenceRegionVocabulary"/>
+        <owl:disjointWith rdf:resource="#TissueVocabulary"/>
         <rdfs:comment rdf:datatype="&xsd;string"
             >Definition: A reference to the Gene Ontology Cellular Component (GO CC) ontology. Homepage at http://www.geneontology.org.  Browse at http://www.ebi.ac.uk/ontology-lookup/browse.do?ontName=GO</rdfs:comment>
     </owl:Class>
     <owl:Class rdf:ID="CellVocabulary">
         <rdfs:subClassOf rdf:resource="#ControlledVocabulary"/>
-        <owl:disjointWith rdf:resource="#PhenotypeVocabulary"/>
-        <owl:disjointWith rdf:resource="#ExperimentalFormVocabulary"/>
-        <owl:disjointWith rdf:resource="#SequenceModificationVocabulary"/>
-        <owl:disjointWith rdf:resource="#EvidenceCodeVocabulary"/>
-        <owl:disjointWith rdf:resource="#InteractionVocabulary"/>
-        <owl:disjointWith rdf:resource="#RelationshipTypeVocabulary"/>
-        <owl:disjointWith rdf:resource="#SequenceRegionVocabulary"/>
-        <owl:disjointWith rdf:resource="#EntityReferenceTypeVocabulary"/>
-        <owl:disjointWith rdf:resource="#TissueVocabulary"/>
         <owl:disjointWith rdf:resource="#CellularLocationVocabulary"/>
+        <owl:disjointWith rdf:resource="#EntityReferenceTypeVocabulary"/>
+        <owl:disjointWith rdf:resource="#EvidenceCodeVocabulary"/>
+        <owl:disjointWith rdf:resource="#ExperimentalFormVocabulary"/>
+        <owl:disjointWith rdf:resource="#InteractionVocabulary"/>
+        <owl:disjointWith rdf:resource="#PhenotypeVocabulary"/>
+        <owl:disjointWith rdf:resource="#RelationshipTypeVocabulary"/>
+        <owl:disjointWith rdf:resource="#SequenceModificationVocabulary"/>
+        <owl:disjointWith rdf:resource="#SequenceRegionVocabulary"/>
+        <owl:disjointWith rdf:resource="#TissueVocabulary"/>
         <rdfs:comment rdf:datatype="&xsd;string"
             >Definition: A reference to the Cell Type Ontology (CL). Homepage at http://obofoundry.org/cgi-bin/detail.cgi?cell.  Browse at http://www.ebi.ac.uk/ontology-lookup/browse.do?ontName=CL</rdfs:comment>
     </owl:Class>
     <owl:FunctionalProperty rdf:ID="chemicalFormula">
         <rdf:type rdf:resource="&owl;DatatypeProperty"/>
         <rdfs:domain rdf:resource="#SmallMoleculeReference"/>
-        <rdfs:range rdf:resource="&xsd;string"/>
         <rdfs:comment rdf:datatype="&xsd;string"
             >The chemical formula of the small molecule. Note: chemical formula can also be stored in the STRUCTURE property (in CML). In case of disagreement between the value of this property and that in the CML file, the CML value takes precedence.</rdfs:comment>
+        <rdfs:range rdf:resource="&xsd;string"/>
     </owl:FunctionalProperty>
     <owl:Class rdf:ID="ChemicalStructure">
         <rdfs:subClassOf>
             <owl:Restriction>
                 <owl:onProperty rdf:resource="#structureFormat"/>
-                <owl:cardinality rdf:datatype="&xsd;int">1</owl:cardinality>
+                <owl:cardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:cardinality>
             </owl:Restriction>
         </rdfs:subClassOf>
-        <rdfs:subClassOf rdf:resource="#UtilityClass"/>
         <rdfs:subClassOf>
             <owl:Restriction>
                 <owl:onProperty rdf:resource="#structureData"/>
-                <owl:cardinality rdf:datatype="&xsd;int">1</owl:cardinality>
+                <owl:cardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:cardinality>
             </owl:Restriction>
         </rdfs:subClassOf>
-        <owl:disjointWith rdf:resource="#Xref"/>
+        <rdfs:subClassOf rdf:resource="#UtilityClass"/>
+        <owl:disjointWith rdf:resource="#BioSource"/>
+        <owl:disjointWith rdf:resource="#ControlledVocabulary"/>
+        <owl:disjointWith rdf:resource="#DeltaG"/>
         <owl:disjointWith rdf:resource="#EntityFeature"/>
         <owl:disjointWith rdf:resource="#EntityReference"/>
-        <owl:disjointWith rdf:resource="#Provenance"/>
-        <owl:disjointWith rdf:resource="#KPrime"/>
-        <owl:disjointWith rdf:resource="#ControlledVocabulary"/>
-        <owl:disjointWith rdf:resource="#ExperimentalForm"/>
-        <owl:disjointWith rdf:resource="#Stoichiometry"/>
-        <owl:disjointWith rdf:resource="#BioSource"/>
         <owl:disjointWith rdf:resource="#Evidence"/>
-        <owl:disjointWith rdf:resource="#DeltaG"/>
+        <owl:disjointWith rdf:resource="#ExperimentalForm"/>
+        <owl:disjointWith rdf:resource="#KPrime"/>
         <owl:disjointWith rdf:resource="#PathwayStep"/>
-        <owl:disjointWith rdf:resource="#SequenceLocation"/>
+        <owl:disjointWith rdf:resource="#Provenance"/>
         <owl:disjointWith rdf:resource="#Score"/>
+        <owl:disjointWith rdf:resource="#SequenceLocation"/>
+        <owl:disjointWith rdf:resource="#Stoichiometry"/>
+        <owl:disjointWith rdf:resource="#Xref"/>
         <rdfs:comment rdf:datatype="&xsd;string"
             >Definition: The chemical structure of a small molecule. 
 
-Usage: Structure information is stored in the property structureData, in one of three formats: the CML format (see URL www.xml-cml.org), the SMILES format (see URL www.daylight.com/dayhtml/smiles/) or the InChI format (http://www.iupac.org/inchi/). The structureFormat property specifies which format is used.
+Usage: Structure information is stored in the property structureData, in one of three formats: the CML format (see www.xml-cml.org), the SMILES format (see  www.daylight.com/dayhtml/smiles/) or the InChI format (http://www.iupac.org/inchi/). The structureFormat property specifies which format is used.
 
 Examples: The following SMILES string describes the structure of glucose-6-phosphate:
 &apos;C(OP(=O)(O)O)[CH]1([CH](O)[CH](O)[CH](O)[CH](O)O1)&apos;.</rdfs:comment>
     </owl:Class>
     <owl:ObjectProperty rdf:ID="cofactor">
         <rdfs:domain rdf:resource="#Catalysis"/>
+        <rdfs:comment xml:lang="en"
+            >Any cofactor(s) or coenzyme(s) required for catalysis of the conversion by the enzyme. This is a suproperty of participants.</rdfs:comment>
         <rdfs:range rdf:resource="#PhysicalEntity"/>
         <rdfs:subPropertyOf rdf:resource="#participant"/>
-        <rdfs:comment xml:lang="en"
-            >Any cofactor(s) or coenzyme(s) required for catalysis of the conversion by the enzyme. COFACTOR is a sub-property of PARTICIPANTS.</rdfs:comment>
     </owl:ObjectProperty>
     <owl:DatatypeProperty rdf:ID="comment">
         <rdfs:domain>
@@ -291,24 +289,24 @@ Examples: The following SMILES string describes the structure of glucose-6-phosp
                 </owl:unionOf>
             </owl:Class>
         </rdfs:domain>
-        <rdfs:range rdf:resource="&xsd;string"/>
         <rdfs:comment rdf:datatype="&xsd;string"
             >Comment on the data in the container class. This property should be used instead of the OWL documentation elements (rdfs:comment) for instances because information in &apos;comment&apos; is data to be exchanged, whereas the rdfs:comment field is used for metadata about the structure of the BioPAX ontology.</rdfs:comment>
+        <rdfs:range rdf:resource="&xsd;string"/>
     </owl:DatatypeProperty>
     <owl:Class rdf:ID="Complex">
-        <rdfs:subClassOf rdf:resource="#PhysicalEntity"/>
         <rdfs:subClassOf>
             <owl:Restriction>
                 <owl:onProperty rdf:resource="#memberPhysicalEntity"/>
                 <owl:allValuesFrom rdf:resource="#Complex"/>
             </owl:Restriction>
         </rdfs:subClassOf>
-        <owl:disjointWith rdf:resource="#RnaRegion"/>
+        <rdfs:subClassOf rdf:resource="#PhysicalEntity"/>
+        <owl:disjointWith rdf:resource="#Dna"/>
         <owl:disjointWith rdf:resource="#DnaRegion"/>
         <owl:disjointWith rdf:resource="#Protein"/>
-        <owl:disjointWith rdf:resource="#SmallMolecule"/>
-        <owl:disjointWith rdf:resource="#Dna"/>
         <owl:disjointWith rdf:resource="#Rna"/>
+        <owl:disjointWith rdf:resource="#RnaRegion"/>
+        <owl:disjointWith rdf:resource="#SmallMolecule"/>
         <rdfs:comment rdf:datatype="&xsd;string"
             >Definition: A physical entity whose structure is comprised of other physical entities bound to each other covalently or non-covalently, at least one of which is a macromolecule (e.g. protein, DNA, or RNA) and the Stoichiometry of the components are known. 
 
@@ -337,15 +335,15 @@ Examples: Assembly of the TFB2 and TFB3 proteins into the TFIIH complex, and ass
     </owl:InverseFunctionalProperty>
     <owl:ObjectProperty rdf:ID="componentStoichiometry">
         <rdfs:domain rdf:resource="#Complex"/>
-        <rdfs:range rdf:resource="#Stoichiometry"/>
         <rdfs:comment rdf:datatype="&xsd;string"
             >The stoichiometry of components in a complex</rdfs:comment>
+        <rdfs:range rdf:resource="#Stoichiometry"/>
     </owl:ObjectProperty>
     <owl:ObjectProperty rdf:ID="confidence">
         <rdfs:domain rdf:resource="#Evidence"/>
-        <rdfs:range rdf:resource="#Score"/>
         <rdfs:comment rdf:datatype="&xsd;string"
             >Confidence in the containing instance.  Usually a statistical measure.</rdfs:comment>
+        <rdfs:range rdf:resource="#Score"/>
     </owl:ObjectProperty>
     <owl:Class rdf:ID="Control">
         <rdfs:subClassOf rdf:resource="#Interaction"/>
@@ -369,6 +367,8 @@ Examples: A small molecule that inhibits a pathway by an unknown mechanism.</rdf
     <owl:FunctionalProperty rdf:ID="controlled">
         <rdf:type rdf:resource="&owl;ObjectProperty"/>
         <rdfs:domain rdf:resource="#Control"/>
+        <rdfs:comment xml:lang="en"
+            >The entity that is controlled, e.g., in a biochemical reaction, the reaction is controlled by an enzyme. Controlled is a sub-property of participants.</rdfs:comment>
         <rdfs:range>
             <owl:Class>
                 <owl:unionOf rdf:parseType="Collection">
@@ -378,8 +378,6 @@ Examples: A small molecule that inhibits a pathway by an unknown mechanism.</rdf
             </owl:Class>
         </rdfs:range>
         <rdfs:subPropertyOf rdf:resource="#participant"/>
-        <rdfs:comment xml:lang="en"
-            >The entity that is controlled, e.g., in a biochemical reaction, the reaction is controlled by an enzyme. CONTROLLED is a sub-property of PARTICIPANTS.</rdfs:comment>
     </owl:FunctionalProperty>
     <owl:Class rdf:ID="ControlledVocabulary">
         <rdfs:subClassOf>
@@ -389,25 +387,27 @@ Examples: A small molecule that inhibits a pathway by an unknown mechanism.</rdf
             </owl:Restriction>
         </rdfs:subClassOf>
         <rdfs:subClassOf rdf:resource="#UtilityClass"/>
-        <owl:disjointWith rdf:resource="#EntityReference"/>
-        <owl:disjointWith rdf:resource="#Xref"/>
-        <owl:disjointWith rdf:resource="#DeltaG"/>
-        <owl:disjointWith rdf:resource="#PathwayStep"/>
-        <owl:disjointWith rdf:resource="#Evidence"/>
-        <owl:disjointWith rdf:resource="#SequenceLocation"/>
-        <owl:disjointWith rdf:resource="#KPrime"/>
-        <owl:disjointWith rdf:resource="#Score"/>
-        <owl:disjointWith rdf:resource="#Provenance"/>
         <owl:disjointWith rdf:resource="#BioSource"/>
         <owl:disjointWith rdf:resource="#ChemicalStructure"/>
+        <owl:disjointWith rdf:resource="#DeltaG"/>
         <owl:disjointWith rdf:resource="#EntityFeature"/>
+        <owl:disjointWith rdf:resource="#EntityReference"/>
+        <owl:disjointWith rdf:resource="#Evidence"/>
         <owl:disjointWith rdf:resource="#ExperimentalForm"/>
+        <owl:disjointWith rdf:resource="#KPrime"/>
+        <owl:disjointWith rdf:resource="#PathwayStep"/>
+        <owl:disjointWith rdf:resource="#Provenance"/>
+        <owl:disjointWith rdf:resource="#Score"/>
+        <owl:disjointWith rdf:resource="#SequenceLocation"/>
         <owl:disjointWith rdf:resource="#Stoichiometry"/>
+        <owl:disjointWith rdf:resource="#Xref"/>
         <rdfs:comment rdf:datatype="&xsd;string"
             >Used to reference terms from external controlled vocabularies (CVs) from the ontology. To support consistency and compatibility, open, freely available CVs should be used whenever possible, such as the Gene Ontology (GO)15 or other open biological CVs listed on the OBO website (http://obo.sourceforge.net/). See the section on controlled vocabularies in Section 4 for more information.</rdfs:comment>
     </owl:Class>
     <owl:ObjectProperty rdf:ID="controller">
         <rdfs:domain rdf:resource="#Control"/>
+        <rdfs:comment xml:lang="en"
+            >The controlling entity, e.g., in a biochemical reaction, an enzyme is the controlling entity of the reaction. CONTROLLER is a sub-property of PARTICIPANTS.</rdfs:comment>
         <rdfs:range>
             <owl:Class>
                 <owl:unionOf rdf:parseType="Collection">
@@ -417,12 +417,44 @@ Examples: A small molecule that inhibits a pathway by an unknown mechanism.</rdf
             </owl:Class>
         </rdfs:range>
         <rdfs:subPropertyOf rdf:resource="#participant"/>
-        <rdfs:comment xml:lang="en"
-            >The controlling entity, e.g., in a biochemical reaction, an enzyme is the controlling entity of the reaction. CONTROLLER is a sub-property of PARTICIPANTS.</rdfs:comment>
     </owl:ObjectProperty>
     <owl:FunctionalProperty rdf:ID="controlType">
         <rdf:type rdf:resource="&owl;DatatypeProperty"/>
         <rdfs:domain rdf:resource="#Control"/>
+        <rdfs:comment rdf:datatype="&xsd;string"
+            >Defines the nature of the control relationship between the controller and the controlled entities.
+
+The following terms are possible values:
+
+ACTIVATION: General activation. Compounds that activate the specified enzyme activity by an unknown mechanism. The mechanism is defined as unknown, because either the mechanism has yet to be elucidated in the experimental literature, or the paper(s) curated thus far do not define the mechanism, and a full literature search has yet to be performed.
+
+The following term can not be used in the catalysis class:
+INHIBITION: General inhibition. Compounds that inhibit the specified enzyme activity by an unknown mechanism. The mechanism is defined as unknown, because either the mechanism has yet to be elucidated in the experimental literature, or the paper(s) curated thus far do not define the mechanism, and a full literature search has yet to be performed.
+
+The following terms can only be used in the modulation class (these definitions from EcoCyc):
+INHIBITION-ALLOSTERIC
+Allosteric inhibitors decrease the specified enzyme activity by binding reversibly to the enzyme and inducing a conformational change that decreases the affinity of the enzyme to its substrates without affecting its VMAX. Allosteric inhibitors can be competitive or noncompetitive inhibitors, therefore, those inhibition categories can be used in conjunction with this category.
+
+INHIBITION-COMPETITIVE
+Competitive inhibitors are compounds that competitively inhibit the specified enzyme activity by binding reversibly to the enzyme and preventing the substrate from binding. Binding of the inhibitor and substrate are mutually exclusive because it is assumed that the inhibitor and substrate can both bind only to the free enzyme. A competitive inhibitor can either bind to the active site of the enzyme, directly excluding the substrate from binding there, or it can bind to another site on the enzyme, altering the conformation of the enzyme such that the substrate can not bind to the active site.
+
+INHIBITION-IRREVERSIBLE
+Irreversible inhibitors are compounds that irreversibly inhibit the specified enzyme activity by binding to the enzyme and dissociating so slowly that it is considered irreversible. For example, alkylating agents, such as iodoacetamide, irreversibly inhibit the catalytic activity of some enzymes by modifying cysteine side chains.
+
+INHIBITION-NONCOMPETITIVE
+Noncompetitive inhibitors are compounds that noncompetitively inhibit the specified enzyme by binding reversibly to both the free enzyme and to the enzyme-substrate complex. The inhibitor and substrate may be bound to the enzyme simultaneously and do not exclude each other. However, only the enzyme-substrate complex (not the enzyme-substrate-inhibitor complex) is catalytically active.
+
+INHIBITION-OTHER
+Compounds that inhibit the specified enzyme activity by a mechanism that has been characterized, but that cannot be clearly classified as irreversible, competitive, noncompetitive, uncompetitive, or allosteric.
+
+INHIBITION-UNCOMPETITIVE
+Uncompetitive inhibitors are compounds that uncompetitively inhibit the specified enzyme activity by binding reversibly to the enzyme-substrate complex but not to the enzyme alone.
+
+ACTIVATION-NONALLOSTERIC
+Nonallosteric activators increase the specified enzyme activity by means other than allosteric.
+
+ACTIVATION-ALLOSTERIC
+Allosteric activators increase the specified enzyme activity by binding reversibly to the enzyme and inducing a conformational change that increases the affinity of the enzyme to its substrates without affecting its VMAX.</rdfs:comment>
         <rdfs:range>
             <owl:DataRange>
                 <owl:oneOf>
@@ -486,40 +518,6 @@ Examples: A small molecule that inhibits a pathway by an unknown mechanism.</rdf
                 </owl:oneOf>
             </owl:DataRange>
         </rdfs:range>
-        <rdfs:comment rdf:datatype="&xsd;string"
-            >Defines the nature of the control relationship between the CONTROLLER and the CONTROLLED entities.
-
-The following terms are possible values:
-
-ACTIVATION: General activation. Compounds that activate the specified enzyme activity by an unknown mechanism. The mechanism is defined as unknown, because either the mechanism has yet to be elucidated in the experimental literature, or the paper(s) curated thus far do not define the mechanism, and a full literature search has yet to be performed.
-
-The following term can not be used in the catalysis class:
-INHIBITION: General inhibition. Compounds that inhibit the specified enzyme activity by an unknown mechanism. The mechanism is defined as unknown, because either the mechanism has yet to be elucidated in the experimental literature, or the paper(s) curated thus far do not define the mechanism, and a full literature search has yet to be performed.
-
-The following terms can only be used in the modulation class (these definitions from EcoCyc):
-INHIBITION-ALLOSTERIC
-Allosteric inhibitors decrease the specified enzyme activity by binding reversibly to the enzyme and inducing a conformational change that decreases the affinity of the enzyme to its substrates without affecting its VMAX. Allosteric inhibitors can be competitive or noncompetitive inhibitors, therefore, those inhibition categories can be used in conjunction with this category.
-
-INHIBITION-COMPETITIVE
-Competitive inhibitors are compounds that competitively inhibit the specified enzyme activity by binding reversibly to the enzyme and preventing the substrate from binding. Binding of the inhibitor and substrate are mutually exclusive because it is assumed that the inhibitor and substrate can both bind only to the free enzyme. A competitive inhibitor can either bind to the active site of the enzyme, directly excluding the substrate from binding there, or it can bind to another site on the enzyme, altering the conformation of the enzyme such that the substrate can not bind to the active site.
-
-INHIBITION-IRREVERSIBLE
-Irreversible inhibitors are compounds that irreversibly inhibit the specified enzyme activity by binding to the enzyme and dissociating so slowly that it is considered irreversible. For example, alkylating agents, such as iodoacetamide, irreversibly inhibit the catalytic activity of some enzymes by modifying cysteine side chains.
-
-INHIBITION-NONCOMPETITIVE
-Noncompetitive inhibitors are compounds that noncompetitively inhibit the specified enzyme by binding reversibly to both the free enzyme and to the enzyme-substrate complex. The inhibitor and substrate may be bound to the enzyme simultaneously and do not exclude each other. However, only the enzyme-substrate complex (not the enzyme-substrate-inhibitor complex) is catalytically active.
-
-INHIBITION-OTHER
-Compounds that inhibit the specified enzyme activity by a mechanism that has been characterized, but that cannot be clearly classified as irreversible, competitive, noncompetitive, uncompetitive, or allosteric.
-
-INHIBITION-UNCOMPETITIVE
-Uncompetitive inhibitors are compounds that uncompetitively inhibit the specified enzyme activity by binding reversibly to the enzyme-substrate complex but not to the enzyme alone.
-
-ACTIVATION-NONALLOSTERIC
-Nonallosteric activators increase the specified enzyme activity by means other than allosteric.
-
-ACTIVATION-ALLOSTERIC
-Allosteric activators increase the specified enzyme activity by binding reversibly to the enzyme and inducing a conformational change that increases the affinity of the enzyme to its substrates without affecting its VMAX.</rdfs:comment>
     </owl:FunctionalProperty>
     <owl:Class rdf:ID="Conversion">
         <rdfs:subClassOf rdf:resource="#Interaction"/>
@@ -543,6 +541,8 @@ Example: Opening of a voltage gated channel.</rdfs:comment>
     <owl:FunctionalProperty rdf:ID="conversionDirection">
         <rdf:type rdf:resource="&owl;DatatypeProperty"/>
         <rdfs:domain rdf:resource="#Conversion"/>
+        <rdfs:comment rdf:datatype="&xsd;string"
+            >This property represents the direction of the reaction. If a reaction is fundamentally irreversible, then it will run in a single direction under all contexts. Otherwise it is reversible.</rdfs:comment>
         <rdfs:range>
             <owl:DataRange>
                 <owl:oneOf>
@@ -563,8 +563,6 @@ Example: Opening of a voltage gated channel.</rdfs:comment>
                 </owl:oneOf>
             </owl:DataRange>
         </rdfs:range>
-        <rdfs:comment rdf:datatype="&xsd;string"
-            >This property represents the direction of the reaction. If a reaction is fundamentally irreversible, then it will run in a single direction under all contexts. Otherwise it is reversible.</rdfs:comment>
     </owl:FunctionalProperty>
     <owl:Class rdf:ID="CovalentBindingFeature">
         <rdfs:subClassOf rdf:resource="#BindingFeature"/>
@@ -584,23 +582,23 @@ charged tRNA</rdfs:comment>
     </owl:Class>
     <owl:ObjectProperty rdf:ID="dataSource">
         <rdfs:domain rdf:resource="#Entity"/>
-        <rdfs:range rdf:resource="#Provenance"/>
         <rdfs:comment rdf:datatype="&xsd;string"
             >A free text description of the source of this data, e.g. a database or person name. This property should be used to describe the source of the data. This is meant to be used by databases that export their data to the BioPAX format or by systems that are integrating data from multiple sources. The granularity of use (specifying the data source in many or few instances) is up to the user. It is intended that this property report the last data source, not all data sources that the data has passed through from creation.</rdfs:comment>
+        <rdfs:range rdf:resource="#Provenance"/>
     </owl:ObjectProperty>
     <owl:FunctionalProperty rdf:ID="db">
         <rdf:type rdf:resource="&owl;DatatypeProperty"/>
         <rdfs:domain rdf:resource="#Xref"/>
-        <rdfs:range rdf:resource="&xsd;string"/>
         <rdfs:comment xml:lang="en"
             >The name of the external database to which this xref refers.</rdfs:comment>
+        <rdfs:range rdf:resource="&xsd;string"/>
     </owl:FunctionalProperty>
     <owl:FunctionalProperty rdf:ID="dbVersion">
         <rdf:type rdf:resource="&owl;DatatypeProperty"/>
         <rdfs:domain rdf:resource="#Xref"/>
-        <rdfs:range rdf:resource="&xsd;string"/>
         <rdfs:comment xml:lang="en"
             >The version of the external database in which this xref was last known to be valid. Resources may have recommendations for referencing dataset versions. For instance, the Gene Ontology recommends listing the date the GO terms were downloaded.</rdfs:comment>
+        <rdfs:range rdf:resource="&xsd;string"/>
     </owl:FunctionalProperty>
     <owl:Class rdf:ID="Degradation">
         <rdfs:subClassOf rdf:resource="#Conversion"/>
@@ -626,40 +624,39 @@ Example:  Degradation of a protein to amino acids.</rdfs:comment>
         <rdfs:subClassOf>
             <owl:Restriction>
                 <owl:onProperty rdf:resource="#deltaGPrime0"/>
-                <owl:cardinality rdf:datatype="&xsd;int">1</owl:cardinality>
+                <owl:cardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:cardinality>
             </owl:Restriction>
         </rdfs:subClassOf>
         <rdfs:subClassOf rdf:resource="#UtilityClass"/>
         <owl:disjointWith rdf:resource="#BioSource"/>
-        <owl:disjointWith rdf:resource="#EntityReference"/>
-        <owl:disjointWith rdf:resource="#SequenceLocation"/>
-        <owl:disjointWith rdf:resource="#Score"/>
-        <owl:disjointWith rdf:resource="#ControlledVocabulary"/>
-        <owl:disjointWith rdf:resource="#ExperimentalForm"/>
-        <owl:disjointWith rdf:resource="#PathwayStep"/>
-        <owl:disjointWith rdf:resource="#EntityFeature"/>
-        <owl:disjointWith rdf:resource="#KPrime"/>
-        <owl:disjointWith rdf:resource="#Xref"/>
-        <owl:disjointWith rdf:resource="#Provenance"/>
-        <owl:disjointWith rdf:resource="#Evidence"/>
         <owl:disjointWith rdf:resource="#ChemicalStructure"/>
+        <owl:disjointWith rdf:resource="#ControlledVocabulary"/>
+        <owl:disjointWith rdf:resource="#EntityFeature"/>
+        <owl:disjointWith rdf:resource="#EntityReference"/>
+        <owl:disjointWith rdf:resource="#Evidence"/>
+        <owl:disjointWith rdf:resource="#ExperimentalForm"/>
+        <owl:disjointWith rdf:resource="#KPrime"/>
+        <owl:disjointWith rdf:resource="#PathwayStep"/>
+        <owl:disjointWith rdf:resource="#Provenance"/>
+        <owl:disjointWith rdf:resource="#Score"/>
+        <owl:disjointWith rdf:resource="#SequenceLocation"/>
         <owl:disjointWith rdf:resource="#Stoichiometry"/>
+        <owl:disjointWith rdf:resource="#Xref"/>
         <rdfs:comment rdf:datatype="&xsd;string"
             >Definition: Standard transformed Gibbs energy change for a reaction written in terms of biochemical reactants.  
 Usage: Delta-G is represented as a 5-tuple of delta-G&apos;&lt;sup&gt;0&lt;/sup&gt;, temperature, ionic strength , pH, and pMg . A conversion in BioPAX may have multiple Delta-G values, representing different measurements for delta-G&apos;&lt;sup&gt;0&lt;/sup&gt; obtained under the different experimental conditions.</rdfs:comment>
     </owl:Class>
     <owl:ObjectProperty rdf:ID="deltaG">
         <rdfs:domain rdf:resource="#BiochemicalReaction"/>
-        <rdfs:range rdf:resource="#DeltaG"/>
         <rdfs:comment rdf:datatype="&xsd;string"
             >For biochemical reactions, this property refers to the standard transformed Gibbs energy change for a reaction written in terms of biochemical reactants (sums of species), delta-G
 
 Since Delta-G can change based on multiple factors including ionic strength and temperature a reaction can have multiple DeltaG values.</rdfs:comment>
+        <rdfs:range rdf:resource="#DeltaG"/>
     </owl:ObjectProperty>
     <owl:FunctionalProperty rdf:ID="deltaGPrime0">
         <rdf:type rdf:resource="&owl;DatatypeProperty"/>
         <rdfs:domain rdf:resource="#DeltaG"/>
-        <rdfs:range rdf:resource="&xsd;float"/>
         <rdfs:comment rdf:datatype="&xsd;string"
             >For biochemical reactions, this property refers to the standard transformed Gibbs energy change for a reaction written in terms of biochemical reactants (sums of species), delta-G&apos;&lt;sup&gt;o&lt;/sup&gt;.
 
@@ -670,10 +667,10 @@ and
 delta-G&apos;&lt;sup&gt;o&lt;/sup&gt; has units of kJ/mol.  Like K&apos;, it is a function of temperature (T), ionic strength (I), pH, and pMg (pMg = -log&lt;sub&gt;10&lt;/sub&gt;[Mg&lt;sup&gt;2+&lt;/sup&gt;]). Therefore, these quantities must be specified, and values for DELTA-G for biochemical reactions are represented as 5-tuples of the form (delta-G&apos;&lt;sup&gt;o&lt;/sup&gt; T I pH pMg).
 
 (This definition from EcoCyc)</rdfs:comment>
+        <rdfs:range rdf:resource="&xsd;float"/>
     </owl:FunctionalProperty>
     <owl:DatatypeProperty rdf:ID="deltaH">
         <rdfs:domain rdf:resource="#BiochemicalReaction"/>
-        <rdfs:range rdf:resource="&xsd;float"/>
         <rdfs:comment rdf:datatype="&xsd;string"
             >For biochemical reactions, this property refers to the standard transformed enthalpy change for a reaction written in terms of biochemical reactants (sums of species), delta-H&apos;&lt;sup&gt;o&lt;/sup&gt;.
 
@@ -682,25 +679,26 @@ delta-G&apos;&lt;sup&gt;o&lt;/sup&gt; has units of kJ/mol.  Like K&apos;, it is 
 Units: kJ/mole
 
 (This definition from EcoCyc)</rdfs:comment>
+        <rdfs:range rdf:resource="&xsd;float"/>
     </owl:DatatypeProperty>
     <owl:DatatypeProperty rdf:ID="deltaS">
         <rdfs:domain rdf:resource="#BiochemicalReaction"/>
-        <rdfs:range rdf:resource="&xsd;float"/>
         <rdfs:comment rdf:datatype="&xsd;string"
             >For biochemical reactions, this property refers to the standard transformed entropy change for a reaction written in terms of biochemical reactants (sums of species), delta-S&apos;&lt;sup&gt;o&lt;/sup&gt;.
 
   delta-G&apos;&lt;sup&gt;o&lt;/sup&gt; = delta-H&apos;&lt;sup&gt;o&lt;/sup&gt; - T delta-S&apos;&lt;sup&gt;o&lt;/sup&gt;
 
 (This definition from EcoCyc)</rdfs:comment>
+        <rdfs:range rdf:resource="&xsd;float"/>
     </owl:DatatypeProperty>
     <owl:FunctionalProperty rdf:ID="displayName">
         <rdf:type rdf:resource="&owl;DatatypeProperty"/>
-        <rdfs:range rdf:resource="&xsd;string"/>
-        <rdfs:subPropertyOf rdf:resource="#name"/>
         <rdfs:comment rdf:datatype="&xsd;string"
             >An abbreviated name for this entity, preferably a name that is short enough to be used in a visualization application to label a graphical element that represents this entity. If no short name is available, an xref may be used for this purpose by the visualization application.
 
 Warning:  Subproperties of name are functional, that is we expect to have only one standardName and shortName for a given entity. If a user decides to assign a different name to standardName or shortName, they have to remove the old triplet from the model too. If the old name should be retained as a synonym a regular &quot;name&quot; property should also be introduced with the old name.</rdfs:comment>
+        <rdfs:range rdf:resource="&xsd;string"/>
+        <rdfs:subPropertyOf rdf:resource="#name"/>
     </owl:FunctionalProperty>
     <owl:Class rdf:ID="Dna">
         <rdfs:subClassOf>
@@ -716,19 +714,18 @@ Warning:  Subproperties of name are functional, that is we expect to have only o
             </owl:Restriction>
         </rdfs:subClassOf>
         <rdfs:subClassOf rdf:resource="#PhysicalEntity"/>
-        <owl:disjointWith rdf:resource="#Protein"/>
-        <owl:disjointWith rdf:resource="#SmallMolecule"/>
-        <owl:disjointWith rdf:resource="#DnaRegion"/>
-        <owl:disjointWith rdf:resource="#RnaRegion"/>
         <owl:disjointWith rdf:resource="#Complex"/>
+        <owl:disjointWith rdf:resource="#DnaRegion"/>
+        <owl:disjointWith rdf:resource="#Protein"/>
         <owl:disjointWith rdf:resource="#Rna"/>
+        <owl:disjointWith rdf:resource="#RnaRegion"/>
+        <owl:disjointWith rdf:resource="#SmallMolecule"/>
         <rdfs:comment rdf:datatype="&xsd;string"
             >Definition: A physical entity consisting of a sequence of deoxyribonucleotide monophosphates; a deoxyribonucleic acid.
 Usage: DNA should be used for pools of individual DNA molecules. For describing subregions on those molecules use DNARegion.
 Examples: a chromosome, a plasmid. A specific example is chromosome 7 of Homo sapiens.</rdfs:comment>
     </owl:Class>
     <owl:Class rdf:ID="DnaReference">
-        <rdfs:subClassOf rdf:resource="#EntityReference"/>
         <rdfs:subClassOf>
             <owl:Restriction>
                 <owl:onProperty rdf:resource="#memberEntityReference"/>
@@ -741,11 +738,12 @@ Examples: a chromosome, a plasmid. A specific example is chromosome 7 of Homo sa
                 <owl:allValuesFrom rdf:resource="#DnaRegionReference"/>
             </owl:Restriction>
         </rdfs:subClassOf>
-        <owl:disjointWith rdf:resource="#RnaReference"/>
+        <rdfs:subClassOf rdf:resource="#EntityReference"/>
         <owl:disjointWith rdf:resource="#DnaRegionReference"/>
         <owl:disjointWith rdf:resource="#ProteinReference"/>
-        <owl:disjointWith rdf:resource="#SmallMoleculeReference"/>
+        <owl:disjointWith rdf:resource="#RnaReference"/>
         <owl:disjointWith rdf:resource="#RnaRegionReference"/>
+        <owl:disjointWith rdf:resource="#SmallMoleculeReference"/>
         <rdfs:comment rdf:datatype="&xsd;string"
             >Definition: A DNA reference is a grouping of several DNA entities that are common in sequence.  Members can differ in celular location, sequence features, SNPs, mutations and bound partners.
 
@@ -765,12 +763,12 @@ Comments : Note that this is not a reference gene. Genes are non-physical,statel
                 <owl:allValuesFrom rdf:resource="#DnaRegionReference"/>
             </owl:Restriction>
         </rdfs:subClassOf>
+        <owl:disjointWith rdf:resource="#Complex"/>
         <owl:disjointWith rdf:resource="#Dna"/>
         <owl:disjointWith rdf:resource="#Protein"/>
-        <owl:disjointWith rdf:resource="#SmallMolecule"/>
-        <owl:disjointWith rdf:resource="#Complex"/>
-        <owl:disjointWith rdf:resource="#RnaRegion"/>
         <owl:disjointWith rdf:resource="#Rna"/>
+        <owl:disjointWith rdf:resource="#RnaRegion"/>
+        <owl:disjointWith rdf:resource="#SmallMolecule"/>
         <rdfs:comment rdf:datatype="&xsd;string"
             >Definition: A region on a DNA molecule. 
 Usage:  DNARegion is not a pool of independent molecules but a subregion on these molecules. As such, every DNARegion has a defining DNA molecule.  
@@ -785,20 +783,20 @@ Examples: Protein encoding region, promoter</rdfs:comment>
         </rdfs:subClassOf>
         <rdfs:subClassOf rdf:resource="#EntityReference"/>
         <owl:disjointWith rdf:resource="#DnaReference"/>
-        <owl:disjointWith rdf:resource="#RnaRegionReference"/>
         <owl:disjointWith rdf:resource="#ProteinReference"/>
         <owl:disjointWith rdf:resource="#RnaReference"/>
+        <owl:disjointWith rdf:resource="#RnaRegionReference"/>
         <owl:disjointWith rdf:resource="#SmallMoleculeReference"/>
         <rdfs:comment rdf:datatype="&xsd;string"
             >Definition: A DNARegionReference is a grouping of several DNARegion entities that are common in sequence and genomic position.  Members can differ in cellular location, sequence features, SNPs, mutations and bound partners.</rdfs:comment>
     </owl:Class>
     <owl:DatatypeProperty rdf:ID="eCNumber">
         <rdfs:domain rdf:resource="#BiochemicalReaction"/>
-        <rdfs:range rdf:resource="&xsd;string"/>
         <rdfs:comment rdf:datatype="&xsd;string"
             >The unique number assigned to a reaction by the Enzyme Commission of the International Union of Biochemistry and Molecular Biology.
 
 Note that not all biochemical reactions currently have EC numbers assigned to them.</rdfs:comment>
+        <rdfs:range rdf:resource="&xsd;string"/>
     </owl:DatatypeProperty>
     <owl:Class rdf:ID="Entity">
         <rdfs:comment rdf:datatype="&xsd;string"
@@ -813,20 +811,20 @@ Synonyms: element, thing, object, bioentity, statement.</rdfs:comment>
     </owl:Class>
     <owl:Class rdf:ID="EntityFeature">
         <rdfs:subClassOf rdf:resource="#UtilityClass"/>
-        <owl:disjointWith rdf:resource="#Evidence"/>
-        <owl:disjointWith rdf:resource="#DeltaG"/>
-        <owl:disjointWith rdf:resource="#Provenance"/>
-        <owl:disjointWith rdf:resource="#ControlledVocabulary"/>
-        <owl:disjointWith rdf:resource="#SequenceLocation"/>
         <owl:disjointWith rdf:resource="#BioSource"/>
-        <owl:disjointWith rdf:resource="#KPrime"/>
-        <owl:disjointWith rdf:resource="#Xref"/>
-        <owl:disjointWith rdf:resource="#Score"/>
         <owl:disjointWith rdf:resource="#ChemicalStructure"/>
-        <owl:disjointWith rdf:resource="#Stoichiometry"/>
-        <owl:disjointWith rdf:resource="#PathwayStep"/>
-        <owl:disjointWith rdf:resource="#ExperimentalForm"/>
+        <owl:disjointWith rdf:resource="#ControlledVocabulary"/>
+        <owl:disjointWith rdf:resource="#DeltaG"/>
         <owl:disjointWith rdf:resource="#EntityReference"/>
+        <owl:disjointWith rdf:resource="#Evidence"/>
+        <owl:disjointWith rdf:resource="#ExperimentalForm"/>
+        <owl:disjointWith rdf:resource="#KPrime"/>
+        <owl:disjointWith rdf:resource="#PathwayStep"/>
+        <owl:disjointWith rdf:resource="#Provenance"/>
+        <owl:disjointWith rdf:resource="#Score"/>
+        <owl:disjointWith rdf:resource="#SequenceLocation"/>
+        <owl:disjointWith rdf:resource="#Stoichiometry"/>
+        <owl:disjointWith rdf:resource="#Xref"/>
         <rdfs:comment rdf:datatype="&xsd;string"
             >Description: A characteristic of a physical entity that can change while the entity still retains its biological identity. 
 
@@ -840,28 +838,28 @@ Examples: Open/close conformational state of channel proteins, &quot;active&quot
     <owl:InverseFunctionalProperty rdf:ID="entityFeature">
         <rdf:type rdf:resource="&owl;ObjectProperty"/>
         <rdfs:domain rdf:resource="#EntityReference"/>
-        <rdfs:range rdf:resource="#EntityFeature"/>
         <rdfs:comment rdf:datatype="&xsd;string"
             >Variable features that are observed for the entities of this entityReference - such as known PTM or methylation sites and non-covalent bonds. Note that this is an aggregate list of all known features and it does not represent a state itself.</rdfs:comment>
+        <rdfs:range rdf:resource="#EntityFeature"/>
     </owl:InverseFunctionalProperty>
     <owl:Class rdf:ID="EntityReference">
         <rdfs:subClassOf rdf:resource="#UtilityClass"/>
-        <owl:disjointWith rdf:resource="#Evidence"/>
-        <owl:disjointWith rdf:resource="#SequenceLocation"/>
-        <owl:disjointWith rdf:resource="#EntityFeature"/>
         <owl:disjointWith rdf:resource="#BioSource"/>
         <owl:disjointWith rdf:resource="#ChemicalStructure"/>
-        <owl:disjointWith rdf:resource="#PhysicalEntity"/>
-        <owl:disjointWith rdf:resource="#PathwayStep"/>
-        <owl:disjointWith rdf:resource="#Provenance"/>
-        <owl:disjointWith rdf:resource="#Xref"/>
-        <owl:disjointWith rdf:resource="#ExperimentalForm"/>
-        <owl:disjointWith rdf:resource="#DeltaG"/>
-        <owl:disjointWith rdf:resource="#KPrime"/>
-        <owl:disjointWith rdf:resource="#Stoichiometry"/>
-        <owl:disjointWith rdf:resource="#SmallMolecule"/>
         <owl:disjointWith rdf:resource="#ControlledVocabulary"/>
+        <owl:disjointWith rdf:resource="#DeltaG"/>
+        <owl:disjointWith rdf:resource="#EntityFeature"/>
+        <owl:disjointWith rdf:resource="#Evidence"/>
+        <owl:disjointWith rdf:resource="#ExperimentalForm"/>
+        <owl:disjointWith rdf:resource="#KPrime"/>
+        <owl:disjointWith rdf:resource="#PathwayStep"/>
+        <owl:disjointWith rdf:resource="#PhysicalEntity"/>
+        <owl:disjointWith rdf:resource="#Provenance"/>
         <owl:disjointWith rdf:resource="#Score"/>
+        <owl:disjointWith rdf:resource="#SequenceLocation"/>
+        <owl:disjointWith rdf:resource="#SmallMolecule"/>
+        <owl:disjointWith rdf:resource="#Stoichiometry"/>
+        <owl:disjointWith rdf:resource="#Xref"/>
         <rdfs:comment rdf:datatype="&xsd;string"
             >Definition: An entity reference is a grouping of several physical entities across different contexts and molecular states, that share common physical properties and often named and treated as a single entity with multiple states by biologists. 
 
@@ -891,29 +889,29 @@ Comments: This grouping has three semantic implications:
                 </owl:unionOf>
             </owl:Class>
         </rdfs:domain>
-        <rdfs:range rdf:resource="#EntityReference"/>
         <rdfs:comment rdf:datatype="&xsd;string"
             >Reference entity for this physical entity.</rdfs:comment>
+        <rdfs:range rdf:resource="#EntityReference"/>
     </owl:FunctionalProperty>
     <owl:FunctionalProperty rdf:ID="entityReferenceType">
         <rdf:type rdf:resource="&owl;ObjectProperty"/>
         <rdfs:domain rdf:resource="#EntityReference"/>
-        <rdfs:range rdf:resource="#EntityReferenceTypeVocabulary"/>
         <rdfs:comment rdf:datatype="&xsd;string"
             >A controlled vocabulary term that is used to describe the type of grouping such as homology or functional group.</rdfs:comment>
+        <rdfs:range rdf:resource="#EntityReferenceTypeVocabulary"/>
     </owl:FunctionalProperty>
     <owl:Class rdf:ID="EntityReferenceTypeVocabulary">
         <rdfs:subClassOf rdf:resource="#ControlledVocabulary"/>
         <owl:disjointWith rdf:resource="#CellularLocationVocabulary"/>
-        <owl:disjointWith rdf:resource="#TissueVocabulary"/>
-        <owl:disjointWith rdf:resource="#SequenceModificationVocabulary"/>
-        <owl:disjointWith rdf:resource="#EvidenceCodeVocabulary"/>
-        <owl:disjointWith rdf:resource="#RelationshipTypeVocabulary"/>
-        <owl:disjointWith rdf:resource="#SequenceRegionVocabulary"/>
-        <owl:disjointWith rdf:resource="#PhenotypeVocabulary"/>
-        <owl:disjointWith rdf:resource="#ExperimentalFormVocabulary"/>
         <owl:disjointWith rdf:resource="#CellVocabulary"/>
+        <owl:disjointWith rdf:resource="#EvidenceCodeVocabulary"/>
+        <owl:disjointWith rdf:resource="#ExperimentalFormVocabulary"/>
         <owl:disjointWith rdf:resource="#InteractionVocabulary"/>
+        <owl:disjointWith rdf:resource="#PhenotypeVocabulary"/>
+        <owl:disjointWith rdf:resource="#RelationshipTypeVocabulary"/>
+        <owl:disjointWith rdf:resource="#SequenceModificationVocabulary"/>
+        <owl:disjointWith rdf:resource="#SequenceRegionVocabulary"/>
+        <owl:disjointWith rdf:resource="#TissueVocabulary"/>
         <rdfs:comment rdf:datatype="&xsd;string"
             >Definiiton: A reference to a term from an entity reference group ontology. As of the writing of this documentation, there is no standard ontology of these terms, though a common type is &#8216;homology&#8217;.</rdfs:comment>
     </owl:Class>
@@ -924,32 +922,32 @@ Comments: This grouping has three semantic implications:
                 <owl:unionOf rdf:parseType="Collection">
                     <owl:Restriction>
                         <owl:onProperty rdf:resource="#confidence"/>
-                        <owl:minCardinality rdf:datatype="&xsd;int">1</owl:minCardinality>
+                        <owl:minCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:minCardinality>
                     </owl:Restriction>
                     <owl:Restriction>
                         <owl:onProperty rdf:resource="#evidenceCode"/>
-                        <owl:minCardinality rdf:datatype="&xsd;int">1</owl:minCardinality>
+                        <owl:minCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:minCardinality>
                     </owl:Restriction>
                     <owl:Restriction>
                         <owl:onProperty rdf:resource="#experimentalForm"/>
-                        <owl:minCardinality rdf:datatype="&xsd;int">1</owl:minCardinality>
+                        <owl:minCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:minCardinality>
                     </owl:Restriction>
                 </owl:unionOf>
             </owl:Class>
         </rdfs:subClassOf>
-        <owl:disjointWith rdf:resource="#PathwayStep"/>
-        <owl:disjointWith rdf:resource="#Stoichiometry"/>
+        <owl:disjointWith rdf:resource="#BioSource"/>
+        <owl:disjointWith rdf:resource="#ChemicalStructure"/>
+        <owl:disjointWith rdf:resource="#ControlledVocabulary"/>
+        <owl:disjointWith rdf:resource="#DeltaG"/>
         <owl:disjointWith rdf:resource="#EntityFeature"/>
         <owl:disjointWith rdf:resource="#EntityReference"/>
-        <owl:disjointWith rdf:resource="#BioSource"/>
-        <owl:disjointWith rdf:resource="#ControlledVocabulary"/>
-        <owl:disjointWith rdf:resource="#SequenceLocation"/>
         <owl:disjointWith rdf:resource="#ExperimentalForm"/>
-        <owl:disjointWith rdf:resource="#ChemicalStructure"/>
         <owl:disjointWith rdf:resource="#KPrime"/>
+        <owl:disjointWith rdf:resource="#PathwayStep"/>
         <owl:disjointWith rdf:resource="#Provenance"/>
         <owl:disjointWith rdf:resource="#Score"/>
-        <owl:disjointWith rdf:resource="#DeltaG"/>
+        <owl:disjointWith rdf:resource="#SequenceLocation"/>
+        <owl:disjointWith rdf:resource="#Stoichiometry"/>
         <owl:disjointWith rdf:resource="#Xref"/>
         <rdfs:comment rdf:datatype="&xsd;string"
             >Definition: The support for a particular assertion, such as the existence of an interaction or pathway. 
@@ -967,28 +965,28 @@ Examples: A description of a molecular binding assay that was used to detect a p
                 </owl:unionOf>
             </owl:Class>
         </rdfs:domain>
-        <rdfs:range rdf:resource="#Evidence"/>
         <rdfs:comment rdf:datatype="&xsd;string"
             >Scientific evidence supporting the existence of the entity as described.</rdfs:comment>
+        <rdfs:range rdf:resource="#Evidence"/>
     </owl:ObjectProperty>
     <owl:ObjectProperty rdf:ID="evidenceCode">
         <rdfs:domain rdf:resource="#Evidence"/>
-        <rdfs:range rdf:resource="#EvidenceCodeVocabulary"/>
         <rdfs:comment rdf:datatype="&xsd;string"
             >A pointer to a term in an external controlled vocabulary, such as the GO, PSI-MI or BioCyc evidence codes, that describes the nature of the support, such as &apos;traceable author statement&apos; or &apos;yeast two-hybrid&apos;.</rdfs:comment>
+        <rdfs:range rdf:resource="#EvidenceCodeVocabulary"/>
     </owl:ObjectProperty>
     <owl:Class rdf:ID="EvidenceCodeVocabulary">
         <rdfs:subClassOf rdf:resource="#ControlledVocabulary"/>
-        <owl:disjointWith rdf:resource="#RelationshipTypeVocabulary"/>
         <owl:disjointWith rdf:resource="#CellularLocationVocabulary"/>
-        <owl:disjointWith rdf:resource="#EntityReferenceTypeVocabulary"/>
-        <owl:disjointWith rdf:resource="#SequenceRegionVocabulary"/>
-        <owl:disjointWith rdf:resource="#SequenceModificationVocabulary"/>
-        <owl:disjointWith rdf:resource="#ExperimentalFormVocabulary"/>
         <owl:disjointWith rdf:resource="#CellVocabulary"/>
-        <owl:disjointWith rdf:resource="#PhenotypeVocabulary"/>
-        <owl:disjointWith rdf:resource="#TissueVocabulary"/>
+        <owl:disjointWith rdf:resource="#EntityReferenceTypeVocabulary"/>
+        <owl:disjointWith rdf:resource="#ExperimentalFormVocabulary"/>
         <owl:disjointWith rdf:resource="#InteractionVocabulary"/>
+        <owl:disjointWith rdf:resource="#PhenotypeVocabulary"/>
+        <owl:disjointWith rdf:resource="#RelationshipTypeVocabulary"/>
+        <owl:disjointWith rdf:resource="#SequenceModificationVocabulary"/>
+        <owl:disjointWith rdf:resource="#SequenceRegionVocabulary"/>
+        <owl:disjointWith rdf:resource="#TissueVocabulary"/>
         <rdfs:comment rdf:datatype="&xsd;string"
             >Definition: A reference to the PSI Molecular Interaction ontology (MI) experimental method types, including &quot;interaction detection method&quot;, &quot;participant identification method&quot;, &quot;feature detection method&quot;. Homepage at http://www.psidev.info/.  Browse at http://www.ebi.ac.uk/ontology-lookup/browse.do?ontName=MI
 
@@ -996,50 +994,52 @@ Terms from the Pathway Tools Evidence Ontology may also be used. Homepage http:/
     </owl:Class>
     <owl:ObjectProperty rdf:ID="experimentalFeature">
         <rdfs:domain rdf:resource="#ExperimentalForm"/>
-        <rdfs:range rdf:resource="#EntityFeature"/>
         <rdfs:comment rdf:datatype="&xsd;string"
             >A feature of the experimental form of the participant of the interaction, such as a protein tag. It is not expected to occur in vivo or be necessary for the interaction.</rdfs:comment>
+        <rdfs:range rdf:resource="#EntityFeature"/>
     </owl:ObjectProperty>
     <owl:Class rdf:ID="ExperimentalForm">
         <rdfs:subClassOf>
             <owl:Restriction>
                 <owl:onProperty rdf:resource="#experimentalFormDescription"/>
-                <owl:minCardinality rdf:datatype="&xsd;int">1</owl:minCardinality>
+                <owl:minCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:minCardinality>
             </owl:Restriction>
         </rdfs:subClassOf>
         <rdfs:subClassOf rdf:resource="#UtilityClass"/>
-        <owl:disjointWith rdf:resource="#EntityReference"/>
-        <owl:disjointWith rdf:resource="#EntityFeature"/>
-        <owl:disjointWith rdf:resource="#Evidence"/>
-        <owl:disjointWith rdf:resource="#Provenance"/>
-        <owl:disjointWith rdf:resource="#Stoichiometry"/>
-        <owl:disjointWith rdf:resource="#ControlledVocabulary"/>
-        <owl:disjointWith rdf:resource="#Xref"/>
-        <owl:disjointWith rdf:resource="#PathwayStep"/>
-        <owl:disjointWith rdf:resource="#ChemicalStructure"/>
-        <owl:disjointWith rdf:resource="#KPrime"/>
         <owl:disjointWith rdf:resource="#BioSource"/>
-        <owl:disjointWith rdf:resource="#SequenceLocation"/>
+        <owl:disjointWith rdf:resource="#ChemicalStructure"/>
+        <owl:disjointWith rdf:resource="#ControlledVocabulary"/>
         <owl:disjointWith rdf:resource="#DeltaG"/>
+        <owl:disjointWith rdf:resource="#EntityFeature"/>
+        <owl:disjointWith rdf:resource="#EntityReference"/>
+        <owl:disjointWith rdf:resource="#Evidence"/>
+        <owl:disjointWith rdf:resource="#KPrime"/>
+        <owl:disjointWith rdf:resource="#PathwayStep"/>
+        <owl:disjointWith rdf:resource="#Provenance"/>
         <owl:disjointWith rdf:resource="#Score"/>
+        <owl:disjointWith rdf:resource="#SequenceLocation"/>
+        <owl:disjointWith rdf:resource="#Stoichiometry"/>
+        <owl:disjointWith rdf:resource="#Xref"/>
         <rdfs:comment rdf:datatype="&xsd;string"
             >Definition: The form of a physical entity in a particular experiment, as it may be modified for purposes of experimental design.
 Examples: A His-tagged protein in a binding assay. A protein can be tagged by multiple tags, so can have more than 1 experimental form type terms</rdfs:comment>
     </owl:Class>
     <owl:ObjectProperty rdf:ID="experimentalForm">
         <rdfs:domain rdf:resource="#Evidence"/>
-        <rdfs:range rdf:resource="#ExperimentalForm"/>
         <rdfs:comment rdf:datatype="&xsd;string"
             >The experimental forms associated with an evidence instance.</rdfs:comment>
+        <rdfs:range rdf:resource="#ExperimentalForm"/>
     </owl:ObjectProperty>
     <owl:ObjectProperty rdf:ID="experimentalFormDescription">
         <rdfs:domain rdf:resource="#ExperimentalForm"/>
-        <rdfs:range rdf:resource="#ExperimentalFormVocabulary"/>
         <rdfs:comment rdf:datatype="&xsd;string"
             >Descriptor of this experimental form from a controlled vocabulary.</rdfs:comment>
+        <rdfs:range rdf:resource="#ExperimentalFormVocabulary"/>
     </owl:ObjectProperty>
     <owl:ObjectProperty rdf:ID="experimentalFormEntity">
         <rdfs:domain rdf:resource="#ExperimentalForm"/>
+        <rdfs:comment rdf:datatype="&xsd;string"
+            >The gene or physical entity that this experimental form describes.</rdfs:comment>
         <rdfs:range>
             <owl:Class>
                 <owl:unionOf rdf:parseType="Collection">
@@ -1048,21 +1048,19 @@ Examples: A His-tagged protein in a binding assay. A protein can be tagged by mu
                 </owl:unionOf>
             </owl:Class>
         </rdfs:range>
-        <rdfs:comment rdf:datatype="&xsd;string"
-            >The gene or physical entity that this experimental form describes.</rdfs:comment>
     </owl:ObjectProperty>
     <owl:Class rdf:ID="ExperimentalFormVocabulary">
         <rdfs:subClassOf rdf:resource="#ControlledVocabulary"/>
-        <owl:disjointWith rdf:resource="#CellVocabulary"/>
-        <owl:disjointWith rdf:resource="#EvidenceCodeVocabulary"/>
-        <owl:disjointWith rdf:resource="#SequenceRegionVocabulary"/>
         <owl:disjointWith rdf:resource="#CellularLocationVocabulary"/>
-        <owl:disjointWith rdf:resource="#TissueVocabulary"/>
+        <owl:disjointWith rdf:resource="#CellVocabulary"/>
+        <owl:disjointWith rdf:resource="#EntityReferenceTypeVocabulary"/>
+        <owl:disjointWith rdf:resource="#EvidenceCodeVocabulary"/>
+        <owl:disjointWith rdf:resource="#InteractionVocabulary"/>
+        <owl:disjointWith rdf:resource="#PhenotypeVocabulary"/>
         <owl:disjointWith rdf:resource="#RelationshipTypeVocabulary"/>
         <owl:disjointWith rdf:resource="#SequenceModificationVocabulary"/>
-        <owl:disjointWith rdf:resource="#PhenotypeVocabulary"/>
-        <owl:disjointWith rdf:resource="#EntityReferenceTypeVocabulary"/>
-        <owl:disjointWith rdf:resource="#InteractionVocabulary"/>
+        <owl:disjointWith rdf:resource="#SequenceRegionVocabulary"/>
+        <owl:disjointWith rdf:resource="#TissueVocabulary"/>
         <rdfs:comment rdf:datatype="&xsd;string"
             >Definition: A reference to the PSI Molecular Interaction ontology (MI) participant identification method (e.g. mass spectrometry), experimental role (e.g. bait, prey), experimental preparation (e.g. expression level) type. Homepage at http://www.psidev.info/.  Browse http://www.ebi.ac.uk/ontology-lookup/browse.do?ontName=MI&amp;termId=MI%3A0002&amp;termName=participant%20identification%20method
 
@@ -1072,21 +1070,21 @@ http://www.ebi.ac.uk/ontology-lookup/browse.do?ontName=MI&amp;termId=MI%3A0346&a
     </owl:Class>
     <owl:ObjectProperty rdf:ID="feature">
         <rdfs:domain rdf:resource="#PhysicalEntity"/>
-        <rdfs:range rdf:resource="#EntityFeature"/>
         <rdfs:comment rdf:datatype="&xsd;string"
             >Sequence features of the owner physical entity.</rdfs:comment>
+        <rdfs:range rdf:resource="#EntityFeature"/>
     </owl:ObjectProperty>
     <owl:ObjectProperty rdf:ID="featureLocation">
         <rdfs:domain rdf:resource="#EntityFeature"/>
-        <rdfs:range rdf:resource="#SequenceLocation"/>
         <rdfs:comment rdf:datatype="&xsd;string"
             >Location of the feature on the sequence of the interactor. One feature may have more than one location, used e.g. for features which involve sequence positions close in the folded, three-dimensional state of a protein, but non-continuous along the sequence.</rdfs:comment>
+        <rdfs:range rdf:resource="#SequenceLocation"/>
     </owl:ObjectProperty>
     <owl:ObjectProperty rdf:ID="featureLocationType">
         <rdfs:domain rdf:resource="#EntityFeature"/>
-        <rdfs:range rdf:resource="#SequenceRegionVocabulary"/>
         <rdfs:comment rdf:datatype="&xsd;string"
             >A controlled vocabulary term describing the type of the sequence location such as C-Terminal or SH2 Domain.</rdfs:comment>
+        <rdfs:range rdf:resource="#SequenceRegionVocabulary"/>
     </owl:ObjectProperty>
     <owl:Class rdf:ID="FragmentFeature">
         <rdfs:subClassOf rdf:resource="#EntityFeature"/>
@@ -1107,7 +1105,7 @@ Examples: Insulin Hormone</rdfs:comment>
         <rdfs:subClassOf>
             <owl:Restriction>
                 <owl:onProperty rdf:resource="#organism"/>
-                <owl:maxCardinality rdf:datatype="&xsd;int">1</owl:maxCardinality>
+                <owl:maxCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:maxCardinality>
             </owl:Restriction>
         </rdfs:subClassOf>
         <rdfs:subClassOf rdf:resource="#Entity"/>
@@ -1123,20 +1121,20 @@ Usage: Gene should only be used for describing GeneticInteractions.</rdfs:commen
         <rdfs:subClassOf>
             <owl:Restriction>
                 <owl:onProperty rdf:resource="#interactionType"/>
-                <owl:maxCardinality rdf:datatype="&xsd;int">1</owl:maxCardinality>
+                <owl:maxCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:maxCardinality>
             </owl:Restriction>
         </rdfs:subClassOf>
         <rdfs:subClassOf rdf:resource="#Interaction"/>
         <rdfs:subClassOf>
             <owl:Restriction>
                 <owl:onProperty rdf:resource="#phenotype"/>
-                <owl:cardinality rdf:datatype="&xsd;int">1</owl:cardinality>
+                <owl:cardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:cardinality>
             </owl:Restriction>
         </rdfs:subClassOf>
         <rdfs:subClassOf>
             <owl:Restriction>
                 <owl:onProperty rdf:resource="#participant"/>
-                <owl:minCardinality rdf:datatype="&xsd;int">2</owl:minCardinality>
+                <owl:minCardinality rdf:datatype="&xsd;nonNegativeInteger">2</owl:minCardinality>
             </owl:Restriction>
         </rdfs:subClassOf>
         <rdfs:subClassOf>
@@ -1145,10 +1143,10 @@ Usage: Gene should only be used for describing GeneticInteractions.</rdfs:commen
                 <owl:allValuesFrom rdf:resource="#Gene"/>
             </owl:Restriction>
         </rdfs:subClassOf>
-        <owl:disjointWith rdf:resource="#MolecularInteraction"/>
-        <owl:disjointWith rdf:resource="#TemplateReaction"/>
         <owl:disjointWith rdf:resource="#Control"/>
         <owl:disjointWith rdf:resource="#Conversion"/>
+        <owl:disjointWith rdf:resource="#MolecularInteraction"/>
+        <owl:disjointWith rdf:resource="#TemplateReaction"/>
         <rdfs:comment rdf:datatype="&xsd;string"
             >Definition : Genetic interactions between genes occur when two genetic perturbations (e.g. mutations) have a combined phenotypic effect not caused by either perturbation alone. A gene participant in a genetic interaction represents the gene that is perturbed. Genetic interactions are not physical interactions but logical (AND) relationships. Their physical manifestations can be complex and span an arbitarily long duration. 
 
@@ -1159,16 +1157,16 @@ Example: A synthetic lethal interaction occurs when cell growth is possible with
     <owl:FunctionalProperty rdf:ID="id">
         <rdf:type rdf:resource="&owl;DatatypeProperty"/>
         <rdfs:domain rdf:resource="#Xref"/>
-        <rdfs:range rdf:resource="&xsd;string"/>
         <rdfs:comment xml:lang="en"
             >The primary identifier in the external database of the object to which this xref refers.</rdfs:comment>
+        <rdfs:range rdf:resource="&xsd;string"/>
     </owl:FunctionalProperty>
     <owl:FunctionalProperty rdf:ID="idVersion">
         <rdf:type rdf:resource="&owl;DatatypeProperty"/>
         <rdfs:domain rdf:resource="#Xref"/>
-        <rdfs:range rdf:resource="&xsd;string"/>
         <rdfs:comment rdf:datatype="&xsd;string"
             >The version number of the identifier (ID). E.g. The RefSeq accession number NM_005228.3 should be split into NM_005228 as the ID and 3 as the ID-VERSION.</rdfs:comment>
+        <rdfs:range rdf:resource="&xsd;string"/>
     </owl:FunctionalProperty>
     <owl:Class rdf:ID="Interaction">
         <rdfs:subClassOf rdf:resource="#Entity"/>
@@ -1189,27 +1187,27 @@ Examples: protein-protein interaction, biochemical reaction, enzyme catalysis</r
     </owl:Class>
     <owl:ObjectProperty rdf:ID="interactionScore">
         <rdfs:domain rdf:resource="#GeneticInteraction"/>
-        <rdfs:range rdf:resource="#Score"/>
         <rdfs:comment rdf:datatype="&xsd;string"
             >The score of an interaction e.g. a genetic interaction score.</rdfs:comment>
+        <rdfs:range rdf:resource="#Score"/>
     </owl:ObjectProperty>
     <owl:ObjectProperty rdf:ID="interactionType">
         <rdfs:domain rdf:resource="#Interaction"/>
-        <rdfs:range rdf:resource="#InteractionVocabulary"/>
         <rdfs:comment rdf:datatype="&xsd;string"
             >External controlled vocabulary annotating the interaction type, for example &quot;phosphorylation&quot;. This is annotation useful for e.g. display on a web page or database searching, but may not be suitable for other computing tasks, like reasoning.</rdfs:comment>
+        <rdfs:range rdf:resource="#InteractionVocabulary"/>
     </owl:ObjectProperty>
     <owl:Class rdf:ID="InteractionVocabulary">
         <rdfs:subClassOf rdf:resource="#ControlledVocabulary"/>
-        <owl:disjointWith rdf:resource="#ExperimentalFormVocabulary"/>
-        <owl:disjointWith rdf:resource="#EvidenceCodeVocabulary"/>
         <owl:disjointWith rdf:resource="#CellularLocationVocabulary"/>
         <owl:disjointWith rdf:resource="#CellVocabulary"/>
-        <owl:disjointWith rdf:resource="#SequenceRegionVocabulary"/>
-        <owl:disjointWith rdf:resource="#RelationshipTypeVocabulary"/>
         <owl:disjointWith rdf:resource="#EntityReferenceTypeVocabulary"/>
+        <owl:disjointWith rdf:resource="#EvidenceCodeVocabulary"/>
+        <owl:disjointWith rdf:resource="#ExperimentalFormVocabulary"/>
         <owl:disjointWith rdf:resource="#PhenotypeVocabulary"/>
+        <owl:disjointWith rdf:resource="#RelationshipTypeVocabulary"/>
         <owl:disjointWith rdf:resource="#SequenceModificationVocabulary"/>
+        <owl:disjointWith rdf:resource="#SequenceRegionVocabulary"/>
         <owl:disjointWith rdf:resource="#TissueVocabulary"/>
         <rdfs:comment rdf:datatype="&xsd;string"
             >Definition: A reference to the PSI Molecular Interaction ontology (MI) interaction type. Homepage at http://www.psidev.info/.  Browse at http://www.ebi.ac.uk/ontology-lookup/browse.do?ontName=MI&amp;termId=MI%3A0190&amp;termName=interaction%20type</rdfs:comment>
@@ -1217,9 +1215,9 @@ Examples: protein-protein interaction, biochemical reaction, enzyme catalysis</r
     <owl:FunctionalProperty rdf:ID="intraMolecular">
         <rdf:type rdf:resource="&owl;DatatypeProperty"/>
         <rdfs:domain rdf:resource="#BindingFeature"/>
-        <rdfs:range rdf:resource="&xsd;boolean"/>
         <rdfs:comment rdf:datatype="&xsd;string"
-            >This flag represents whether the binding feature is within the same molecule or not.</rdfs:comment>
+            >This flag represents whether the binding feature is within the same molecule or not. A true value implies that the entityReferences of this feature and its binding partner are the same.</rdfs:comment>
+        <rdfs:range rdf:resource="&xsd;boolean"/>
     </owl:FunctionalProperty>
     <owl:FunctionalProperty rdf:ID="ionicStrength">
         <rdf:type rdf:resource="&owl;DatatypeProperty"/>
@@ -1231,14 +1229,13 @@ Examples: protein-protein interaction, biochemical reaction, enzyme catalysis</r
                 </owl:unionOf>
             </owl:Class>
         </rdfs:domain>
-        <rdfs:range rdf:resource="&xsd;float"/>
         <rdfs:comment rdf:datatype="&xsd;string"
             >The ionic strength is defined as half of the total sum of the concentration (ci) of every ionic species (i) in the solution times the square of its charge (zi). For example, the ionic strength of a 0.1 M solution of CaCl2 is 0.5 x (0.1 x 22 + 0.2 x 12) = 0.3 M
 (Definition from http://www.lsbu.ac.uk/biology/enztech/ph.html)</rdfs:comment>
+        <rdfs:range rdf:resource="&xsd;float"/>
     </owl:FunctionalProperty>
     <owl:ObjectProperty rdf:ID="kEQ">
         <rdfs:domain rdf:resource="#BiochemicalReaction"/>
-        <rdfs:range rdf:resource="#KPrime"/>
         <rdfs:comment rdf:datatype="&xsd;string"
             >This quantity is dimensionless and is usually a single number. The measured equilibrium constant for a biochemical reaction, encoded by the slot KEQ, is actually the apparent equilibrium constant, K&apos;.  Concentrations in the equilibrium constant equation refer to the total concentrations of  all forms of particular biochemical reactants. For example, in the equilibrium constant equation for the biochemical reaction in which ATP is hydrolyzed to ADP and inorganic phosphate:
 
@@ -1249,29 +1246,30 @@ The concentration of ATP refers to the total concentration of all of the followi
 [ATP] = [ATP&lt;sup&gt;4-&lt;/sup&gt;] + [HATP&lt;sup&gt;3-&lt;/sup&gt;] + [H&lt;sub&gt;2&lt;/sub&gt;ATP&lt;sup&gt;2-&lt;/sup&gt;] + [MgATP&lt;sup&gt;2-&lt;/sup&gt;] + [MgHATP&lt;sup&gt;-&lt;/sup&gt;] + [Mg&lt;sub&gt;2&lt;/sub&gt;ATP].
 
 The apparent equilibrium constant is formally dimensionless, and can be kept so by inclusion of as many of the terms (1 mol/dm&lt;sup&gt;3&lt;/sup&gt;) in the numerator or denominator as necessary.  It is a function of temperature (T), ionic strength (I), pH, and pMg (pMg = -log&lt;sub&gt;10&lt;/sub&gt;[Mg&lt;sup&gt;2+&lt;/sup&gt;]). Therefore, these quantities must be specified to be precise, and values for KEQ for biochemical reactions may be represented as 5-tuples of the form (K&apos; T I pH pMg).  This property may have multiple values, representing different measurements for K&apos; obtained under the different experimental conditions listed in the 5-tuple. (This definition adapted from EcoCyc)</rdfs:comment>
+        <rdfs:range rdf:resource="#KPrime"/>
     </owl:ObjectProperty>
     <owl:Class rdf:ID="KPrime">
         <rdfs:subClassOf rdf:resource="#UtilityClass"/>
         <rdfs:subClassOf>
             <owl:Restriction>
                 <owl:onProperty rdf:resource="#kPrime"/>
-                <owl:cardinality rdf:datatype="&xsd;int">1</owl:cardinality>
+                <owl:cardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:cardinality>
             </owl:Restriction>
         </rdfs:subClassOf>
-        <owl:disjointWith rdf:resource="#EntityFeature"/>
-        <owl:disjointWith rdf:resource="#Score"/>
-        <owl:disjointWith rdf:resource="#Provenance"/>
-        <owl:disjointWith rdf:resource="#EntityReference"/>
-        <owl:disjointWith rdf:resource="#Stoichiometry"/>
-        <owl:disjointWith rdf:resource="#ChemicalStructure"/>
-        <owl:disjointWith rdf:resource="#SequenceLocation"/>
-        <owl:disjointWith rdf:resource="#Evidence"/>
-        <owl:disjointWith rdf:resource="#PathwayStep"/>
         <owl:disjointWith rdf:resource="#BioSource"/>
-        <owl:disjointWith rdf:resource="#DeltaG"/>
+        <owl:disjointWith rdf:resource="#ChemicalStructure"/>
         <owl:disjointWith rdf:resource="#ControlledVocabulary"/>
-        <owl:disjointWith rdf:resource="#Xref"/>
+        <owl:disjointWith rdf:resource="#DeltaG"/>
+        <owl:disjointWith rdf:resource="#EntityFeature"/>
+        <owl:disjointWith rdf:resource="#EntityReference"/>
+        <owl:disjointWith rdf:resource="#Evidence"/>
         <owl:disjointWith rdf:resource="#ExperimentalForm"/>
+        <owl:disjointWith rdf:resource="#PathwayStep"/>
+        <owl:disjointWith rdf:resource="#Provenance"/>
+        <owl:disjointWith rdf:resource="#Score"/>
+        <owl:disjointWith rdf:resource="#SequenceLocation"/>
+        <owl:disjointWith rdf:resource="#Stoichiometry"/>
+        <owl:disjointWith rdf:resource="#Xref"/>
         <rdfs:comment rdf:datatype="&xsd;string"
             >Definition: The apparent equilibrium constant, K&apos;, and associated values. 
 Usage: Concentrations in the equilibrium constant equation refer to the total concentrations of  all forms of particular biochemical reactants. For example, in the equilibrium constant equation for the biochemical reaction in which ATP is hydrolyzed to ADP and inorganic phosphate:
@@ -1289,7 +1287,6 @@ See http://www.chem.qmul.ac.uk/iubmb/thermod/ for a thermodynamics tutorial.</rd
     <owl:FunctionalProperty rdf:ID="kPrime">
         <rdf:type rdf:resource="&owl;DatatypeProperty"/>
         <rdfs:domain rdf:resource="#KPrime"/>
-        <rdfs:range rdf:resource="&xsd;float"/>
         <rdfs:comment rdf:datatype="&xsd;string"
             >The apparent equilibrium constant K&apos;. Concentrations in the equilibrium constant equation refer to the total concentrations of  all forms of particular biochemical reactants. For example, in the equilibrium constant equation for the biochemical reaction in which ATP is hydrolyzed to ADP and inorganic phosphate:
 
@@ -1301,35 +1298,36 @@ The concentration of ATP refers to the total concentration of all of the followi
 
 The apparent equilibrium constant is formally dimensionless, and can be kept so by inclusion of as many of the terms (1 mol/dm&lt;sup&gt;3&lt;/sup&gt;) in the numerator or denominator as necessary.  It is a function of temperature (T), ionic strength (I), pH, and pMg (pMg = -log&lt;sub&gt;10&lt;/sub&gt;[Mg&lt;sup&gt;2+&lt;/sup&gt;]).
 (Definition from EcoCyc)</rdfs:comment>
+        <rdfs:range rdf:resource="&xsd;float"/>
     </owl:FunctionalProperty>
     <owl:ObjectProperty rdf:ID="left">
         <rdfs:domain rdf:resource="#Conversion"/>
-        <rdfs:range rdf:resource="#PhysicalEntity"/>
-        <rdfs:subPropertyOf rdf:resource="#participant"/>
         <rdfs:comment rdf:datatype="&xsd;string"
             >The participants on the left side of the conversion interaction. Since conversion interactions may proceed in either the left-to-right or right-to-left direction, occupants of the LEFT property may be either reactants or products. LEFT is a sub-property of PARTICIPANTS.</rdfs:comment>
+        <rdfs:range rdf:resource="#PhysicalEntity"/>
+        <rdfs:subPropertyOf rdf:resource="#participant"/>
     </owl:ObjectProperty>
     <owl:ObjectProperty rdf:ID="memberEntityReference">
         <rdfs:domain rdf:resource="#EntityReference"/>
-        <rdfs:range rdf:resource="#EntityReference"/>
         <rdfs:comment rdf:datatype="&xsd;string"
             >An entity reference that qualifies for the definition of this group. For example a member of a PFAM protein family.</rdfs:comment>
+        <rdfs:range rdf:resource="#EntityReference"/>
     </owl:ObjectProperty>
     <owl:TransitiveProperty rdf:ID="memberFeature">
         <rdf:type rdf:resource="&owl;ObjectProperty"/>
         <rdfs:domain rdf:resource="#EntityFeature"/>
-        <rdfs:range rdf:resource="#EntityFeature"/>
         <rdfs:comment rdf:datatype="&xsd;string"
             >An entity feature  that belongs to this homology grouping. Example: a homologous phosphorylation site across a protein family.</rdfs:comment>
+        <rdfs:range rdf:resource="#EntityFeature"/>
     </owl:TransitiveProperty>
     <owl:TransitiveProperty rdf:ID="memberPhysicalEntity">
         <rdf:type rdf:resource="&owl;ObjectProperty"/>
         <rdfs:domain rdf:resource="#PhysicalEntity"/>
-        <rdfs:range rdf:resource="#PhysicalEntity"/>
         <rdfs:comment rdf:datatype="&xsd;string"
             >This property stores the members of a generic physical entity. 
 
 For representing homology generics a better way is to use generic entity references and generic features. However not all generic logic can be captured by this, such as complex generics or rare cases where feature cardinality is variable. Usages of this property should be limited to such cases.</rdfs:comment>
+        <rdfs:range rdf:resource="#PhysicalEntity"/>
     </owl:TransitiveProperty>
     <owl:Class rdf:ID="ModificationFeature">
         <rdfs:subClassOf rdf:resource="#EntityFeature"/>
@@ -1346,9 +1344,9 @@ Instances: A phosphorylation on a protein, a methylation on a DNA.</rdfs:comment
     <owl:FunctionalProperty rdf:ID="modificationType">
         <rdf:type rdf:resource="&owl;ObjectProperty"/>
         <rdfs:domain rdf:resource="#ModificationFeature"/>
-        <rdfs:range rdf:resource="#SequenceModificationVocabulary"/>
         <rdfs:comment rdf:datatype="&xsd;string"
             >Description and classification of the feature.</rdfs:comment>
+        <rdfs:range rdf:resource="#SequenceModificationVocabulary"/>
     </owl:FunctionalProperty>
     <owl:Class rdf:ID="Modulation">
         <rdfs:subClassOf>
@@ -1396,9 +1394,9 @@ Example: Two proteins observed to interact in a yeast-two-hybrid experiment wher
     <owl:FunctionalProperty rdf:ID="molecularWeight">
         <rdf:type rdf:resource="&owl;DatatypeProperty"/>
         <rdfs:domain rdf:resource="#SmallMoleculeReference"/>
-        <rdfs:range rdf:resource="&xsd;float"/>
         <rdfs:comment xml:lang="en"
             >Defines the molecular weight of the molecule, in daltons.</rdfs:comment>
+        <rdfs:range rdf:resource="&xsd;float"/>
     </owl:FunctionalProperty>
     <owl:DatatypeProperty rdf:ID="name">
         <rdfs:domain>
@@ -1411,23 +1409,23 @@ Example: Two proteins observed to interact in a yeast-two-hybrid experiment wher
                 </owl:unionOf>
             </owl:Class>
         </rdfs:domain>
-        <rdfs:range rdf:resource="&xsd;string"/>
         <rdfs:comment xml:lang="en"
             >Synonyms for this entity.  standardName and shortName are subproperties of this property and if declared they are automatically considered as names. 
 
 Warning:  Subproperties of name are functional, that is we expect to have only one standardName and shortName for a given entity. If a user decides to assign a different name to standardName or shortName, they have to remove the old triplet from the model too. If the old name should be retained as a synonym a regular &quot;name&quot; property should also be introduced with the old name.</rdfs:comment>
+        <rdfs:range rdf:resource="&xsd;string"/>
     </owl:DatatypeProperty>
     <owl:ObjectProperty rdf:ID="nextStep">
         <rdfs:domain rdf:resource="#PathwayStep"/>
-        <rdfs:range rdf:resource="#PathwayStep"/>
         <rdfs:comment rdf:datatype="&xsd;string"
             >The next step(s) of the pathway.  Contains zero or more pathwayStep instances.  If there is no next step, this property is empty. Multiple pathwayStep instances indicate pathway branching.</rdfs:comment>
+        <rdfs:range rdf:resource="#PathwayStep"/>
     </owl:ObjectProperty>
     <owl:ObjectProperty rdf:ID="notFeature">
         <rdfs:domain rdf:resource="#PhysicalEntity"/>
-        <rdfs:range rdf:resource="#EntityFeature"/>
         <rdfs:comment rdf:datatype="&xsd;string"
             >Sequence features where the owner physical entity has a feature. If not specified, other potential features are not known.</rdfs:comment>
+        <rdfs:range rdf:resource="#EntityFeature"/>
     </owl:ObjectProperty>
     <owl:FunctionalProperty rdf:ID="organism">
         <rdf:type rdf:resource="&owl;ObjectProperty"/>
@@ -1444,21 +1442,21 @@ Warning:  Subproperties of name are functional, that is we expect to have only o
                 </owl:unionOf>
             </owl:Class>
         </rdfs:domain>
-        <rdfs:range rdf:resource="#BioSource"/>
         <rdfs:comment xml:lang="en"
             >An organism, e.g. &apos;Homo sapiens&apos;. This is the organism that the entity is found in. Pathways may not have an organism associated with them, for instance, reference pathways from KEGG. Sequence-based entities (DNA, protein, RNA) may contain an xref to a sequence database that contains organism information, in which case the information should be consistent with the value for ORGANISM.</rdfs:comment>
+        <rdfs:range rdf:resource="#BioSource"/>
     </owl:FunctionalProperty>
     <owl:ObjectProperty rdf:ID="participant">
         <rdfs:domain rdf:resource="#Interaction"/>
-        <rdfs:range rdf:resource="#Entity"/>
         <rdfs:comment rdf:datatype="&xsd;string"
             >This property lists the entities that participate in this interaction. For example, in a biochemical reaction, the participants are the union of the reactants and the products of the reaction. This property has a number of sub-properties, such as LEFT and RIGHT used in the biochemicalInteraction class. Any participant listed in a sub-property will automatically be assumed to also be in PARTICIPANTS by a number of software systems, including Protege, so this property should not contain any instances if there are instances contained in a sub-property.</rdfs:comment>
+        <rdfs:range rdf:resource="#Entity"/>
     </owl:ObjectProperty>
     <owl:ObjectProperty rdf:ID="participantStoichiometry">
         <rdfs:domain rdf:resource="#Conversion"/>
-        <rdfs:range rdf:resource="#Stoichiometry"/>
         <rdfs:comment rdf:datatype="&xsd;string"
             >Stoichiometry of the left and right participants.</rdfs:comment>
+        <rdfs:range rdf:resource="#Stoichiometry"/>
     </owl:ObjectProperty>
     <owl:Class rdf:ID="Pathway">
         <rdfs:subClassOf rdf:resource="#Entity"/>
@@ -1475,6 +1473,8 @@ Examples: glycolysis, valine biosynthesis, EGFR signaling</rdfs:comment>
     </owl:Class>
     <owl:ObjectProperty rdf:ID="pathwayComponent">
         <rdfs:domain rdf:resource="#Pathway"/>
+        <rdfs:comment rdf:datatype="&xsd;string"
+            >The set of interactions and/or pathwaySteps in this pathway/network. Each instance of the pathwayStep class defines: 1) a set of interactions that together define a particular step in the pathway, for example a catalysis instance and the conversion that it catalyzes; 2) an order relationship to one or more other pathway steps (via the NEXT-STEP property). Note: This ordering is not necessarily temporal - the order described may simply represent connectivity between adjacent steps. Temporal ordering information should only be inferred from the direction of each interaction.</rdfs:comment>
         <rdfs:range>
             <owl:Class>
                 <owl:unionOf rdf:parseType="Collection">
@@ -1483,31 +1483,29 @@ Examples: glycolysis, valine biosynthesis, EGFR signaling</rdfs:comment>
                 </owl:unionOf>
             </owl:Class>
         </rdfs:range>
-        <rdfs:comment rdf:datatype="&xsd;string"
-            >The set of interactions and/or pathwaySteps in this pathway/network. Each instance of the pathwayStep class defines: 1) a set of interactions that together define a particular step in the pathway, for example a catalysis instance and the conversion that it catalyzes; 2) an order relationship to one or more other pathway steps (via the NEXT-STEP property). Note: This ordering is not necessarily temporal - the order described may simply represent connectivity between adjacent steps. Temporal ordering information should only be inferred from the direction of each interaction.</rdfs:comment>
     </owl:ObjectProperty>
     <owl:ObjectProperty rdf:ID="pathwayOrder">
         <rdfs:domain rdf:resource="#Pathway"/>
-        <rdfs:range rdf:resource="#PathwayStep"/>
         <rdfs:comment rdf:datatype="&xsd;string"
             >The ordering of components (interactions and pathways) in the context of this pathway. This is useful to specific circular or branched pathways or orderings when component biochemical reactions are normally reversible, but are directed in the context of this pathway.</rdfs:comment>
+        <rdfs:range rdf:resource="#PathwayStep"/>
     </owl:ObjectProperty>
     <owl:Class rdf:ID="PathwayStep">
         <rdfs:subClassOf rdf:resource="#UtilityClass"/>
-        <owl:disjointWith rdf:resource="#Provenance"/>
-        <owl:disjointWith rdf:resource="#Score"/>
-        <owl:disjointWith rdf:resource="#Xref"/>
+        <owl:disjointWith rdf:resource="#BioSource"/>
         <owl:disjointWith rdf:resource="#ChemicalStructure"/>
         <owl:disjointWith rdf:resource="#ControlledVocabulary"/>
-        <owl:disjointWith rdf:resource="#BioSource"/>
-        <owl:disjointWith rdf:resource="#ExperimentalForm"/>
-        <owl:disjointWith rdf:resource="#Stoichiometry"/>
-        <owl:disjointWith rdf:resource="#KPrime"/>
-        <owl:disjointWith rdf:resource="#Evidence"/>
-        <owl:disjointWith rdf:resource="#SequenceLocation"/>
-        <owl:disjointWith rdf:resource="#EntityFeature"/>
         <owl:disjointWith rdf:resource="#DeltaG"/>
+        <owl:disjointWith rdf:resource="#EntityFeature"/>
         <owl:disjointWith rdf:resource="#EntityReference"/>
+        <owl:disjointWith rdf:resource="#Evidence"/>
+        <owl:disjointWith rdf:resource="#ExperimentalForm"/>
+        <owl:disjointWith rdf:resource="#KPrime"/>
+        <owl:disjointWith rdf:resource="#Provenance"/>
+        <owl:disjointWith rdf:resource="#Score"/>
+        <owl:disjointWith rdf:resource="#SequenceLocation"/>
+        <owl:disjointWith rdf:resource="#Stoichiometry"/>
+        <owl:disjointWith rdf:resource="#Xref"/>
         <rdfs:comment rdf:datatype="&xsd;string"
             >Definition: A step in an ordered pathway.
 Rationale: Some pathways can have a temporal order. For example,  if the pathway boundaries are based on a perturbation phenotype link, the pathway might start with the perturbing agent and end at gene expression leading to the observed changes. Pathway steps can represent directed compound graphs.
@@ -1518,9 +1516,9 @@ Example: A metabolic pathway may contain a pathway step composed of one biochemi
     <owl:FunctionalProperty rdf:ID="patoData">
         <rdf:type rdf:resource="&owl;DatatypeProperty"/>
         <rdfs:domain rdf:resource="#PhenotypeVocabulary"/>
-        <rdfs:range rdf:resource="&xsd;string"/>
         <rdfs:comment rdf:datatype="&xsd;string"
             >The phenotype data from PATO, formatted as PhenoXML (defined at http://www.fruitfly.org/~cjm/obd/formats.html)</rdfs:comment>
+        <rdfs:range rdf:resource="&xsd;string"/>
     </owl:FunctionalProperty>
     <owl:FunctionalProperty rdf:ID="ph">
         <rdf:type rdf:resource="&owl;DatatypeProperty"/>
@@ -1532,29 +1530,29 @@ Example: A metabolic pathway may contain a pathway step composed of one biochemi
                 </owl:unionOf>
             </owl:Class>
         </rdfs:domain>
-        <rdfs:range rdf:resource="&xsd;float"/>
         <rdfs:comment rdf:datatype="&xsd;string"
             >A measure of acidity and alkalinity of a solution that is a number on a scale on which a value of 7 represents neutrality and lower numbers indicate increasing acidity and higher numbers increasing alkalinity and on which each unit of change represents a tenfold change in acidity or alkalinity and that is the negative logarithm of the effective hydrogen-ion concentration or hydrogen-ion activity in gram equivalents per liter of the solution. (Definition from Merriam-Webster Dictionary)</rdfs:comment>
+        <rdfs:range rdf:resource="&xsd;float"/>
     </owl:FunctionalProperty>
     <owl:FunctionalProperty rdf:ID="phenotype">
         <rdf:type rdf:resource="&owl;ObjectProperty"/>
         <rdfs:domain rdf:resource="#GeneticInteraction"/>
-        <rdfs:range rdf:resource="#PhenotypeVocabulary"/>
         <rdfs:comment rdf:datatype="&xsd;string"
             >The phenotype quality used to define this genetic interaction e.g. viability.</rdfs:comment>
+        <rdfs:range rdf:resource="#PhenotypeVocabulary"/>
     </owl:FunctionalProperty>
     <owl:Class rdf:ID="PhenotypeVocabulary">
         <rdfs:subClassOf rdf:resource="#ControlledVocabulary"/>
-        <owl:disjointWith rdf:resource="#RelationshipTypeVocabulary"/>
-        <owl:disjointWith rdf:resource="#SequenceRegionVocabulary"/>
+        <owl:disjointWith rdf:resource="#CellularLocationVocabulary"/>
         <owl:disjointWith rdf:resource="#CellVocabulary"/>
+        <owl:disjointWith rdf:resource="#EntityReferenceTypeVocabulary"/>
+        <owl:disjointWith rdf:resource="#EvidenceCodeVocabulary"/>
         <owl:disjointWith rdf:resource="#ExperimentalFormVocabulary"/>
         <owl:disjointWith rdf:resource="#InteractionVocabulary"/>
-        <owl:disjointWith rdf:resource="#CellularLocationVocabulary"/>
-        <owl:disjointWith rdf:resource="#EvidenceCodeVocabulary"/>
-        <owl:disjointWith rdf:resource="#EntityReferenceTypeVocabulary"/>
-        <owl:disjointWith rdf:resource="#TissueVocabulary"/>
+        <owl:disjointWith rdf:resource="#RelationshipTypeVocabulary"/>
         <owl:disjointWith rdf:resource="#SequenceModificationVocabulary"/>
+        <owl:disjointWith rdf:resource="#SequenceRegionVocabulary"/>
+        <owl:disjointWith rdf:resource="#TissueVocabulary"/>
         <rdfs:comment rdf:datatype="&xsd;string"
             >Definition: The phenotype measured in the experiment e.g. growth rate or viability of a cell. This is only the type, not the value e.g. for a synthetic lethal interaction, the phenotype is viability, specified by ID: PATO:0000169, &quot;viability&quot;, not the value (specified by ID: PATO:0000718, &quot;lethal (sensu genetics)&quot;. A single term in a phenotype controlled vocabulary can be referenced using the xref, or the PhenoXML describing the PATO EQ model phenotype description can be stored as a string in PATO-DATA.</rdfs:comment>
     </owl:Class>
@@ -1581,9 +1579,9 @@ Examples: extracellular calcium, ser 64 phosphorylated p53</rdfs:comment>
     <owl:FunctionalProperty rdf:ID="physicalEntity">
         <rdf:type rdf:resource="&owl;ObjectProperty"/>
         <rdfs:domain rdf:resource="#Stoichiometry"/>
-        <rdfs:range rdf:resource="#PhysicalEntity"/>
         <rdfs:comment xml:lang="en"
             >The physical entity to be annotated with stoichiometry.</rdfs:comment>
+        <rdfs:range rdf:resource="#PhysicalEntity"/>
     </owl:FunctionalProperty>
     <owl:FunctionalProperty rdf:ID="pMg">
         <rdf:type rdf:resource="&owl;DatatypeProperty"/>
@@ -1595,13 +1593,18 @@ Examples: extracellular calcium, ser 64 phosphorylated p53</rdfs:comment>
                 </owl:unionOf>
             </owl:Class>
         </rdfs:domain>
-        <rdfs:range rdf:resource="&xsd;float"/>
         <rdfs:comment rdf:datatype="&xsd;string"
             >A measure of the concentration of magnesium (Mg) in solution. (pMg = -log&lt;sub&gt;10&lt;/sub&gt;[Mg&lt;sup&gt;2+&lt;/sup&gt;])</rdfs:comment>
+        <rdfs:range rdf:resource="&xsd;float"/>
     </owl:FunctionalProperty>
     <owl:FunctionalProperty rdf:ID="positionStatus">
         <rdf:type rdf:resource="&owl;DatatypeProperty"/>
         <rdfs:domain rdf:resource="#SequenceSite"/>
+        <rdfs:comment rdf:datatype="&xsd;string"
+            >The confidence status of the sequence position. This could be:
+EQUAL: The SEQUENCE-POSITION is known to be at the SEQUENCE-POSITION.
+GREATER-THAN: The site is greater than the SEQUENCE-POSITION.
+LESS-THAN: The site is less than the SEQUENCE-POSITION.</rdfs:comment>
         <rdfs:range>
             <owl:DataRange>
                 <owl:oneOf>
@@ -1622,14 +1625,11 @@ Examples: extracellular calcium, ser 64 phosphorylated p53</rdfs:comment>
                 </owl:oneOf>
             </owl:DataRange>
         </rdfs:range>
-        <rdfs:comment rdf:datatype="&xsd;string"
-            >The confidence status of the sequence position. This could be:
-EQUAL: The SEQUENCE-POSITION is known to be at the SEQUENCE-POSITION.
-GREATER-THAN: The site is greater than the SEQUENCE-POSITION.
-LESS-THAN: The site is less than the SEQUENCE-POSITION.</rdfs:comment>
     </owl:FunctionalProperty>
     <owl:ObjectProperty rdf:ID="product">
         <rdfs:domain rdf:resource="#TemplateReaction"/>
+        <rdfs:comment rdf:datatype="&xsd;string"
+            >The product of a template reaction.</rdfs:comment>
         <rdfs:range>
             <owl:Class>
                 <owl:unionOf rdf:parseType="Collection">
@@ -1640,8 +1640,6 @@ LESS-THAN: The site is less than the SEQUENCE-POSITION.</rdfs:comment>
             </owl:Class>
         </rdfs:range>
         <rdfs:subPropertyOf rdf:resource="#participant"/>
-        <rdfs:comment rdf:datatype="&xsd;string"
-            >The product of a template reaction.</rdfs:comment>
     </owl:ObjectProperty>
     <owl:Class rdf:ID="Protein">
         <rdfs:subClassOf rdf:resource="#PhysicalEntity"/>
@@ -1657,12 +1655,12 @@ LESS-THAN: The site is less than the SEQUENCE-POSITION.</rdfs:comment>
                 <owl:allValuesFrom rdf:resource="#ProteinReference"/>
             </owl:Restriction>
         </rdfs:subClassOf>
+        <owl:disjointWith rdf:resource="#Complex"/>
+        <owl:disjointWith rdf:resource="#Dna"/>
+        <owl:disjointWith rdf:resource="#DnaRegion"/>
+        <owl:disjointWith rdf:resource="#Rna"/>
         <owl:disjointWith rdf:resource="#RnaRegion"/>
         <owl:disjointWith rdf:resource="#SmallMolecule"/>
-        <owl:disjointWith rdf:resource="#Dna"/>
-        <owl:disjointWith rdf:resource="#Rna"/>
-        <owl:disjointWith rdf:resource="#DnaRegion"/>
-        <owl:disjointWith rdf:resource="#Complex"/>
         <rdfs:comment rdf:datatype="&xsd;string"
             >Definition: A physical entity consisting of a sequence of amino acids; a protein monomer; a single polypeptide chain.
 Examples: The epidermal growth factor receptor (EGFR) protein.</rdfs:comment>
@@ -1702,19 +1700,19 @@ Comments:Most Protein databases, including UniProt would map one to one with Pro
             </owl:Restriction>
         </rdfs:subClassOf>
         <rdfs:subClassOf rdf:resource="#UtilityClass"/>
-        <owl:disjointWith rdf:resource="#ExperimentalForm"/>
-        <owl:disjointWith rdf:resource="#ChemicalStructure"/>
-        <owl:disjointWith rdf:resource="#Stoichiometry"/>
-        <owl:disjointWith rdf:resource="#Evidence"/>
-        <owl:disjointWith rdf:resource="#ControlledVocabulary"/>
-        <owl:disjointWith rdf:resource="#KPrime"/>
-        <owl:disjointWith rdf:resource="#EntityReference"/>
-        <owl:disjointWith rdf:resource="#EntityFeature"/>
         <owl:disjointWith rdf:resource="#BioSource"/>
-        <owl:disjointWith rdf:resource="#Score"/>
-        <owl:disjointWith rdf:resource="#PathwayStep"/>
+        <owl:disjointWith rdf:resource="#ChemicalStructure"/>
+        <owl:disjointWith rdf:resource="#ControlledVocabulary"/>
         <owl:disjointWith rdf:resource="#DeltaG"/>
+        <owl:disjointWith rdf:resource="#EntityFeature"/>
+        <owl:disjointWith rdf:resource="#EntityReference"/>
+        <owl:disjointWith rdf:resource="#Evidence"/>
+        <owl:disjointWith rdf:resource="#ExperimentalForm"/>
+        <owl:disjointWith rdf:resource="#KPrime"/>
+        <owl:disjointWith rdf:resource="#PathwayStep"/>
+        <owl:disjointWith rdf:resource="#Score"/>
         <owl:disjointWith rdf:resource="#SequenceLocation"/>
+        <owl:disjointWith rdf:resource="#Stoichiometry"/>
         <owl:disjointWith rdf:resource="#Xref"/>
         <rdfs:comment rdf:datatype="&xsd;string"
             >Definition: The direct source of pathway data or score.
@@ -1743,23 +1741,23 @@ Examples: PubMed:10234245</rdfs:comment>
     </owl:FunctionalProperty>
     <owl:ObjectProperty rdf:ID="relationshipType">
         <rdfs:domain rdf:resource="#RelationshipXref"/>
-        <rdfs:range rdf:resource="#RelationshipTypeVocabulary"/>
         <rdfs:comment rdf:datatype="&xsd;string"
             >Definition:A controlled vocabulary term that defines the type of relationship that this xref defines.
 Usage: There is currently no controlled vocabulary of relationship types for BioPAX, although one will be created in the future as the usage of this property increases.</rdfs:comment>
+        <rdfs:range rdf:resource="#RelationshipTypeVocabulary"/>
     </owl:ObjectProperty>
     <owl:Class rdf:ID="RelationshipTypeVocabulary">
         <rdfs:subClassOf rdf:resource="#ControlledVocabulary"/>
-        <owl:disjointWith rdf:resource="#SequenceModificationVocabulary"/>
-        <owl:disjointWith rdf:resource="#InteractionVocabulary"/>
-        <owl:disjointWith rdf:resource="#ExperimentalFormVocabulary"/>
-        <owl:disjointWith rdf:resource="#TissueVocabulary"/>
-        <owl:disjointWith rdf:resource="#PhenotypeVocabulary"/>
-        <owl:disjointWith rdf:resource="#CellVocabulary"/>
-        <owl:disjointWith rdf:resource="#EvidenceCodeVocabulary"/>
-        <owl:disjointWith rdf:resource="#SequenceRegionVocabulary"/>
         <owl:disjointWith rdf:resource="#CellularLocationVocabulary"/>
+        <owl:disjointWith rdf:resource="#CellVocabulary"/>
         <owl:disjointWith rdf:resource="#EntityReferenceTypeVocabulary"/>
+        <owl:disjointWith rdf:resource="#EvidenceCodeVocabulary"/>
+        <owl:disjointWith rdf:resource="#ExperimentalFormVocabulary"/>
+        <owl:disjointWith rdf:resource="#InteractionVocabulary"/>
+        <owl:disjointWith rdf:resource="#PhenotypeVocabulary"/>
+        <owl:disjointWith rdf:resource="#SequenceModificationVocabulary"/>
+        <owl:disjointWith rdf:resource="#SequenceRegionVocabulary"/>
+        <owl:disjointWith rdf:resource="#TissueVocabulary"/>
         <rdfs:comment rdf:datatype="&xsd;string"
             >Definition: Vocabulary for defining relationship Xref types. A reference to the PSI Molecular Interaction ontology (MI) Cross Reference type. Homepage at http://www.psidev.info/.  Browse at http://www.ebi.ac.uk/ontology-lookup/browse.do?ontName=MI&amp;termId=MI%3A0353&amp;termName=cross-reference%20type</rdfs:comment>
     </owl:Class>
@@ -1772,10 +1770,10 @@ Examples: A link between a gene G in a BioPAX data collection, and the protein p
     </owl:Class>
     <owl:ObjectProperty rdf:ID="right">
         <rdfs:domain rdf:resource="#Conversion"/>
-        <rdfs:range rdf:resource="#PhysicalEntity"/>
-        <rdfs:subPropertyOf rdf:resource="#participant"/>
         <rdfs:comment rdf:datatype="&xsd;string"
             >The participants on the right side of the conversion interaction. Since conversion interactions may proceed in either the left-to-right or right-to-left direction, occupants of the RIGHT property may be either reactants or products. RIGHT is a sub-property of PARTICIPANTS.</rdfs:comment>
+        <rdfs:range rdf:resource="#PhysicalEntity"/>
+        <rdfs:subPropertyOf rdf:resource="#participant"/>
     </owl:ObjectProperty>
     <owl:Class rdf:ID="Rna">
         <rdfs:subClassOf>
@@ -1791,11 +1789,11 @@ Examples: A link between a gene G in a BioPAX data collection, and the protein p
             </owl:Restriction>
         </rdfs:subClassOf>
         <rdfs:subClassOf rdf:resource="#PhysicalEntity"/>
+        <owl:disjointWith rdf:resource="#Complex"/>
+        <owl:disjointWith rdf:resource="#Dna"/>
+        <owl:disjointWith rdf:resource="#DnaRegion"/>
         <owl:disjointWith rdf:resource="#Protein"/>
         <owl:disjointWith rdf:resource="#RnaRegion"/>
-        <owl:disjointWith rdf:resource="#Complex"/>
-        <owl:disjointWith rdf:resource="#DnaRegion"/>
-        <owl:disjointWith rdf:resource="#Dna"/>
         <owl:disjointWith rdf:resource="#SmallMolecule"/>
         <rdfs:comment rdf:datatype="&xsd;string"
             >Definition: A physical entity consisting of a sequence of ribonucleotide monophosphates; a ribonucleic acid.
@@ -1817,8 +1815,8 @@ Examples: messengerRNA, microRNA, ribosomalRNA. A specific example is the let-7 
         </rdfs:subClassOf>
         <rdfs:subClassOf rdf:resource="#EntityReference"/>
         <owl:disjointWith rdf:resource="#DnaReference"/>
-        <owl:disjointWith rdf:resource="#ProteinReference"/>
         <owl:disjointWith rdf:resource="#DnaRegionReference"/>
+        <owl:disjointWith rdf:resource="#ProteinReference"/>
         <owl:disjointWith rdf:resource="#RnaRegionReference"/>
         <owl:disjointWith rdf:resource="#SmallMoleculeReference"/>
         <rdfs:comment rdf:datatype="&xsd;string"
@@ -1838,12 +1836,12 @@ Examples: messengerRNA, microRNA, ribosomalRNA. A specific example is the let-7 
             </owl:Restriction>
         </rdfs:subClassOf>
         <rdfs:subClassOf rdf:resource="#PhysicalEntity"/>
-        <owl:disjointWith rdf:resource="#Protein"/>
-        <owl:disjointWith rdf:resource="#DnaRegion"/>
-        <owl:disjointWith rdf:resource="#SmallMolecule"/>
         <owl:disjointWith rdf:resource="#Complex"/>
-        <owl:disjointWith rdf:resource="#Rna"/>
         <owl:disjointWith rdf:resource="#Dna"/>
+        <owl:disjointWith rdf:resource="#DnaRegion"/>
+        <owl:disjointWith rdf:resource="#Protein"/>
+        <owl:disjointWith rdf:resource="#Rna"/>
+        <owl:disjointWith rdf:resource="#SmallMolecule"/>
         <rdfs:comment rdf:datatype="&xsd;string"
             >Definition: A region on a RNA molecule. 
 Usage: RNARegion is not a pool of independent molecules but a subregion on these molecules. As such, every RNARegion has a defining RNA molecule.  
@@ -1870,23 +1868,23 @@ Examples: CDS, 3&apos; UTR, Hairpin</rdfs:comment>
         <rdfs:subClassOf>
             <owl:Restriction>
                 <owl:onProperty rdf:resource="#value"/>
-                <owl:cardinality rdf:datatype="&xsd;int">1</owl:cardinality>
+                <owl:cardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:cardinality>
             </owl:Restriction>
         </rdfs:subClassOf>
+        <owl:disjointWith rdf:resource="#BioSource"/>
+        <owl:disjointWith rdf:resource="#ChemicalStructure"/>
+        <owl:disjointWith rdf:resource="#ControlledVocabulary"/>
+        <owl:disjointWith rdf:resource="#DeltaG"/>
+        <owl:disjointWith rdf:resource="#EntityFeature"/>
+        <owl:disjointWith rdf:resource="#EntityReference"/>
+        <owl:disjointWith rdf:resource="#Evidence"/>
+        <owl:disjointWith rdf:resource="#ExperimentalForm"/>
+        <owl:disjointWith rdf:resource="#KPrime"/>
+        <owl:disjointWith rdf:resource="#PathwayStep"/>
+        <owl:disjointWith rdf:resource="#Provenance"/>
         <owl:disjointWith rdf:resource="#SequenceLocation"/>
         <owl:disjointWith rdf:resource="#Stoichiometry"/>
-        <owl:disjointWith rdf:resource="#PathwayStep"/>
         <owl:disjointWith rdf:resource="#Xref"/>
-        <owl:disjointWith rdf:resource="#DeltaG"/>
-        <owl:disjointWith rdf:resource="#KPrime"/>
-        <owl:disjointWith rdf:resource="#EntityFeature"/>
-        <owl:disjointWith rdf:resource="#ChemicalStructure"/>
-        <owl:disjointWith rdf:resource="#EntityReference"/>
-        <owl:disjointWith rdf:resource="#ExperimentalForm"/>
-        <owl:disjointWith rdf:resource="#ControlledVocabulary"/>
-        <owl:disjointWith rdf:resource="#Provenance"/>
-        <owl:disjointWith rdf:resource="#BioSource"/>
-        <owl:disjointWith rdf:resource="#Evidence"/>
         <rdfs:comment rdf:datatype="&xsd;string"
             >Definition: A score associated with a publication reference describing how the score was determined, the name of the method and a comment briefly describing the method.
 Usage:  The xref must contain at least one publication that describes the method used to determine the score value. There is currently no standard way of describing  values, so any string is valid.
@@ -1895,10 +1893,10 @@ Examples: The statistical significance of a result, e.g. &quot;p&lt;0.05&quot;.<
     <owl:FunctionalProperty rdf:ID="scoreSource">
         <rdf:type rdf:resource="&owl;ObjectProperty"/>
         <rdfs:domain rdf:resource="#Score"/>
-        <rdfs:range rdf:resource="#Provenance"/>
         <rdfs:comment rdf:datatype="&xsd;string"
             >This property defines the source of the scoring methodology --
 a publication or web site describing the scoring methodology and the range of values.</rdfs:comment>
+        <rdfs:range rdf:resource="#Provenance"/>
     </owl:FunctionalProperty>
     <owl:FunctionalProperty rdf:ID="sequence">
         <rdf:type rdf:resource="&owl;DatatypeProperty"/>
@@ -1913,9 +1911,9 @@ a publication or web site describing the scoring methodology and the range of va
                 </owl:unionOf>
             </owl:Class>
         </rdfs:domain>
-        <rdfs:range rdf:resource="&xsd;string"/>
         <rdfs:comment xml:lang="en"
             >Polymer sequence in uppercase letters. For DNA, usually A,C,G,T letters representing the nucleosides of adenine, cytosine, guanine and thymine, respectively; for RNA, usually A, C, U, G; for protein, usually the letters corresponding to the 20 letter IUPAC amino acid code.</rdfs:comment>
+        <rdfs:range rdf:resource="&xsd;string"/>
     </owl:FunctionalProperty>
     <owl:Class rdf:ID="SequenceInterval">
         <rdfs:subClassOf rdf:resource="#SequenceLocation"/>
@@ -1927,71 +1925,71 @@ Usage: Interval is defined as an ordered pair of SequenceSites. All of the seque
     <owl:FunctionalProperty rdf:ID="sequenceIntervalBegin">
         <rdf:type rdf:resource="&owl;ObjectProperty"/>
         <rdfs:domain rdf:resource="#SequenceInterval"/>
-        <rdfs:range rdf:resource="#SequenceSite"/>
         <rdfs:comment rdf:datatype="&xsd;string"
             >The begin position of a sequence interval.</rdfs:comment>
+        <rdfs:range rdf:resource="#SequenceSite"/>
     </owl:FunctionalProperty>
     <owl:FunctionalProperty rdf:ID="sequenceIntervalEnd">
         <rdf:type rdf:resource="&owl;ObjectProperty"/>
         <rdfs:domain rdf:resource="#SequenceInterval"/>
-        <rdfs:range rdf:resource="#SequenceSite"/>
         <rdfs:comment rdf:datatype="&xsd;string"
             >The end position of a sequence interval.</rdfs:comment>
+        <rdfs:range rdf:resource="#SequenceSite"/>
     </owl:FunctionalProperty>
     <owl:Class rdf:ID="SequenceLocation">
         <rdfs:subClassOf rdf:resource="#UtilityClass"/>
-        <owl:disjointWith rdf:resource="#DeltaG"/>
-        <owl:disjointWith rdf:resource="#Score"/>
-        <owl:disjointWith rdf:resource="#KPrime"/>
-        <owl:disjointWith rdf:resource="#Evidence"/>
-        <owl:disjointWith rdf:resource="#EntityReference"/>
-        <owl:disjointWith rdf:resource="#Provenance"/>
-        <owl:disjointWith rdf:resource="#ExperimentalForm"/>
-        <owl:disjointWith rdf:resource="#EntityFeature"/>
-        <owl:disjointWith rdf:resource="#Xref"/>
-        <owl:disjointWith rdf:resource="#ChemicalStructure"/>
-        <owl:disjointWith rdf:resource="#PathwayStep"/>
-        <owl:disjointWith rdf:resource="#ControlledVocabulary"/>
-        <owl:disjointWith rdf:resource="#Stoichiometry"/>
         <owl:disjointWith rdf:resource="#BioSource"/>
+        <owl:disjointWith rdf:resource="#ChemicalStructure"/>
+        <owl:disjointWith rdf:resource="#ControlledVocabulary"/>
+        <owl:disjointWith rdf:resource="#DeltaG"/>
+        <owl:disjointWith rdf:resource="#EntityFeature"/>
+        <owl:disjointWith rdf:resource="#EntityReference"/>
+        <owl:disjointWith rdf:resource="#Evidence"/>
+        <owl:disjointWith rdf:resource="#ExperimentalForm"/>
+        <owl:disjointWith rdf:resource="#KPrime"/>
+        <owl:disjointWith rdf:resource="#PathwayStep"/>
+        <owl:disjointWith rdf:resource="#Provenance"/>
+        <owl:disjointWith rdf:resource="#Score"/>
+        <owl:disjointWith rdf:resource="#Stoichiometry"/>
+        <owl:disjointWith rdf:resource="#Xref"/>
         <rdfs:comment rdf:datatype="&xsd;string"
             >Definition: A location on a nucleotide or amino acid sequence.
 Usage: For most purposes it is more appropriate to use subclasses of this class. Direct instances of SequenceLocation can be used for uknown locations that can not be classified neither as an interval nor a site.</rdfs:comment>
     </owl:Class>
     <owl:Class rdf:ID="SequenceModificationVocabulary">
         <rdfs:subClassOf rdf:resource="#ControlledVocabulary"/>
-        <owl:disjointWith rdf:resource="#SequenceRegionVocabulary"/>
-        <owl:disjointWith rdf:resource="#RelationshipTypeVocabulary"/>
-        <owl:disjointWith rdf:resource="#PhenotypeVocabulary"/>
-        <owl:disjointWith rdf:resource="#CellVocabulary"/>
-        <owl:disjointWith rdf:resource="#InteractionVocabulary"/>
-        <owl:disjointWith rdf:resource="#TissueVocabulary"/>
-        <owl:disjointWith rdf:resource="#ExperimentalFormVocabulary"/>
-        <owl:disjointWith rdf:resource="#EvidenceCodeVocabulary"/>
-        <owl:disjointWith rdf:resource="#EntityReferenceTypeVocabulary"/>
         <owl:disjointWith rdf:resource="#CellularLocationVocabulary"/>
+        <owl:disjointWith rdf:resource="#CellVocabulary"/>
+        <owl:disjointWith rdf:resource="#EntityReferenceTypeVocabulary"/>
+        <owl:disjointWith rdf:resource="#EvidenceCodeVocabulary"/>
+        <owl:disjointWith rdf:resource="#ExperimentalFormVocabulary"/>
+        <owl:disjointWith rdf:resource="#InteractionVocabulary"/>
+        <owl:disjointWith rdf:resource="#PhenotypeVocabulary"/>
+        <owl:disjointWith rdf:resource="#RelationshipTypeVocabulary"/>
+        <owl:disjointWith rdf:resource="#SequenceRegionVocabulary"/>
+        <owl:disjointWith rdf:resource="#TissueVocabulary"/>
         <rdfs:comment rdf:datatype="&xsd;string"
             >Definiiton: A reference to the PSI Molecular Interaction ontology (MI) of covalent sequence modifications. Homepage at http://www.psidev.info/.  Browse at http://www.ebi.ac.uk/ontology-lookup/browse.do?ontName=MI&amp;termId=MI%3A0252&amp;termName=biological%20feature. Only children that are covelent modifications at specific positions can be used.</rdfs:comment>
     </owl:Class>
     <owl:FunctionalProperty rdf:ID="sequencePosition">
         <rdf:type rdf:resource="&owl;DatatypeProperty"/>
         <rdfs:domain rdf:resource="#SequenceSite"/>
-        <rdfs:range rdf:resource="&xsd;int"/>
         <rdfs:comment rdf:datatype="&xsd;string"
             >The integer listed gives the position. The first base or amino acid is position 1. In combination with the numeric value, the property &apos;POSITION-STATUS&apos; allows to express fuzzy positions, e.g. &apos;less than 4&apos;.</rdfs:comment>
+        <rdfs:range rdf:resource="&xsd;int"/>
     </owl:FunctionalProperty>
     <owl:Class rdf:ID="SequenceRegionVocabulary">
         <rdfs:subClassOf rdf:resource="#ControlledVocabulary"/>
-        <owl:disjointWith rdf:resource="#InteractionVocabulary"/>
-        <owl:disjointWith rdf:resource="#EvidenceCodeVocabulary"/>
-        <owl:disjointWith rdf:resource="#TissueVocabulary"/>
-        <owl:disjointWith rdf:resource="#PhenotypeVocabulary"/>
-        <owl:disjointWith rdf:resource="#ExperimentalFormVocabulary"/>
-        <owl:disjointWith rdf:resource="#CellVocabulary"/>
-        <owl:disjointWith rdf:resource="#SequenceModificationVocabulary"/>
-        <owl:disjointWith rdf:resource="#EntityReferenceTypeVocabulary"/>
-        <owl:disjointWith rdf:resource="#RelationshipTypeVocabulary"/>
         <owl:disjointWith rdf:resource="#CellularLocationVocabulary"/>
+        <owl:disjointWith rdf:resource="#CellVocabulary"/>
+        <owl:disjointWith rdf:resource="#EntityReferenceTypeVocabulary"/>
+        <owl:disjointWith rdf:resource="#EvidenceCodeVocabulary"/>
+        <owl:disjointWith rdf:resource="#ExperimentalFormVocabulary"/>
+        <owl:disjointWith rdf:resource="#InteractionVocabulary"/>
+        <owl:disjointWith rdf:resource="#PhenotypeVocabulary"/>
+        <owl:disjointWith rdf:resource="#RelationshipTypeVocabulary"/>
+        <owl:disjointWith rdf:resource="#SequenceModificationVocabulary"/>
+        <owl:disjointWith rdf:resource="#TissueVocabulary"/>
         <rdfs:comment rdf:datatype="&xsd;string"
             >Definition: A reference to a controlled vocabulary of sequence regions, such as InterPro or Sequence Ontology (SO). Homepage at http://www.sequenceontology.org/.  Browse at http://www.ebi.ac.uk/ontology-lookup/browse.do?ontName=SO</rdfs:comment>
     </owl:Class>
@@ -2029,12 +2027,12 @@ Usage: A sequence site is always defined based on the reference sequence of the 
             </owl:Restriction>
         </rdfs:subClassOf>
         <owl:disjointWith rdf:resource="#Complex"/>
-        <owl:disjointWith rdf:resource="#RnaRegion"/>
-        <owl:disjointWith rdf:resource="#EntityReference"/>
         <owl:disjointWith rdf:resource="#Dna"/>
         <owl:disjointWith rdf:resource="#DnaRegion"/>
+        <owl:disjointWith rdf:resource="#EntityReference"/>
         <owl:disjointWith rdf:resource="#Protein"/>
         <owl:disjointWith rdf:resource="#Rna"/>
+        <owl:disjointWith rdf:resource="#RnaRegion"/>
         <rdfs:comment rdf:datatype="&xsd;string"
             >Definition: A pool of molecules that are neither complexes nor are genetically encoded.
 
@@ -2063,37 +2061,40 @@ Examples: glucose, penicillin, phosphatidylinositol</rdfs:comment>
     </owl:Class>
     <owl:DatatypeProperty rdf:ID="source">
         <rdfs:domain rdf:resource="#PublicationXref"/>
-        <rdfs:range rdf:resource="&xsd;string"/>
         <rdfs:comment rdf:datatype="&xsd;string"
             >The source  in which the reference was published, such as: a book title, or a journal title and volume and pages.</rdfs:comment>
+        <rdfs:range rdf:resource="&xsd;string"/>
     </owl:DatatypeProperty>
     <owl:FunctionalProperty rdf:ID="spontaneous">
         <rdf:type rdf:resource="&owl;DatatypeProperty"/>
         <rdfs:domain rdf:resource="#Conversion"/>
-        <rdfs:range rdf:resource="&xsd;boolean"/>
         <rdfs:comment rdf:datatype="&xsd;string"
             >Specifies whether a conversion occurs spontaneously or not. If the spontaneity is not known, the SPONTANEOUS property should be left empty.</rdfs:comment>
+        <rdfs:range rdf:resource="&xsd;boolean"/>
     </owl:FunctionalProperty>
     <owl:FunctionalProperty rdf:ID="standardName">
         <rdf:type rdf:resource="&owl;DatatypeProperty"/>
-        <rdfs:range rdf:resource="&xsd;string"/>
-        <rdfs:subPropertyOf rdf:resource="#name"/>
         <rdfs:comment xml:lang="en"
             >The preferred full name for this entity, if exists assigned by a standard nomenclature organization such as HUGO Gene Nomenclature Committee.
 
 Warning:  Subproperties of name are functional, that is we expect to have only one standardName and shortName for a given entity. If a user decides to assign a different name to standardName or shortName, they have to remove the old triplet from the model too. If the old name should be retained as a synonym a regular &quot;name&quot; property should also be introduced with the old name.</rdfs:comment>
+        <rdfs:range rdf:resource="&xsd;string"/>
+        <rdfs:subPropertyOf rdf:resource="#name"/>
     </owl:FunctionalProperty>
     <owl:FunctionalProperty rdf:ID="stepConversion">
         <rdf:type rdf:resource="&owl;ObjectProperty"/>
         <rdfs:domain rdf:resource="#BiochemicalPathwayStep"/>
-        <rdfs:range rdf:resource="#Conversion"/>
-        <rdfs:subPropertyOf rdf:resource="#stepProcess"/>
         <rdfs:comment rdf:datatype="&xsd;string"
             >The central process that take place at this step of the biochemical pathway.</rdfs:comment>
+        <rdfs:range rdf:resource="#Conversion"/>
+        <rdfs:subPropertyOf rdf:resource="#stepProcess"/>
     </owl:FunctionalProperty>
     <owl:FunctionalProperty rdf:ID="stepDirection">
         <rdf:type rdf:resource="&owl;DatatypeProperty"/>
         <rdfs:domain rdf:resource="#BiochemicalPathwayStep"/>
+        <rdfs:comment rdf:datatype="&xsd;string"
+            >Direction of the conversion in this particular pathway context. 
+This property can be used for annotating direction of enzymatic activity. Even if an enzyme catalyzes a reaction reversibly, the flow of matter through the pathway will force the equilibrium in a given direction for that particular pathway.</rdfs:comment>
         <rdfs:range>
             <owl:DataRange>
                 <owl:oneOf>
@@ -2114,12 +2115,11 @@ Warning:  Subproperties of name are functional, that is we expect to have only o
                 </owl:oneOf>
             </owl:DataRange>
         </rdfs:range>
-        <rdfs:comment rdf:datatype="&xsd;string"
-            >Direction of the conversion in this particular pathway context. 
-This property can be used for annotating direction of enzymatic activity. Even if an enzyme catalyzes a reaction reversibly, the flow of matter through the pathway will force the equilibrium in a given direction for that particular pathway.</rdfs:comment>
     </owl:FunctionalProperty>
     <owl:ObjectProperty rdf:ID="stepProcess">
         <rdfs:domain rdf:resource="#PathwayStep"/>
+        <rdfs:comment rdf:datatype="&xsd;string"
+            >An interaction or a pathway that are a part of this pathway step.</rdfs:comment>
         <rdfs:range>
             <owl:Class>
                 <owl:unionOf rdf:parseType="Collection">
@@ -2128,44 +2128,42 @@ This property can be used for annotating direction of enzymatic activity. Even i
                 </owl:unionOf>
             </owl:Class>
         </rdfs:range>
-        <rdfs:comment rdf:datatype="&xsd;string"
-            >An interaction or a pathway that are a part of this pathway step.</rdfs:comment>
     </owl:ObjectProperty>
     <owl:FunctionalProperty rdf:ID="stoichiometricCoefficient">
         <rdf:type rdf:resource="&owl;DatatypeProperty"/>
         <rdfs:domain rdf:resource="#Stoichiometry"/>
-        <rdfs:range rdf:resource="&xsd;float"/>
         <rdfs:comment rdf:datatype="&xsd;string"
             >Stoichiometric coefficient for one of the entities in an interaction or complex. This value can be any rational number. Generic values such as &quot;n&quot; or &quot;n+1&quot; should not be used - polymers are currently not covered.</rdfs:comment>
+        <rdfs:range rdf:resource="&xsd;float"/>
     </owl:FunctionalProperty>
     <owl:Class rdf:ID="Stoichiometry">
         <rdfs:subClassOf rdf:resource="#UtilityClass"/>
         <rdfs:subClassOf>
             <owl:Restriction>
                 <owl:onProperty rdf:resource="#stoichiometricCoefficient"/>
-                <owl:cardinality rdf:datatype="&xsd;int">1</owl:cardinality>
+                <owl:cardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:cardinality>
             </owl:Restriction>
         </rdfs:subClassOf>
         <rdfs:subClassOf>
             <owl:Restriction>
                 <owl:onProperty rdf:resource="#physicalEntity"/>
-                <owl:cardinality rdf:datatype="&xsd;int">1</owl:cardinality>
+                <owl:cardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:cardinality>
             </owl:Restriction>
         </rdfs:subClassOf>
-        <owl:disjointWith rdf:resource="#Provenance"/>
-        <owl:disjointWith rdf:resource="#SequenceLocation"/>
-        <owl:disjointWith rdf:resource="#ControlledVocabulary"/>
-        <owl:disjointWith rdf:resource="#EntityFeature"/>
-        <owl:disjointWith rdf:resource="#Score"/>
         <owl:disjointWith rdf:resource="#BioSource"/>
-        <owl:disjointWith rdf:resource="#Evidence"/>
         <owl:disjointWith rdf:resource="#ChemicalStructure"/>
-        <owl:disjointWith rdf:resource="#PathwayStep"/>
-        <owl:disjointWith rdf:resource="#Xref"/>
+        <owl:disjointWith rdf:resource="#ControlledVocabulary"/>
         <owl:disjointWith rdf:resource="#DeltaG"/>
-        <owl:disjointWith rdf:resource="#KPrime"/>
+        <owl:disjointWith rdf:resource="#EntityFeature"/>
         <owl:disjointWith rdf:resource="#EntityReference"/>
+        <owl:disjointWith rdf:resource="#Evidence"/>
         <owl:disjointWith rdf:resource="#ExperimentalForm"/>
+        <owl:disjointWith rdf:resource="#KPrime"/>
+        <owl:disjointWith rdf:resource="#PathwayStep"/>
+        <owl:disjointWith rdf:resource="#Provenance"/>
+        <owl:disjointWith rdf:resource="#Score"/>
+        <owl:disjointWith rdf:resource="#SequenceLocation"/>
+        <owl:disjointWith rdf:resource="#Xref"/>
         <rdfs:comment rdf:datatype="&xsd;string"
             >Definition: Stoichiometric coefficient of a physical entity in the context of a conversion or complex.
 Usage: For each participating element there must be 0 or 1 stoichiometry element. A non-existing stoichiometric element is treated as unknown.
@@ -2174,20 +2172,22 @@ This is an n-ary bridge for left, right and component properties. Relative stoic
     <owl:FunctionalProperty rdf:ID="structure">
         <rdf:type rdf:resource="&owl;ObjectProperty"/>
         <rdfs:domain rdf:resource="#SmallMoleculeReference"/>
-        <rdfs:range rdf:resource="#ChemicalStructure"/>
         <rdfs:comment xml:lang="en"
             >Defines the chemical structure and other information about this molecule, using an instance of class chemicalStructure.</rdfs:comment>
+        <rdfs:range rdf:resource="#ChemicalStructure"/>
     </owl:FunctionalProperty>
     <owl:FunctionalProperty rdf:ID="structureData">
         <rdf:type rdf:resource="&owl;DatatypeProperty"/>
         <rdfs:domain rdf:resource="#ChemicalStructure"/>
-        <rdfs:range rdf:resource="&xsd;string"/>
         <rdfs:comment rdf:datatype="&xsd;string"
-            >This property holds a string of data defining chemical structure or other information, in either the CML or SMILES format, as specified in property Structure-Format. If, for example, the CML format is used, then the value of this property is a string containing the XML encoding of the CML data.</rdfs:comment>
+            >This property holds a string of data defining chemical structure,in one of the three formats:&lt;a href =&quot;www.xml-cml.org&quot;&gt;CML&lt;/a&gt;, &lt;a href = &quot;www.daylight.com/dayhtml/smiles/&quot;&gt;SMILES&lt;/a&gt; or &lt;a href=&quot;http://www.iupac.org/inchi/&quot;&gt;InChI&lt;/a&gt;. If, for example,the CML format is used, then the value of this property is a string containing the XML encoding of the CML data.</rdfs:comment>
+        <rdfs:range rdf:resource="&xsd;string"/>
     </owl:FunctionalProperty>
     <owl:FunctionalProperty rdf:ID="structureFormat">
         <rdf:type rdf:resource="&owl;DatatypeProperty"/>
         <rdfs:domain rdf:resource="#ChemicalStructure"/>
+        <rdfs:comment xml:lang="en"
+            >This property specifies which format is used to define chemical structure data.</rdfs:comment>
         <rdfs:range>
             <owl:DataRange>
                 <owl:oneOf>
@@ -2208,8 +2208,6 @@ This is an n-ary bridge for left, right and component properties. Relative stoic
                 </owl:oneOf>
             </owl:DataRange>
         </rdfs:range>
-        <rdfs:comment xml:lang="en"
-            >This property specifies which format is used to define chemical structure data.</rdfs:comment>
     </owl:FunctionalProperty>
     <owl:ObjectProperty rdf:ID="subRegion">
         <rdfs:domain>
@@ -2222,6 +2220,8 @@ This is an n-ary bridge for left, right and component properties. Relative stoic
                 </owl:unionOf>
             </owl:Class>
         </rdfs:domain>
+        <rdfs:comment rdf:datatype="&xsd;string"
+            >The sub region of a region or nucleic acid molecule. The sub region must be wholly part of the region, not outside of it.</rdfs:comment>
         <rdfs:range>
             <owl:Class>
                 <owl:unionOf rdf:parseType="Collection">
@@ -2230,8 +2230,6 @@ This is an n-ary bridge for left, right and component properties. Relative stoic
                 </owl:unionOf>
             </owl:Class>
         </rdfs:range>
-        <rdfs:comment rdf:datatype="&xsd;string"
-            >The sub region of a region or nucleic acid molecule. The sub region must be wholly part of the region, not outside of it.</rdfs:comment>
     </owl:ObjectProperty>
     <owl:FunctionalProperty rdf:ID="temperature">
         <rdf:type rdf:resource="&owl;DatatypeProperty"/>
@@ -2243,13 +2241,15 @@ This is an n-ary bridge for left, right and component properties. Relative stoic
                 </owl:unionOf>
             </owl:Class>
         </rdfs:domain>
-        <rdfs:range rdf:resource="&xsd;float"/>
         <rdfs:comment rdf:datatype="&xsd;string"
             >Temperature in Celsius</rdfs:comment>
+        <rdfs:range rdf:resource="&xsd;float"/>
     </owl:FunctionalProperty>
     <owl:FunctionalProperty rdf:ID="template">
         <rdf:type rdf:resource="&owl;ObjectProperty"/>
         <rdfs:domain rdf:resource="#TemplateReaction"/>
+        <rdfs:comment rdf:datatype="&xsd;string"
+            >The template molecule that is used in this template reaction.</rdfs:comment>
         <rdfs:range>
             <owl:Class>
                 <owl:unionOf rdf:parseType="Collection">
@@ -2261,12 +2261,12 @@ This is an n-ary bridge for left, right and component properties. Relative stoic
             </owl:Class>
         </rdfs:range>
         <rdfs:subPropertyOf rdf:resource="#participant"/>
-        <rdfs:comment rdf:datatype="&xsd;string"
-            >The template molecule that is used in this template reaction.</rdfs:comment>
     </owl:FunctionalProperty>
     <owl:FunctionalProperty rdf:ID="templateDirection">
         <rdf:type rdf:resource="&owl;DatatypeProperty"/>
         <rdfs:domain rdf:resource="#TemplateReaction"/>
+        <rdfs:comment rdf:datatype="&xsd;string"
+            >The direction of the template reaction on the template.</rdfs:comment>
         <rdfs:range>
             <owl:DataRange>
                 <owl:oneOf>
@@ -2282,8 +2282,6 @@ This is an n-ary bridge for left, right and component properties. Relative stoic
                 </owl:oneOf>
             </owl:DataRange>
         </rdfs:range>
-        <rdfs:comment rdf:datatype="&xsd;string"
-            >The direction of the template reaction on the template.</rdfs:comment>
     </owl:FunctionalProperty>
     <owl:Class rdf:ID="TemplateReaction">
         <rdfs:subClassOf rdf:resource="#Interaction"/>
@@ -2360,38 +2358,38 @@ Usage: To represent the binding of the transcription factor to a regulatory elem
     </owl:Class>
     <owl:DatatypeProperty rdf:ID="term">
         <rdfs:domain rdf:resource="#ControlledVocabulary"/>
-        <rdfs:range rdf:resource="&xsd;string"/>
         <rdfs:comment rdf:datatype="&xsd;string"
             >The external controlled vocabulary term.</rdfs:comment>
+        <rdfs:range rdf:resource="&xsd;string"/>
     </owl:DatatypeProperty>
     <owl:FunctionalProperty rdf:ID="tissue">
         <rdf:type rdf:resource="&owl;ObjectProperty"/>
         <rdfs:domain rdf:resource="#BioSource"/>
-        <rdfs:range rdf:resource="#TissueVocabulary"/>
         <rdfs:comment xml:lang="en"
             >An external controlled vocabulary of tissue types.</rdfs:comment>
+        <rdfs:range rdf:resource="#TissueVocabulary"/>
     </owl:FunctionalProperty>
     <owl:Class rdf:ID="TissueVocabulary">
         <rdfs:subClassOf rdf:resource="#ControlledVocabulary"/>
         <owl:disjointWith rdf:resource="#CellularLocationVocabulary"/>
-        <owl:disjointWith rdf:resource="#InteractionVocabulary"/>
-        <owl:disjointWith rdf:resource="#SequenceRegionVocabulary"/>
+        <owl:disjointWith rdf:resource="#CellVocabulary"/>
         <owl:disjointWith rdf:resource="#EntityReferenceTypeVocabulary"/>
+        <owl:disjointWith rdf:resource="#EvidenceCodeVocabulary"/>
+        <owl:disjointWith rdf:resource="#ExperimentalFormVocabulary"/>
+        <owl:disjointWith rdf:resource="#InteractionVocabulary"/>
+        <owl:disjointWith rdf:resource="#PhenotypeVocabulary"/>
         <owl:disjointWith rdf:resource="#RelationshipTypeVocabulary"/>
         <owl:disjointWith rdf:resource="#SequenceModificationVocabulary"/>
-        <owl:disjointWith rdf:resource="#ExperimentalFormVocabulary"/>
-        <owl:disjointWith rdf:resource="#EvidenceCodeVocabulary"/>
-        <owl:disjointWith rdf:resource="#PhenotypeVocabulary"/>
-        <owl:disjointWith rdf:resource="#CellVocabulary"/>
+        <owl:disjointWith rdf:resource="#SequenceRegionVocabulary"/>
         <rdfs:comment rdf:datatype="&xsd;string"
             >Definition: A reference to the BRENDA (BTO). Homepage at http://www.brenda-enzymes.info/.  Browse at http://www.ebi.ac.uk/ontology-lookup/browse.do?ontName=BTO</rdfs:comment>
     </owl:Class>
     <owl:FunctionalProperty rdf:ID="title">
         <rdf:type rdf:resource="&owl;DatatypeProperty"/>
         <rdfs:domain rdf:resource="#PublicationXref"/>
-        <rdfs:range rdf:resource="&xsd;string"/>
         <rdfs:comment xml:lang="en"
             >The title of the publication.</rdfs:comment>
+        <rdfs:range rdf:resource="&xsd;string"/>
     </owl:FunctionalProperty>
     <owl:Class rdf:ID="Transport">
         <rdfs:subClassOf rdf:resource="#Conversion"/>
@@ -2420,13 +2418,13 @@ Examples: In the PEP-dependent phosphotransferase system, transportation of suga
         <rdfs:subClassOf>
             <owl:Restriction>
                 <owl:onProperty rdf:resource="#id"/>
-                <owl:cardinality rdf:datatype="&xsd;int">1</owl:cardinality>
+                <owl:cardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:cardinality>
             </owl:Restriction>
         </rdfs:subClassOf>
         <rdfs:subClassOf>
             <owl:Restriction>
                 <owl:onProperty rdf:resource="#db"/>
-                <owl:cardinality rdf:datatype="&xsd;int">1</owl:cardinality>
+                <owl:cardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:cardinality>
             </owl:Restriction>
         </rdfs:subClassOf>
         <rdfs:subClassOf rdf:resource="#Xref"/>
@@ -2440,9 +2438,9 @@ Examples: An xref in a protein instance pointing to an entry in the Swiss-Prot d
     </owl:Class>
     <owl:DatatypeProperty rdf:ID="url">
         <rdfs:domain rdf:resource="#PublicationXref"/>
-        <rdfs:range rdf:resource="&xsd;string"/>
         <rdfs:comment xml:lang="en"
             >The URL at which the publication can be found, if it is available through the Web.</rdfs:comment>
+        <rdfs:range rdf:resource="&xsd;string"/>
     </owl:DatatypeProperty>
     <owl:Class rdf:ID="UtilityClass">
         <rdfs:comment rdf:datatype="&xsd;string"
@@ -2455,26 +2453,26 @@ Usage: The utilityClass class is actually a metaclass and is only present to org
     <owl:FunctionalProperty rdf:ID="value">
         <rdf:type rdf:resource="&owl;DatatypeProperty"/>
         <rdfs:domain rdf:resource="#Score"/>
-        <rdfs:range rdf:resource="&xsd;string"/>
         <rdfs:comment rdf:datatype="&xsd;string"
             >The value of the score. This can be a numerical or categorical value.</rdfs:comment>
+        <rdfs:range rdf:resource="&xsd;string"/>
     </owl:FunctionalProperty>
     <owl:Class rdf:ID="Xref">
         <rdfs:subClassOf rdf:resource="#UtilityClass"/>
-        <owl:disjointWith rdf:resource="#Evidence"/>
-        <owl:disjointWith rdf:resource="#Stoichiometry"/>
-        <owl:disjointWith rdf:resource="#DeltaG"/>
-        <owl:disjointWith rdf:resource="#KPrime"/>
-        <owl:disjointWith rdf:resource="#SequenceLocation"/>
         <owl:disjointWith rdf:resource="#BioSource"/>
-        <owl:disjointWith rdf:resource="#ExperimentalForm"/>
-        <owl:disjointWith rdf:resource="#Score"/>
-        <owl:disjointWith rdf:resource="#EntityFeature"/>
-        <owl:disjointWith rdf:resource="#PathwayStep"/>
-        <owl:disjointWith rdf:resource="#EntityReference"/>
-        <owl:disjointWith rdf:resource="#Provenance"/>
         <owl:disjointWith rdf:resource="#ChemicalStructure"/>
         <owl:disjointWith rdf:resource="#ControlledVocabulary"/>
+        <owl:disjointWith rdf:resource="#DeltaG"/>
+        <owl:disjointWith rdf:resource="#EntityFeature"/>
+        <owl:disjointWith rdf:resource="#EntityReference"/>
+        <owl:disjointWith rdf:resource="#Evidence"/>
+        <owl:disjointWith rdf:resource="#ExperimentalForm"/>
+        <owl:disjointWith rdf:resource="#KPrime"/>
+        <owl:disjointWith rdf:resource="#PathwayStep"/>
+        <owl:disjointWith rdf:resource="#Provenance"/>
+        <owl:disjointWith rdf:resource="#Score"/>
+        <owl:disjointWith rdf:resource="#SequenceLocation"/>
+        <owl:disjointWith rdf:resource="#Stoichiometry"/>
         <rdfs:comment rdf:datatype="&xsd;string"
             >Definition: A reference from an instance of a class in this ontology to an object in an external resource.
 Rationale: Xrefs in the future can be removed in the future in favor of explicit miram links. 
@@ -2493,15 +2491,15 @@ Usage: For most cases one of the subclasses of xref should be used.</rdfs:commen
                 </owl:unionOf>
             </owl:Class>
         </rdfs:domain>
-        <rdfs:range rdf:resource="#Xref"/>
         <rdfs:comment xml:lang="en"
             >Values of this property define external cross-references from this entity to entities in external databases.</rdfs:comment>
+        <rdfs:range rdf:resource="#Xref"/>
     </owl:ObjectProperty>
     <owl:FunctionalProperty rdf:ID="year">
         <rdf:type rdf:resource="&owl;DatatypeProperty"/>
         <rdfs:domain rdf:resource="#PublicationXref"/>
-        <rdfs:range rdf:resource="&xsd;int"/>
         <rdfs:comment xml:lang="en"
             >The year in which this publication was published.</rdfs:comment>
+        <rdfs:range rdf:resource="&xsd;int"/>
     </owl:FunctionalProperty>
 </rdf:RDF>

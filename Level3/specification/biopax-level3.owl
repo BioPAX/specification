@@ -402,7 +402,14 @@ Examples: A small molecule that inhibits a pathway by an unknown mechanism.</rdf
         <owl:disjointWith rdf:resource="#Stoichiometry"/>
         <owl:disjointWith rdf:resource="#Xref"/>
         <rdfs:comment rdf:datatype="&xsd;string"
-            >Used to reference terms from external controlled vocabularies (CVs) from the ontology. To support consistency and compatibility, open, freely available CVs should be used whenever possible, such as the Gene Ontology (GO)15 or other open biological CVs listed on the OBO website (http://obo.sourceforge.net/). See the section on controlled vocabularies in Section 4 for more information.</rdfs:comment>
+            >Definition: This class represents a term from an external controlled vocabulary (CV).
+Rationale: Controlled Vocabularies mark cases where BioPAX delegates the representation of a complex biological phenomena to an external controlled vocabulary development effort such as Gene Ontology. Each subclass of this class represents one such case and often has an associated &quot;Best-Practice&quot; external resource to use. See the documentation of each subclass for more specific information. Correct usage of controlled vocabularies are critical to data exchange and integration.
+Usage: The individuals belonging to this class must unambiguously refer to the source controlled vocabulary. This can be achieved in two manners:
+The xref property of this class is restricted to the unification xref class. It must point to the source controlled vocabulary.
+Alternatively the rdf-id of the member individuals can be set to the designated MIRIAM URN.
+It is a best practice to do both whenever possible.
+Although it is possible to use multiple unification xrefs to identify semantically identical terms across alternative controlled vocabularies, this is not a recommended practice as it might lead to maintenance issues as the controlled vocabularies change.
+There is no recommended use-case for directly instantiating this class. Please use its subclasses instead.</rdfs:comment>
     </owl:Class>
     <owl:ObjectProperty rdf:ID="controller">
         <rdfs:domain rdf:resource="#Control"/>
@@ -530,19 +537,16 @@ Allosteric activators increase the specified enzyme activity by binding reversib
         <owl:disjointWith rdf:resource="#Control"/>
         <owl:disjointWith rdf:resource="#GeneticInteraction"/>
         <rdfs:comment rdf:datatype="&xsd;string"
-            >Definition: An interaction in which molecules of one or more physicalEntity pools are physically transformed and become a member of one or more other physicalEntity pools.
-
-Comments: Conversions in BioPAX are stoichiometric and closed world, i.e. it is assumed that all of the participants are listed. Both properties are due to the law of mass conservation. 
-
-Usage: Subclasses of conversion represent different types of transformation reflected by the properties of different physicalEntity. BiochemicalReactions will change the ModificationFeatures on a PhysicalEntity , Transport will change the CellularLocation and ComplexAssembly will change BindingFeatures. Generic Conversion class should only be used when the modification does not fit into one of these classes. 
-
+            >Definition: An interaction in which molecules of one or more PhysicalEntity pools are physically transformed and become a member of one or more other PhysicalEntity pools.
+Rationale: Conversion is Comments: Conversions in BioPAX are stoichiometric and closed world, i.e. it is assumed that all of the participants are listed. Both properties are due to the law of mass conservation.
+Usage: Subclasses of conversion represent different types of transformation reflected by the properties of different physicalEntity. BiochemicalReactions will change the ModificationFeatures on a PhysicalEntity, Transport will change the Cellular Location and ComplexAssembly will change BindingFeatures. Generic Conversion class should only be used when the modification does not fit into a any of these classes.
 Example: Opening of a voltage gated channel.</rdfs:comment>
     </owl:Class>
     <owl:FunctionalProperty rdf:ID="conversionDirection">
         <rdf:type rdf:resource="&owl;DatatypeProperty"/>
         <rdfs:domain rdf:resource="#Conversion"/>
         <rdfs:comment rdf:datatype="&xsd;string"
-            >This property represents the direction of the reaction. If a reaction is fundamentally irreversible, then it will run in a single direction under all contexts. Otherwise it is reversible.</rdfs:comment>
+            >This property represents the direction of the reaction. If a reaction will run in a single direction under all biological contexts then it is considered irreversible and has a direction. Otherwise it is reversible.</rdfs:comment>
         <rdfs:range>
             <owl:DataRange>
                 <owl:oneOf>
@@ -664,9 +668,7 @@ Since Delta-G can change based on multiple factors including ionic strength and 
 and
   delta-G&apos;&lt;sup&gt;o&lt;/sup&gt; = delta-H&apos;&lt;sup&gt;o&lt;/sup&gt; - T delta-S&apos;&lt;sup&gt;o&lt;/sup&gt;
 
-delta-G&apos;&lt;sup&gt;o&lt;/sup&gt; has units of kJ/mol.  Like K&apos;, it is a function of temperature (T), ionic strength (I), pH, and pMg (pMg = -log&lt;sub&gt;10&lt;/sub&gt;[Mg&lt;sup&gt;2+&lt;/sup&gt;]). Therefore, these quantities must be specified, and values for DELTA-G for biochemical reactions are represented as 5-tuples of the form (delta-G&apos;&lt;sup&gt;o&lt;/sup&gt; T I pH pMg).
-
-(This definition from EcoCyc)</rdfs:comment>
+delta-G&apos;&lt;sup&gt;o&lt;/sup&gt; has units of kJ/mol.  Like K&apos;, it is a function of temperature (T), ionic strength (I), pH, and pMg (pMg = -log&lt;sub&gt;10&lt;/sub&gt;[Mg&lt;sup&gt;2+&lt;/sup&gt;]). Therefore, these quantities must be specified, and values for DELTA-G for biochemical reactions are represented as 5-tuples of the form (delta-G&apos;&lt;sup&gt;o&lt;/sup&gt; T I pH pMg).</rdfs:comment>
         <rdfs:range rdf:resource="&xsd;float"/>
     </owl:FunctionalProperty>
     <owl:DatatypeProperty rdf:ID="deltaH">
@@ -802,12 +804,9 @@ Note that not all biochemical reactions currently have EC numbers assigned to th
         <rdfs:comment rdf:datatype="&xsd;string"
             >Definition: A discrete biological unit used when describing pathways. 
 
-Rationale: Entity is the most abstract class for representing interacting 
-    elements in a pathway. It includes both occurents (interactions and 
-    pathways) and continuants (physical entities and genes). Loosely speaking, 
-    BioPAX Entity is an atomic scientific statement with an associated source, 
-    evidence and references. 
-Synonyms: element, thing, object, bioentity, statement.</rdfs:comment>
+Rationale: Entity is the most abstract class for representing components of  a pathway. It includes both occurents (interactions and  pathways) and continuants (physical entities and genes). Loosely speaking, BioPAX Entity is an atomic scientific statement with an associated source, evidence and references.
+Usage: There is no recommended use-cases for instantiating this class. Please, use its subclasses instead. 
+Synonyms: element, thing,biological unit, statement, observable.</rdfs:comment>
     </owl:Class>
     <owl:Class rdf:ID="EntityFeature">
         <rdfs:subClassOf rdf:resource="#UtilityClass"/>
@@ -1230,8 +1229,7 @@ Examples: protein-protein interaction, biochemical reaction, enzyme catalysis</r
             </owl:Class>
         </rdfs:domain>
         <rdfs:comment rdf:datatype="&xsd;string"
-            >The ionic strength is defined as half of the total sum of the concentration (ci) of every ionic species (i) in the solution times the square of its charge (zi). For example, the ionic strength of a 0.1 M solution of CaCl2 is 0.5 x (0.1 x 22 + 0.2 x 12) = 0.3 M
-(Definition from http://www.lsbu.ac.uk/biology/enztech/ph.html)</rdfs:comment>
+            >The ionic strength is defined as half of the total sum of the concentration (ci) of every ionic species (i) in the solution times the square of its charge (zi). For example, the ionic strength of a 0.1 M solution of CaCl2 is 0.5 x (0.1 x 22 + 0.2 x 12) = 0.3 M</rdfs:comment>
         <rdfs:range rdf:resource="&xsd;float"/>
     </owl:FunctionalProperty>
     <owl:ObjectProperty rdf:ID="kEQ">
@@ -1303,7 +1301,7 @@ The apparent equilibrium constant is formally dimensionless, and can be kept so 
     <owl:ObjectProperty rdf:ID="left">
         <rdfs:domain rdf:resource="#Conversion"/>
         <rdfs:comment rdf:datatype="&xsd;string"
-            >The participants on the left side of the conversion interaction. Since conversion interactions may proceed in either the left-to-right or right-to-left direction, occupants of the LEFT property may be either reactants or products. LEFT is a sub-property of PARTICIPANTS.</rdfs:comment>
+            >The participants on the left side of the conversion interaction. Since conversion interactions may proceed in either the left-to-right or right-to-left direction, occupants of the left property may be either reactants or products. left is a sub-property of participants.</rdfs:comment>
         <rdfs:range rdf:resource="#PhysicalEntity"/>
         <rdfs:subPropertyOf rdf:resource="#participant"/>
     </owl:ObjectProperty>

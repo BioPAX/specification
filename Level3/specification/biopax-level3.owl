@@ -827,7 +827,7 @@ Synonyms: element, thing,biological unit, statement, observable.</rdfs:comment>
         <rdfs:comment rdf:datatype="&xsd;string"
             >Description: A characteristic of a physical entity that can change while the entity still retains its biological identity. 
 
-Rationale: Two phosphorylated forms of a protein are strictly speaking different chemical  molecules. It is, however, standard in biology to treat them as different states of the same entity, where the entity is loosely defined based on sequence. Entity Feature class and its subclassses captures these variable characteristics. A Physical Entity in BioPAX represents a pool of  molecules rather than an individual molecule. This is a notion imported from chemistry( See PhysicalEntity). Pools are defined by a set of Entity Features in the sense that a single molecule must have all of the features in the set in order to be considered a member of the pool. Since it is impossible to list and experimentally test all potential features for an  entity, features that are not listed in the selection criteria is neglected Pools can also be defined by the converse by specifying features  that are known to NOT exist in a specific context. As DNA, RNA and Proteins can be hierarchicaly organized into families based on sequence homology so can entity features. The memberFeature property allows capturing such hierarchical classifications among entity features.
+Rationale: Two phosphorylated forms of a protein are strictly speaking different chemical  molecules. It is, however, standard in biology to treat them as different states of the same entity, where the entity is loosely defined based on sequence. Entity Feature class and its subclassses captures these variable characteristics. A Physical Entity in BioPAX represents a pool of  molecules rather than an individual molecule. This is a notion imported from chemistry( See PhysicalEntity). Pools are defined by a set of Entity Features in the sense that a single molecule must have all of the features in the set in order to be considered a member of the pool. Since it is impossible to list and experimentally test all potential features for an  entity, features that are not listed in the selection criteria is neglected Pools can also be defined by the converse by specifying features  that are known to NOT exist in a specific context. As DNA, RNA and Proteins can be hierarchically organized into families based on sequence homology so can entity features. The memberFeature property allows capturing such hierarchical classifications among entity features.
 
 
 Usage: Subclasses of entity feature describe most common biological instances and should be preferred whenever possible. One common usecase for instantiating  entity feature is, for describing active/inactive states of proteins where more specific feature information is not available.  
@@ -1076,13 +1076,16 @@ http://www.ebi.ac.uk/ontology-lookup/browse.do?ontName=MI&amp;termId=MI%3A0346&a
     <owl:ObjectProperty rdf:ID="featureLocation">
         <rdfs:domain rdf:resource="#EntityFeature"/>
         <rdfs:comment rdf:datatype="&xsd;string"
-            >Location of the feature on the sequence of the interactor. One feature may have more than one location, used e.g. for features which involve sequence positions close in the folded, three-dimensional state of a protein, but non-continuous along the sequence.</rdfs:comment>
+            >Location of the feature on the sequence of the interactor.
+For modification features this is the modified base or residue. For binding features this is the binding site and for fragment features this is the location of the fragment on the &quot;base&quot; sequence.
+One feature may have more than one location, used e.g. for features which involve sequence positions close in the folded, three-dimensional state of a protein, but non-continuous along the sequence.
+Small Molecules can have binding features but currently it is not possible to define the binding site on the small molecules. In those cases this property should not be specified.</rdfs:comment>
         <rdfs:range rdf:resource="#SequenceLocation"/>
     </owl:ObjectProperty>
     <owl:ObjectProperty rdf:ID="featureLocationType">
         <rdfs:domain rdf:resource="#EntityFeature"/>
         <rdfs:comment rdf:datatype="&xsd;string"
-            >A controlled vocabulary term describing the type of the sequence location such as C-Terminal or SH2 Domain.</rdfs:comment>
+            >A controlled vocabulary term describing the type of the sequence location of the feature such as C-Terminal or SH2 Domain.</rdfs:comment>
         <rdfs:range rdf:resource="#SequenceRegionVocabulary"/>
     </owl:ObjectProperty>
     <owl:Class rdf:ID="FragmentFeature">

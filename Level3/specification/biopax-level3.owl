@@ -1318,7 +1318,11 @@ The apparent equilibrium constant is formally dimensionless, and can be kept so 
         <rdf:type rdf:resource="&owl;ObjectProperty"/>
         <rdfs:domain rdf:resource="#EntityFeature"/>
         <rdfs:comment rdf:datatype="&xsd;string"
-            >An entity feature  that belongs to this homology grouping. Example: a homologous phosphorylation site across a protein family.</rdfs:comment>
+            >An entity feature that belongs to this homology grouping.
+These features should be of the same class of this EntityFeature
+These features should be an EntityFeature of an EntityReference which is a memberEntityReference of the EntityReference of this feature.
+If this set is not empty than the sequenceLocation of this feature should be non-specified.
+Example: a homologous phosphorylation site across a protein family.</rdfs:comment>
         <rdfs:range rdf:resource="#EntityFeature"/>
     </owl:TransitiveProperty>
     <owl:TransitiveProperty rdf:ID="memberPhysicalEntity">

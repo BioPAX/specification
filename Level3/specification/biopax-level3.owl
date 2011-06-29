@@ -1196,7 +1196,8 @@ Examples: protein-protein interaction, biochemical reaction, enzyme catalysis</r
     <owl:ObjectProperty rdf:ID="interactionType">
         <rdfs:domain rdf:resource="#Interaction"/>
         <rdfs:comment rdf:datatype="&xsd;string"
-            >External controlled vocabulary annotating the interaction type, for example &quot;phosphorylation&quot;. This is annotation useful for e.g. display on a web page or database searching, but may not be suitable for other computing tasks, like reasoning.</rdfs:comment>
+            >Controlled vocabulary annotating the interaction type for example, &quot;phosphorylation reaction&quot;. This annotation is meant to be human readable and may not be suitable for computing tasks, like reasoning, that require formal vocabulary systems. For instance, this information would be useful for display on a web page or for querying a database. The PSI-MI interaction type controlled vocabulary should be used. This is browsable at: 
+http://www.ebi.ac.uk/ontology-lookup/browse.do?ontName=MI&amp;termId=MI%3A0190&amp;termName=interaction%20type</rdfs:comment>
         <rdfs:range rdf:resource="#InteractionVocabulary"/>
     </owl:ObjectProperty>
     <owl:Class rdf:ID="InteractionVocabulary">

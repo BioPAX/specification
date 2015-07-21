@@ -1,5 +1,5 @@
 # BioPAX specification and examples
-(Imported from sf.net/p/biopax, particularly - http://hg.code.sf.net/p/biopax/code, on 16 April 2015)
+(Imported from sf.net/p/biopax, particularly - `http://hg.code.sf.net/p/biopax/code`, on 16 April 2015)
 
 Final versions of the BioPAX ontology and documentation can be found at http://www.biopax.org/release/
 

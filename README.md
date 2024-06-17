@@ -26,19 +26,8 @@ Biological Pathways Exchange (BioPAX) is a standard language that aims to enable
 * BioPAX model [examples](https://github.com/BioPAX/specification/blob/master/Level3/examples/)
 * BioPAX [archive and downloads](http://www.biopax.org/downloads/biopax/)
  
-```
-Official BioPAX web site www.biopax.org has been at CBIO MSKCC until 2013; 
-then it moved to Sourceforge (Project-Web hosting, biopax.sf.net) and still resides there. 
-Site configuration and some static content are stored in the Hg [repository](http://hg.code.sf.net/p/biopax/site).
-And we are thinking of a better design (not using .htaccess, MediaWiki and PHP) and migrating here.
-```
-
 Sincerely yours,
-
 BioPAX team.
-
-
-
 
 
 And, e.g., http://www.biopax.org/release/biopax-level3.owl is a stable official URI 
